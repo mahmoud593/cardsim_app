@@ -6,5 +6,6 @@ class Assets {
   static const String fontsTajawalMedium = 'assets/fonts/Tajawal-Medium.ttf';
   static const String fontsTajawalRegular = 'assets/fonts/Tajawal-Regular.ttf';
   static const String imagesCardSim = 'assets/images/cardSim.png';
+  static const String imagesCat = 'assets/images/cat.png';
 
 }
