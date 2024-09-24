@@ -19,9 +19,9 @@ class OffersGridViewItem extends StatelessWidget {
             decoration: const BoxDecoration(boxShadow: [
               BoxShadow(
                   color: Colors.grey,
-                  blurRadius: 10,
-                  spreadRadius: -10,
-                  offset: Offset(0, 10))
+                  blurRadius: 30,
+                  spreadRadius: -30,
+                  offset: Offset(0, 5))
             ]),
             child: Card(
               shape: RoundedRectangleBorder(
@@ -36,7 +36,7 @@ class OffersGridViewItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'fdkjfd',

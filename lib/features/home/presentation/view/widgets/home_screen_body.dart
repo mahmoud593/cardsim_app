@@ -6,7 +6,7 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widets/custom_search_field.dart';
 
 import '../../../../../core/constants/constants.dart';
-import 'offers_grid_view_item.dart';
+import 'offers_grid_view.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
@@ -69,23 +69,12 @@ class HomeScreenBody extends StatelessWidget {
             const SizedBox(
               height: 60,
             ),
-            GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 20,
-                clipBehavior: Clip.none,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.4,
-                  mainAxisSpacing: 55,
-                  crossAxisSpacing: 0.0,
-                ),
-                itemBuilder: (context, index) {
-                  return const Center(child: OffersGridViewItem());
-                }),
+            const OffersGridView(),
           ],
         ),
       ),
     );
   }
 }
+
+
