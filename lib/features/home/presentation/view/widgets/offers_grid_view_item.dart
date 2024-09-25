@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/constants/constants.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/features/home/presentation/view/widgets/request_order_screen.dart';
 
 import '../../../../../generated/assets.dart';
 
-class OffersGridViewItem extends StatelessWidget {
+class OffersGridViewItem extends StatefulWidget {
   const OffersGridViewItem({super.key});
 
   @override
+  State<OffersGridViewItem> createState() => _OffersGridViewItemState();
+}
+
+class _OffersGridViewItemState extends State<OffersGridViewItem> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        customPushNavigator(context, const RequestOrderScreen());
+      },
       child: Stack(
         clipBehavior: Clip.none,
         children: [

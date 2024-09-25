@@ -14,64 +14,62 @@ class HomeScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 8,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(
+            height: 8,
+          ),
+          const Text('مساء الخير, Mazen Gamal !'),
+          const SizedBox(
+            height: 16,
+          ),
+          const DealingsListView(),
+          const SizedBox(
+            height: 16,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(Constants.defaultRadius),
+            child: Image.asset(
+              Assets.imagesCardSim,
             ),
-            const Text('مساء الخير, Mazen Gamal !'),
-            const SizedBox(
-              height: 16,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: ColorManager.primary,
+              borderRadius: BorderRadius.circular(8),
             ),
-            const DealingsListView(),
-            const SizedBox(
-              height: 16,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Center(
+            child: Text(
+              ' جميع العروض',
+              style: TextStyles.textStyle24Bold,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(Constants.defaultRadius),
-              child: Image.asset(
-                Assets.imagesCardSim,
-              ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            height: 40,
+            child: CustomSearchField(
+              controller: searchController,
+              hintText: 'البحث...',
+              suffixIcon: Icons.search,
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              height: 40,
-              decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Center(
-              child: Text(
-                ' جميع العروض',
-                style: TextStyles.textStyle24Bold,
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              height: 40,
-              child: CustomSearchField(
-                controller: searchController,
-                hintText: 'البحث...',
-                suffixIcon: Icons.search,
-              ),
-            ),
-            const SizedBox(
-              height: 60,
-            ),
-            const OffersGridView(),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 60,
+          ),
+          const OffersGridView(),
+        ],
       ),
     );
   }
