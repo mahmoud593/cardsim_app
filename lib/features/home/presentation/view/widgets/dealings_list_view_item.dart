@@ -26,7 +26,7 @@ class DealingsListViewItem extends StatelessWidget {
         ),
         subtitle: const Text('طلبات قيد الانتظار'),
         trailing: IconButton(
-          icon: const Icon(Icons.arrow_downward_sharp),
+          icon: const Icon(Icons.more_vert),
           onPressed: () {},
         ),
       ),
