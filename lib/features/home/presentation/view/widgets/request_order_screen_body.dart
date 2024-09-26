@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/features/home/presentation/view/widgets/amount_form_field.dart';
+import 'package:games_app/features/home/presentation/view/widgets/player_id_search_section.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_blue_container.dart';
+import 'package:games_app/features/home/presentation/view/widgets/request_order_button.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_grid_view.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_red_container.dart';
 import 'package:games_app/features/home/presentation/view/widgets/the_total_container.dart';
@@ -29,7 +31,10 @@ class RequestOrderScreenBody extends StatelessWidget {
           Text(
             'أقل كمية 1 - أقصي كمية 1',
             style: TextStyle(
-                color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold),
+              color: Colors.red,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           SizedBox(
             height: 8,
@@ -41,14 +46,47 @@ class RequestOrderScreenBody extends StatelessWidget {
           Text(
             'المجموع',
             style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(
             height: 8,
           ),
-          TheTotalContainer()
+          TheTotalContainer(),
+          SizedBox(
+            height: 12,
+          ),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'رقم اللاعب',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                TextSpan(
+                  text: ' (إجباري)',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          PlayerIdSearchSection(),
+          SizedBox(
+            height: 16,
+          ),
+          RequestOrderButton()
         ],
       ),
     );
