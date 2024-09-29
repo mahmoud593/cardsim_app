@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:games_app/styles/text_styles/text_styles.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton(
@@ -10,6 +12,7 @@ class DefaultButton extends StatelessWidget {
       this.foregroundColor,
       required this.text,
       this.textStyle,
+      this.haveIcon=false,
       this.icon});
 
   final void Function()? onPressed;
@@ -20,35 +23,43 @@ class DefaultButton extends StatelessWidget {
   final String text;
   final TextStyle? textStyle;
   final IconData? icon;
+  final bool? haveIcon;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      child: ElevatedButton(
+      height: SizeConfig.height*.06,
+      width: double.infinity,
+      child: MaterialButton(
+          color: ColorManager.primary,
           onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: borderRadius),
-              backgroundColor: ColorManager.primary,
-              foregroundColor: Colors.white),
-          child: Row(
+          shape: RoundedRectangleBorder(
+              borderRadius: borderRadius
+          ),
+          child: haveIcon==true?
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                icon,
-                size: 23,
+                icon
               ),
               const SizedBox(
                 width: 10,
               ),
               Text(
                 text,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyles.textStyle18Bold.copyWith(
+                  color: Colors.white
+                )
               ),
             ],
-          )),
-    );
+          ):
+          Text(
+          text,
+          style: TextStyles.textStyle18Bold.copyWith(
+              color: Colors.white
+          )
+        ),
+    ));
   }
 }

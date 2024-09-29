@@ -6,6 +6,7 @@ class AssetManager{
   static const String doneGif = "assets/gif/done.json";
   static const String errorGif = "assets/gif/error_gif.json";
   static const String logo = "assets/images/logo.png";
+  static const String googleIcon = "assets/images/google.png";
   static const String logout = "assets/images/logout.png";
   static const String privacy = "assets/images/privacy.png";
   static const String setting = "assets/images/setting.png";

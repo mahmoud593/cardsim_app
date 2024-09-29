@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
+import 'package:games_app/features/settings/presentation/view/screens/settings_screen.dart';
+import 'package:games_app/features/splash/preentation/view/screen/splash_screen.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('ar'),
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(context),
-      home: const HomeScreen(),
+      home:  const SettingsScreen(),
     );
   }
 }

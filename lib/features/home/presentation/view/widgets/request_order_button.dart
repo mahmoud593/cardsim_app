@@ -10,6 +10,7 @@ class RequestOrderButton extends StatelessWidget {
       width: double.infinity,
       child: DefaultButton(
           onPressed: () {},
+          haveIcon: true ,
           borderRadius: BorderRadius.circular(12),
           icon: Icons.shopping_cart_outlined,
           text: 'إنشاء الطلب'),
