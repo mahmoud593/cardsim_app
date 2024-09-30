@@ -23,6 +23,22 @@ class HomeScreenBody extends StatelessWidget {
           ),
           const Text('مساء الخير, Mazen Gamal !'),
           const SizedBox(
+            height: 12,
+          ),
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: ColorManager.primary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Center(
+                child: Text(
+              'اذا واجهت بتنجان رن علينا',
+              style: TextStyles.textStyle18Medium.copyWith(color: Colors.white),
+            )),
+          ),
+          const SizedBox(
             height: 16,
           ),
           const DealingsListView(),
@@ -33,16 +49,6 @@ class HomeScreenBody extends StatelessWidget {
             borderRadius: BorderRadius.circular(Constants.defaultRadius),
             child: Image.asset(
               Assets.imagesCardSim,
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: ColorManager.primary,
-              borderRadius: BorderRadius.circular(8),
             ),
           ),
           const SizedBox(
@@ -74,5 +80,3 @@ class HomeScreenBody extends StatelessWidget {
     );
   }
 }
-
-

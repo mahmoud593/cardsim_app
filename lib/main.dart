@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:games_app/bloc_observer.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
@@ -15,6 +16,7 @@ import 'generated/l10n.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   CashHelper.init();
   SharedPreferences.getInstance();
   UserDataFromStorage.getData();
