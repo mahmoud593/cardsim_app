@@ -41,7 +41,7 @@ class DefaultButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                icon
+                icon,color: Colors.white,
               ),
               const SizedBox(
                 width: 10,
