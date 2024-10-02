@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:games_app/bloc_observer.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/core/services/service_locator.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_cubit.dart';
@@ -17,6 +18,7 @@ import 'generated/l10n.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  ServiceLocator().setup();
   CashHelper.init();
   SharedPreferences.getInstance();
   UserDataFromStorage.getData();
