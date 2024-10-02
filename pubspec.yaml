@@ -52,6 +52,10 @@ dependencies:
   intl:
   persistent_bottom_nav_bar: ^6.2.1
   carousel_slider: ^5.0.0
+  dartz: ^0.10.1
+  dio: ^5.7.0
+  equatable: ^2.0.5
+  get_it: ^8.0.0
 
 dev_dependencies:
   flutter_test:
