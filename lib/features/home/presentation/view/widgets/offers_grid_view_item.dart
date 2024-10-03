@@ -1,18 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:games_app/core/constants/constants.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/features/home/domain/entities/companies_entity.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_screen.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../../generated/assets.dart';
+class OffersGridViewItem extends StatelessWidget {
+  const OffersGridViewItem({super.key, required this.companiesEntity});
 
-class OffersGridViewItem extends StatefulWidget {
-  const OffersGridViewItem({super.key});
+  final CompaniesEntity companiesEntity;
 
-  @override
-  State<OffersGridViewItem> createState() => _OffersGridViewItemState();
-}
-
-class _OffersGridViewItemState extends State<OffersGridViewItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,8 +36,8 @@ class _OffersGridViewItemState extends State<OffersGridViewItem> {
               ),
               surfaceTintColor: Colors.white,
               elevation: 10,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,8 +46,8 @@ class _OffersGridViewItemState extends State<OffersGridViewItem> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'fdkjfd',
-                          style: TextStyle(fontSize: 16),
+                          companiesEntity.name,
+                          style: const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -59,15 +57,20 @@ class _OffersGridViewItemState extends State<OffersGridViewItem> {
             ),
           ),
           Positioned(
-              bottom: 25,
-              left: 8.5,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  Assets.imagesCat,
-                  scale: 1.88,
+            bottom: 25,
+            left: 8.5,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                imageUrl: companiesEntity.image,
+                scale: 1.88,
+                placeholder: (context, url) => Skeletonizer(
+                  child: Image.network(companiesEntity.image),
                 ),
-              ))
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ),
+          )
         ],
       ),
     );
