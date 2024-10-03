@@ -6,13 +6,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: SafeArea(
-          child: HomeScreenBody(),
+    return  const Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: SafeArea(
+            child: HomeScreenBody(),
+          ),
         ),
-      ),
     );
   }
 }

@@ -1,11 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
-
-class Constants{
-
-
-  static String baseUrl = "";
+class Constants {
   static double defaultRadius = 18.0;
-
-
 }
