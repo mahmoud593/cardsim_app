@@ -6,6 +6,7 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widets/custom_search_field.dart';
 
 import '../../../../../core/constants/constants.dart';
+import 'categories_list_view.dart';
 import 'offers_grid_view.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -72,6 +73,10 @@ class HomeScreenBody extends StatelessWidget {
             ),
           ),
           const SizedBox(
+            height: 10,
+          ),
+          const CategoriesListView(),
+          const SizedBox(
             height: 60,
           ),
           const OffersGridView(),
@@ -80,3 +85,5 @@ class HomeScreenBody extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,8 +1,11 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../entities/categories_entity.dart';
 import '../entities/companies_entity.dart';
 
-abstract class HomeRepo{
+abstract class HomeRepo {
   Future<Either<Failure, List<CompaniesEntity>>> getCompanies();
+
+  Future<Either<Failure, List<CategoriesEntity>>> getCategories();
 }

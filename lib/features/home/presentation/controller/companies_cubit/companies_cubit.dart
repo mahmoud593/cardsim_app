@@ -11,14 +11,19 @@ class CompaniesCubit extends Cubit<CompaniesState> {
 
   final HomeRepo homeRepo;
 
-  static CompaniesCubit get(context) => BlocProvider.of(context);
-
-  Future<void> getCompanies() async {
+  Future<void> getCompanies([String? category]) async {
     emit(CompaniesLoading());
     final result = await homeRepo.getCompanies();
+
     result.fold(
       (l) => emit(CompaniesFailure(l.error)),
-      (r) => emit(CompaniesSuccess(r)),
+      (r) {
+        final filteredCompanies = category == null
+            ? r
+            : r.where((company) => company.category == category).toList();
+
+        emit(CompaniesSuccess(filteredCompanies));
+      },
     );
   }
 }

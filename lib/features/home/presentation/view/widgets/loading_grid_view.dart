@@ -1,21 +1,39 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:games_app/core/constants/constants.dart';
-import 'package:games_app/core/helper/material_navigation.dart';
-import 'package:games_app/features/home/domain/entities/companies_entity.dart';
-import 'package:games_app/features/home/presentation/view/widgets/request_order_screen.dart';
+import 'package:games_app/generated/assets.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class OffersGridViewItem extends StatelessWidget {
-  const OffersGridViewItem({super.key, required this.companiesEntity});
+import '../../../../../core/constants/constants.dart';
 
-  final CompaniesEntity companiesEntity;
+class LoadingGridView extends StatelessWidget {
+  const LoadingGridView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        customPushNavigator(context, const RequestOrderScreen());
-      },
+    return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 6,
+        clipBehavior: Clip.none,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount:
+          MediaQuery.of(context).orientation.index == 0 ? 2 : 3,
+          childAspectRatio: 1.4,
+          mainAxisSpacing: 55,
+          crossAxisSpacing: 0.0,
+        ),
+        itemBuilder: (context, index) {
+          return const Center(
+              child: LoadingGridViewItem());
+        });
+  }
+}
+
+class LoadingGridViewItem extends StatelessWidget {
+  const LoadingGridViewItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Skeletonizer(
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -35,8 +53,8 @@ class OffersGridViewItem extends StatelessWidget {
               ),
               surfaceTintColor: Colors.white,
               elevation: 10,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,8 +63,8 @@ class OffersGridViewItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          companiesEntity.name,
-                          style: const TextStyle(fontSize: 14),
+                          'dummy',
+                          style: TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -60,10 +78,9 @@ class OffersGridViewItem extends StatelessWidget {
             left: 8.5,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: companiesEntity.image,
+              child: Image.asset(
+                Assets.imagesCat,
                 scale: 1.88,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
           )
@@ -72,3 +89,6 @@ class OffersGridViewItem extends StatelessWidget {
     );
   }
 }
+
+
+

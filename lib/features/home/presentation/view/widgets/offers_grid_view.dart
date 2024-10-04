@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/features/home/presentation/view/widgets/loading_grid_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../controller/companies_cubit/companies_cubit.dart';
@@ -29,15 +30,12 @@ class OffersGridView extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return Center(
-                    child: Skeletonizer(
-                      enabled: state is CompaniesLoading,
-                      child: OffersGridViewItem(
-                        companiesEntity: state.companies![index],
-                      ),
+                    child: OffersGridViewItem(
+                      companiesEntity: state.companies![index],
                     ));
               });
         }else{
-          return const Center(child: CircularProgressIndicator());
+          return const LoadingGridView();
         }
       },
     );
