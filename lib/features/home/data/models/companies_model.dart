@@ -5,6 +5,7 @@ class CompaniesModel extends CompaniesEntity {
     required super.name,
     required super.image,
     required super.id,
+    required super.category,
   });
 
   factory CompaniesModel.fromJson(Map<String, dynamic> json) {
@@ -12,9 +13,11 @@ class CompaniesModel extends CompaniesEntity {
       name: json['name'],
       image: json['image'],
       id: json['id'],
+      category: json['category'],
     );
   }
 
   @override
-  String toString() => 'CompaniesModel(name: $name, image: $image, id: $id)';
+  String toString() =>
+      'CompaniesModel(name: $name, image: $image, id: $id, category: $category)';
 }

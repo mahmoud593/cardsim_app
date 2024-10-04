@@ -17,3 +17,6 @@ final class CompaniesFailure extends CompaniesState {
 
   CompaniesFailure(this.message);
 }
+
+
+
