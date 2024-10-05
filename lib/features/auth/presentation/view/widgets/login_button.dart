@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
-import 'package:games_app/styles/widets/default_button.dart';
+import 'package:games_app/styles/widgets/default_button.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({super.key});

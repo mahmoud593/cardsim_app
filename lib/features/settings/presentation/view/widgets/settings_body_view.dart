@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
-import 'package:games_app/styles/widets/default_button.dart';
-import 'package:games_app/styles/widets/default_text_field.dart';
+import 'package:games_app/styles/widgets/default_button.dart';
+import 'package:games_app/styles/widgets/default_text_field.dart';
 
 class SettingsBodyView extends StatelessWidget {
   const SettingsBodyView({super.key});

@@ -12,9 +12,11 @@ class CustomSearchField extends StatelessWidget {
     this.maxLines = 1,
     this.initialValue,
     this.suffixIcon,
+    this.onSubmitted,
   });
 
   final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final String? hintText;
   final String? initialValue;
   final bool? obscureText;
@@ -26,13 +28,6 @@ class CustomSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value) {
-        if (value?.isEmpty ?? true) {
-          return 'Field is required';
-        } else {
-          return null;
-        }
-      },
       initialValue: initialValue,
       maxLines: maxLines,
       keyboardType: textInputType,
@@ -40,15 +35,30 @@ class CustomSearchField extends StatelessWidget {
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       obscureText: obscureText!,
       onChanged: onChanged,
+      onFieldSubmitted: onSubmitted,
+      style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        suffixIcon: Icon(
-          suffixIcon,
-          color: const Color(0xffC9CECF),
+        suffixIcon: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () {
+                controller?.clear();
+              },
+              icon: const Icon(Icons.close, color: Color(0xffC9CECF)),
+            ),
+            IconButton(
+              onPressed: () {
+                onSubmitted!(controller!.text);
+              },
+              icon: Icon(suffixIcon, color: const Color(0xffC9CECF)),
+            ),
+          ],
         ),
         hintText: hintText,
         hintStyle: const TextStyle(
-          color: Color(0xFF949D9E),
-          height: 1.2
+            color: Color(0xFF949D9E),
+            height: 1
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),

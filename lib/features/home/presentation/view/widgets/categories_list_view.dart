@@ -38,10 +38,9 @@ class _CategoriesListViewState extends State<CategoriesListView> {
                         selectedCategory = category.name;
                       }
                     });
-
                     context
                         .read<CompaniesCubit>()
-                        .getCompanies(selectedCategory);
+                        .getCompanies(category: selectedCategory);
                   },
                   child: Chip(
                     label: Text(

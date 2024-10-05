@@ -11,19 +11,58 @@ class CompaniesCubit extends Cubit<CompaniesState> {
 
   final HomeRepo homeRepo;
 
-  Future<void> getCompanies([String? category]) async {
+  Future<void> getCompanies({String? category, String? query}) async {
     emit(CompaniesLoading());
+
     final result = await homeRepo.getCompanies();
 
     result.fold(
       (l) => emit(CompaniesFailure(l.error)),
       (r) {
-        final filteredCompanies = category == null
-            ? r
-            : r.where((company) => company.category == category).toList();
-
+        var filteredCompanies = r;
+        if (category != null) {
+          filteredCompanies = filteredCompanies
+              .where((company) => company.category == category)
+              .toList();
+        }
+        if (query != null && query.isNotEmpty) {
+          filteredCompanies = filteredCompanies
+              .where((company) =>
+                  company.name.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        }
         emit(CompaniesSuccess(filteredCompanies));
       },
     );
   }
 }
+
+// Future<void> getCompanies([String? category]) async {
+//   emit(CompaniesLoading());
+//   final result = await homeRepo.getCompanies();
+//
+//   result.fold(
+//     (l) => emit(CompaniesFailure(l.error)),
+//     (r) {
+//       final filteredCompanies = category == null
+//           ? r
+//           : r.where((company) => company.category == category).toList();
+//
+//       emit(CompaniesSuccess(filteredCompanies));
+//     },
+//   );
+// }
+
+// void searchCompanies(String query) async {
+//   if (query.isEmpty) {
+//     emit(CompaniesInitial());
+//     return;
+//   }
+//   try {
+//     emit(CompaniesLoading());
+//     final companies = await fetchCompaniesByQuery(query);
+//     emit(CompaniesSuccess(companies));
+//   } catch (error) {
+//     emit(CompaniesError("Error loading companies."));
+//   }
+// }
