@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:games_app/styles/widets/default_button.dart';
+import 'package:games_app/styles/widgets/default_button.dart';
 
 class RequestOrderButton extends StatelessWidget {
   const RequestOrderButton({super.key});

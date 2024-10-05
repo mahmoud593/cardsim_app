@@ -19,4 +19,5 @@ class CategoriesCubit extends Cubit<CategoriesState> {
           (r) => emit(CategoriesSuccess(r)),
     );
   }
+
 }

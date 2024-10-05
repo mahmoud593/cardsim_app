@@ -8,4 +8,5 @@ abstract class HomeRepo {
   Future<Either<Failure, List<CompaniesEntity>>> getCompanies();
 
   Future<Either<Failure, List<CategoriesEntity>>> getCategories();
+
 }

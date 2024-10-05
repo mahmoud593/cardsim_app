@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/create_new_account_button.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/forget_password_button.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/login_button.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/login_with_google_button.dart';
 import 'package:games_app/features/splash/preentation/view/widgets/logo_image.dart';
-import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
-import 'package:games_app/styles/widets/default_button.dart';
-import 'package:games_app/styles/widets/default_text_field.dart';
+import 'package:games_app/styles/widgets/default_text_field.dart';
 
 class LoginBodyView extends StatelessWidget {
   const LoginBodyView({super.key});
