@@ -10,6 +10,21 @@ class OrdersCubit extends Cubit<OrdersStates> {
 
   static OrdersCubit get(context) => BlocProvider.of(context);
 
+  final List<String> categories = [
+    'الكل',          // All
+    'قيد التنفيذ',   // In Progress
+    'قيد الإنتظار',  // Pending
+    'مكتمل',        // Completed
+    'مرفوض'         // Rejected
+  ];
+
+  String selectedCategory = 'الكل';
+
+
+  void changeCategory(String category) {
+    selectedCategory = category;
+    emit(ChangeSelectedFilterState());
+  }
 
 
 }

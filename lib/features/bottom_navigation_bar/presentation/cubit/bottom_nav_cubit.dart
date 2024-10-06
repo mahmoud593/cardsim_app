@@ -1,4 +1,6 @@
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/balance/presentation/view/balance_screen.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
@@ -11,14 +13,16 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
 
   static BottomNavCubit get(context) => BlocProvider.of(context);
 
-  int currentIndex = 2;
-
+  int currentIndex = 0;
+  NotchBottomBarController notchBottomBarController = NotchBottomBarController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  
   List<Widget> bottomNavScreens = const [
     HomeScreen(),
     OrdersScreen(),
-    HomeScreen(),
     BalanceScreen(),
     SettingsScreen(),
+    HomeScreen(),
   ];
 
   void changeBottomNav(int index) {

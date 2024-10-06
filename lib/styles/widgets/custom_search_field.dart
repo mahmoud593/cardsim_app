@@ -36,7 +36,7 @@ class CustomSearchField extends StatelessWidget {
       obscureText: obscureText!,
       onChanged: onChanged,
       onFieldSubmitted: onSubmitted,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: ColorManager.primary),
       decoration: InputDecoration(
         suffixIcon: Row(
           mainAxisSize: MainAxisSize.min,
@@ -70,7 +70,7 @@ class CustomSearchField extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
             borderSide: const BorderSide(color: Color(0xFFE6E9E9))),
         filled: true,
-        fillColor: ColorManager.primary,
+        fillColor: ColorManager.darkWhite,
       ),
     );
   }
