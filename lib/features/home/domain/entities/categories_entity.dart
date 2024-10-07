@@ -10,4 +10,5 @@ class CategoriesEntity {
     required this.image,
     required this.slug,
   });
+
 }

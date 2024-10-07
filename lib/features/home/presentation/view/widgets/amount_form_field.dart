@@ -1,28 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:games_app/features/home/domain/entities/products_entity.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
 class AmountFormField extends StatefulWidget {
-  const AmountFormField({super.key});
+  const AmountFormField({super.key, required this.productsEntity, required this.controller});
+
+  final ProductsEntity productsEntity;
+  final TextEditingController controller; // Controller passed from parent
 
   @override
   State<AmountFormField> createState() => _AmountFormFieldState();
 }
 
 class _AmountFormFieldState extends State<AmountFormField> {
-  final TextEditingController _controller = TextEditingController();
   int _counter = 1;
 
   @override
   void initState() {
     super.initState();
-    _controller.text = _counter.toString();
+    _counter = widget.productsEntity.quantity?.min ?? 1;
+    widget.controller.text = _counter.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: _controller,
+      controller: widget.controller,
       textAlign: TextAlign.center,
       style: const TextStyle(color: Colors.white),
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
@@ -33,9 +37,9 @@ class _AmountFormFieldState extends State<AmountFormField> {
           padding: EdgeInsets.zero,
           onPressed: () {
             setState(() {
-              if (_counter > 0) {
+              if (_counter > widget.productsEntity.quantity!.min!) {
                 _counter--;
-                _controller.text = _counter.toString();
+                widget.controller.text = _counter.toString();
               }
             });
           },
@@ -46,8 +50,10 @@ class _AmountFormFieldState extends State<AmountFormField> {
           padding: EdgeInsets.zero,
           onPressed: () {
             setState(() {
-              _counter++;
-              _controller.text = _counter.toString();
+              if (_counter < widget.productsEntity.quantity!.max!) {
+                _counter++;
+                widget.controller.text = _counter.toString();
+              }
             });
           },
           icon: const Icon(CupertinoIcons.plus),
@@ -65,12 +71,5 @@ class _AmountFormFieldState extends State<AmountFormField> {
         });
       },
     );
-  }
-
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
