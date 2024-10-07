@@ -10,4 +10,5 @@ class CompaniesEntity {
     required this.id,
     required this.category,
   });
+
 }

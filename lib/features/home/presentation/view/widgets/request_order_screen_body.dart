@@ -1,94 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:games_app/features/home/presentation/view/widgets/amount_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/features/home/domain/entities/companies_entity.dart';
+import 'package:games_app/features/home/presentation/view/widgets/amount_section.dart';
 import 'package:games_app/features/home/presentation/view/widgets/player_id_search_section.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_blue_container.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_button.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_grid_view.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_red_container.dart';
-import 'package:games_app/features/home/presentation/view/widgets/the_total_container.dart';
+
+import '../../controller/products_cubit/products_cubit.dart';
 
 class RequestOrderScreenBody extends StatelessWidget {
-  const RequestOrderScreenBody({super.key});
+  const RequestOrderScreenBody({super.key, required this.companiesEntity});
+
+  final CompaniesEntity companiesEntity;
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RequestOrderGridView(),
-          SizedBox(
-            height: 30,
-          ),
-          RequestOrderBlueContainer(),
-          SizedBox(
-            height: 8,
-          ),
-          RequestOrderRedContainer(),
-          SizedBox(
-            height: 12,
-          ),
-          Text(
-            'أقل كمية 1 - أقصي كمية 1',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          AmountFormField(),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            'المجموع',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          TheTotalContainer(),
-          SizedBox(
-            height: 12,
-          ),
-          Text.rich(
-            TextSpan(
+    return BlocBuilder<ProductsCubit, ProductsState>(
+      builder: (context, state) {
+        if(state is ProductsSuccess) {
+          return  SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextSpan(
-                  text: 'رقم اللاعب',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                const RequestOrderGridView(),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(companiesEntity.category),
+                const RequestOrderBlueContainer(),
+                const SizedBox(
+                  height: 8,
+                ),
+                const RequestOrderRedContainer(),
+                const SizedBox(
+                  height: 12,
+                ),
+                AmountSection(productsEntity: state.products.first),
+                const SizedBox(
+                  height: 8,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'رقم اللاعب',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' (إجباري)',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                TextSpan(
-                  text: ' (إجباري)',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
+                const SizedBox(
+                  height: 8,
+                ),
+                const PlayerIdSearchSection(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const RequestOrderButton()
               ],
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          PlayerIdSearchSection(),
-          SizedBox(
-            height: 16,
-          ),
-          RequestOrderButton()
-        ],
-      ),
+          );
+        }
+        else {
+          return const Center(
+            child: SizedBox(),
+          );
+        }
+      },
     );
   }
 }

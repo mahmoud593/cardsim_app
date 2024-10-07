@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:games_app/features/home/data/data_source/api_services.dart';
 import 'package:games_app/features/home/domain/entities/categories_entity.dart';
 import 'package:games_app/features/home/domain/entities/companies_entity.dart';
+import 'package:games_app/features/home/domain/entities/products_entity.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -32,4 +33,16 @@ class HomeRepoImp implements HomeRepo {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductsEntity>>> getProducts(int companyId) async {
+    final result = await remoteDataSource.getProducts(companyId);
+    try {
+      print(result);
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
 }

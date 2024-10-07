@@ -14,6 +14,8 @@ import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
+import 'features/home/data/data_source/api_services.dart';
+import 'features/home/domain/repos/home_repo.dart';
 import 'features/home/presentation/controller/categories_cubit/categories_cubit.dart';
 import 'features/home/presentation/controller/companies_cubit/companies_cubit.dart';
 import 'generated/l10n.dart';
@@ -25,7 +27,7 @@ void main() async {
   CashHelper.init();
   SharedPreferences.getInstance();
   UserDataFromStorage.getData();
-  //await HomeRepoImp(ApiServices()).getCategories();
+  //await HomeRepoImp(ApiServices()).getProducts(24);
   runApp(const MyApp());
 }
 
@@ -42,11 +44,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SettingsCubit()),
         BlocProvider(
           create: (context) =>
-              CompaniesCubit(getIt.get<HomeRepoImp>())..getCompanies(),
+              CompaniesCubit(getIt.get<HomeRepo>())..getCompanies(),
         ),
         BlocProvider(
             create: (context) =>
-                CategoriesCubit(getIt.get<HomeRepoImp>())..getCategories())
+                CategoriesCubit(getIt.get<HomeRepo>())..getCategories()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

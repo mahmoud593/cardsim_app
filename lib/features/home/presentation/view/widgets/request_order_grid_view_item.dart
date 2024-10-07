@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../generated/assets.dart';
+import 'package:games_app/features/home/domain/entities/products_entity.dart';
 
 class RequestOrderListViewItem extends StatelessWidget {
-  const RequestOrderListViewItem({super.key});
+  const RequestOrderListViewItem({super.key, required this.productsEntity});
 
+  final ProductsEntity productsEntity;
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Stack(
         children: [
-          Image.asset(
-            Assets.imagesCat,
+          Image.network(
+            productsEntity.image,
             fit: BoxFit.cover,
           ),
           Positioned(
@@ -20,39 +20,47 @@ class RequestOrderListViewItem extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 30,
               color: Colors.black54,
-              child: const Center(
-                child: Text(
-                  'Ahlan, حسب الطلب',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+              padding:  const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      productsEntity.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ),
+            )
+            ,
           ),
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
-              height: 50,
+              height: 45,
               color: Colors.black.withOpacity(0.5),
-              child: const Column(
+              child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '0.000054\$',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    '${productsEntity.price}\$',
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   Text(
-                    '0.000054\$',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    '${productsEntity.price}LE',
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ],
-              ), // Semi-transparent for better visibility
+              ),
             ),
           ),
         ],

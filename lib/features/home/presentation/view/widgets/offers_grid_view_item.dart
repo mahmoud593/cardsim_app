@@ -14,7 +14,7 @@ class OffersGridViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        customPushNavigator(context, const RequestOrderScreen());
+        customPushNavigator(context,  RequestOrderScreen(companiesEntity:  companiesEntity,));
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -45,7 +45,7 @@ class OffersGridViewItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          companiesEntity.name,
+                          companiesEntity.name + ' '+companiesEntity.id.toString(),
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],

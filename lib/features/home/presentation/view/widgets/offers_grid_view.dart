@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/home/presentation/view/widgets/loading_grid_view.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../controller/companies_cubit/companies_cubit.dart';
 import 'offers_grid_view_item.dart';
