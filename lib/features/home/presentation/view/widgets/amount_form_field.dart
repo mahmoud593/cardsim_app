@@ -4,10 +4,11 @@ import 'package:games_app/features/home/domain/entities/products_entity.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
 class AmountFormField extends StatefulWidget {
-  const AmountFormField({super.key, required this.productsEntity, required this.controller});
+  const AmountFormField(
+      {super.key, required this.productsEntity, required this.controller});
 
   final ProductsEntity productsEntity;
-  final TextEditingController controller; // Controller passed from parent
+  final TextEditingController controller;
 
   @override
   State<AmountFormField> createState() => _AmountFormFieldState();

@@ -7,7 +7,12 @@ import 'package:games_app/features/home/presentation/view/widgets/request_order_
 class RequestOrderGridView extends StatelessWidget {
   const RequestOrderGridView({
     super.key,
+    required this.selectedProductIndex,
+    required this.onProductSelected,
   });
+
+  final int? selectedProductIndex;
+  final ValueChanged<int> onProductSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +22,30 @@ class RequestOrderGridView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: state.products.length,
-                clipBehavior: Clip.none,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      MediaQuery.of(context).orientation.index == 0 ? 2 : 3,
-                  childAspectRatio: 1.1,
-                  mainAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return Center(
-                      child: RequestOrderListViewItem(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.products.length,
+              clipBehavior: Clip.none,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount:
+                    MediaQuery.of(context).orientation.index == 0 ? 2 : 3,
+                childAspectRatio: 1.1,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                return Center(
+                  child: RequestOrderListViewItem(
                     productsEntity: state.products[index],
-                  ));
-                }),
+                    isSelected: selectedProductIndex == index,
+                    onTap: state.products[index].status == 'unavailable'
+                        ? null
+                        : () {
+                            onProductSelected(index);
+                          },
+                  ),
+                );
+              },
+            ),
           );
         } else {
           return const LoadingGridView();

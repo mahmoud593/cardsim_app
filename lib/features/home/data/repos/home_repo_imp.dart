@@ -9,13 +9,13 @@ import '../../../../core/errors/failure.dart';
 import '../../domain/repos/home_repo.dart';
 
 class HomeRepoImp implements HomeRepo {
-  final ApiServices remoteDataSource;
+  final ApiServices apiServices;
 
-  HomeRepoImp(this.remoteDataSource);
+  HomeRepoImp(this.apiServices);
 
   @override
   Future<Either<Failure, List<CompaniesEntity>>> getCompanies() async {
-    final result = await remoteDataSource.getCompanies();
+    final result = await apiServices.getCompanies();
     try {
       //print(result);
       return Right(result);
@@ -26,7 +26,7 @@ class HomeRepoImp implements HomeRepo {
 
   @override
   Future<Either<Failure, List<CategoriesEntity>>> getCategories() async {
-    final result = await remoteDataSource.getCategories();
+    final result = await apiServices.getCategories();
     try {
       return Right(result);
     } on ServerExceptions catch (failure) {
@@ -36,7 +36,7 @@ class HomeRepoImp implements HomeRepo {
 
   @override
   Future<Either<Failure, List<ProductsEntity>>> getProducts(int companyId) async {
-    final result = await remoteDataSource.getProducts(companyId);
+    final result = await apiServices.getProducts(companyId);
     try {
       print(result);
       return Right(result);
