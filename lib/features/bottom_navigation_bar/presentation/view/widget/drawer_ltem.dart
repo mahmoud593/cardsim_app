@@ -5,7 +5,7 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 class DrawerItem extends StatelessWidget {
   final String title;
   final IconData icon;
-  final VoidCallback onTap;
+  final Function () onTap;
 
   const DrawerItem({super.key, required this.title, required this.icon, required this.onTap});
 

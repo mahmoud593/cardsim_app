@@ -9,6 +9,8 @@ import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/home/data/repos/home_repo_imp.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_cubit.dart';
+import 'package:games_app/features/our_agent/presentation/cubit/our_agent_cubit.dart';
+import 'package:games_app/features/payment_history/presentation/cubit/payment_history_cubit.dart';
 import 'package:games_app/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => BalanceCubit()),
         BlocProvider(create: (context) => SettingsCubit()),
+        BlocProvider(create: (context) => PaymentHistoryCubit()),
+        BlocProvider(create: (context) => OurAgentCubit()),
         BlocProvider(
           create: (context) =>
               CompaniesCubit(getIt.get<HomeRepoImp>())..getCompanies(),
