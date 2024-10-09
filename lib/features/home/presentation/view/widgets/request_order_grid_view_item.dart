@@ -26,10 +26,11 @@ class RequestOrderListViewItem extends StatelessWidget {
                 ColorFiltered(
                   colorFilter: productsEntity.status == 'unavailable'
                       ? const ColorFilter.mode(
-                    Colors.black,
-                    BlendMode.saturation,
-                  )
-                      : const ColorFilter.mode(Colors.transparent, BlendMode.multiply),
+                          Colors.black,
+                          BlendMode.saturation,
+                        )
+                      : const ColorFilter.mode(
+                          Colors.transparent, BlendMode.multiply),
                   child: Image.network(
                     productsEntity.image,
                     fit: BoxFit.cover,
@@ -47,7 +48,8 @@ class RequestOrderListViewItem extends StatelessWidget {
                   right: 0,
                   child: Container(
                     color: Colors.black54,
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -77,11 +79,13 @@ class RequestOrderListViewItem extends StatelessWidget {
                       children: [
                         Text(
                           '${productsEntity.price}\$',
-                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
                         ),
                         Text(
                           '${productsEntity.price}LE',
-                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
                         ),
                       ],
                     ),
