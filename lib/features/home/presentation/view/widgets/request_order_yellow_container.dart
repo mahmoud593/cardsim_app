@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RequestOrderBlueContainer extends StatelessWidget {
-  const RequestOrderBlueContainer({
-    super.key, required this.text,
-  });
+class RequestOrderYellowContainer extends StatelessWidget {
+  const RequestOrderYellowContainer({super.key, required this.text});
 
   final String text;
   @override
@@ -11,25 +9,25 @@ class RequestOrderBlueContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xffEDF1FA),
+        color: const Color(0xffFAEDED),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           width: 0.4,
-          color: Colors.blueAccent,
+          color: Colors.orange,
         ),
       ),
       child:  Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Icon(
-            Icons.info_outline,
-            color: Colors.blueAccent,
+            Icons.warning_amber_rounded,
+            color: Colors.orange,
           ),
           Expanded(
             child: Text(
               text,
               style: const TextStyle(
-                color: Colors.blue,
+                color: Colors.orange,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

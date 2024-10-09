@@ -5,13 +5,17 @@ import 'package:games_app/features/home/presentation/view/widgets/the_total_cont
 import 'amount_form_field.dart';
 
 class AmountSection extends StatelessWidget {
-  const AmountSection({super.key, required this.productsEntity});
+  const AmountSection({
+    super.key,
+    required this.productsEntity,
+    required this.controller, // Accept the controller
+  });
 
   final ProductsEntity productsEntity;
+  final TextEditingController controller; // Add this line
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,13 +27,12 @@ class AmountSection extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         AmountFormField(
           productsEntity: productsEntity,
-          controller: controller,
+          controller: controller, // Pass the controller to AmountFormField
         ),
+        const SizedBox(height: 8),
         const Text(
           'المجموع',
           style: TextStyle(
@@ -37,9 +40,7 @@ class AmountSection extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 4),
         TheTotalContainer(
           productsEntity: productsEntity,
           controller: controller,
@@ -48,3 +49,4 @@ class AmountSection extends StatelessWidget {
     );
   }
 }
+

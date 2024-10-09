@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class RequestOrderRedContainer extends StatelessWidget {
   const RequestOrderRedContainer({
-    super.key,
+    super.key, required this.text,
   });
 
+  final String text;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,18 +18,17 @@ class RequestOrderRedContainer extends StatelessWidget {
           color: Colors.redAccent,
         ),
       ),
-      child: const Row(
+      child:  Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
+          const Icon(
             Icons.not_interested,
             color: Colors.redAccent,
-            size: 12,
           ),
           Expanded(
             child: Text(
-              'تعميم هام: بالنسبة للعبة ببجي نحن مسؤولين عن عدد الشدات الواصلة للزبون فقط لا غير ولسنا مسؤولين عن أية عروض داخل اللعبة',
-              style: TextStyle(
+              text,
+              style: const TextStyle(
                 color: Colors.redAccent,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

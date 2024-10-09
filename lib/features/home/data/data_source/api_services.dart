@@ -21,7 +21,7 @@ class ApiServices {
     );
     if (response.statusCode == 200) {
       return List<CompaniesModel>.from(
-        (response.data as List).map(
+        (response.data['data'] as List).map(
           (e) => CompaniesModel.fromJson(e),
         ),
       );

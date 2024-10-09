@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
+
 import '../../../../../styles/colors/color_manager.dart';
 
 class TheTotalContainer extends StatefulWidget {
@@ -26,11 +27,26 @@ class _TheTotalContainerState extends State<TheTotalContainer> {
     widget.controller.addListener(updateTotalPrice);
   }
 
+  @override
+  void didUpdateWidget(TheTotalContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.productsEntity != widget.productsEntity) {
+      updateTotalPrice();
+    }
+  }
+
   void updateTotalPrice() {
     final int? quantity = int.tryParse(widget.controller.text);
     setState(() {
-      totalPrice = double.tryParse(widget.productsEntity.price)! * quantity!;
+      totalPrice = (quantity != null
+          ? double.tryParse(widget.productsEntity.price.toString())! * quantity
+          : 0);
     });
+  }
+
+  String formatTotalPrice(double price) {
+    String formattedPrice = price.toStringAsFixed(6);
+    return formattedPrice.replaceFirst(RegExp(r'\.?0*$'), '');
   }
 
   @override
@@ -44,7 +60,7 @@ class _TheTotalContainerState extends State<TheTotalContainer> {
       alignment: AlignmentDirectional.centerStart,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Text(
-        '$totalPrice\$',
+        '${formatTotalPrice(totalPrice)}\$',
         style: const TextStyle(color: Colors.white),
       ),
     );
