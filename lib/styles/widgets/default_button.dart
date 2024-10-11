@@ -13,7 +13,7 @@ class DefaultButton extends StatelessWidget {
       required this.text,
       this.textStyle,
       this.haveIcon=false,
-      this.icon});
+      this.icon, this.width});
 
   final void Function()? onPressed;
   final BorderRadiusGeometry borderRadius;
@@ -24,12 +24,13 @@ class DefaultButton extends StatelessWidget {
   final TextStyle? textStyle;
   final IconData? icon;
   final bool? haveIcon;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: SizeConfig.height*.06,
-      width: double.infinity,
+      width: width,
       child: MaterialButton(
           color: ColorManager.primary,
           onPressed: onPressed,

@@ -4,6 +4,27 @@ import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
 class TextStyles {
+
+  /// small text style
+  static TextStyle textStyle14Bold= TextStyle(
+      fontSize: SizeConfig.height * 0.016,
+      color: ColorManager.textColor,
+      fontWeight: FontWeight.bold
+  );
+
+  static TextStyle textStyle14Medium= TextStyle(
+      fontSize: SizeConfig.height * 0.016,
+      color: ColorManager.textColor,
+      fontWeight: FontWeight.w500
+  );
+
+  static TextStyle textStyle14Regular= TextStyle(
+      fontSize: SizeConfig.height * 0.016,
+      color: ColorManager.textColor,
+      fontWeight: FontWeight.w400
+  );
+
+
   /// normal text style
   static TextStyle textStyle18Bold= TextStyle(
     fontSize: SizeConfig.height * 0.02,
