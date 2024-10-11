@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../domain/entities/categories_entity.dart';
 import '../../../domain/repos/home_repo.dart';
 

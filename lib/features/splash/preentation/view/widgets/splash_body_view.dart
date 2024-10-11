@@ -4,6 +4,7 @@ import 'package:games_app/features/auth/presentation/view/screens/login_screen.d
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/features/splash/preentation/view/widgets/logo_image.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:games_app/styles/text_styles/text_styles.dart';
 
 class SplashBodyView extends StatefulWidget {
   const SplashBodyView({super.key});
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashBodyView> with SingleTickerProvider
     timeDelay(context: context);
     super.initState();
     animationController = AnimationController(vsync: this,duration: const Duration(seconds: 1));
-    slideAnimation = Tween<Offset>(begin: const Offset(0, 2), end: const Offset(0, 0)).animate(animationController);
+    slideAnimation = Tween<Offset>(begin: const Offset( 0,  2), end: const Offset(0, 0)).animate(animationController);
 
     animationController.forward();
   }
@@ -30,6 +31,7 @@ class _SplashScreenState extends State<SplashBodyView> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,6 +47,8 @@ class _SplashScreenState extends State<SplashBodyView> with SingleTickerProvider
             },
 
           ),
+
+
 
         ],
       ),
