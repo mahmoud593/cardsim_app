@@ -22,6 +22,7 @@ class RegisterButton extends StatelessWidget {
         var cubit=AuthCubit.get(context);
         return DefaultButton(
           haveIcon: false,
+          width: double.infinity,
           text: 'انشاء حساب',
           backgroundColor: ColorManager.primary ,
           borderRadius: BorderRadius.circular(12),

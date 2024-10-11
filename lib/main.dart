@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,6 +17,7 @@ import 'package:games_app/features/our_agent/presentation/cubit/our_agent_cubit.
 import 'package:games_app/features/payment_history/presentation/cubit/payment_history_cubit.dart';
 import 'package:games_app/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:games_app/features/splash/preentation/view/screen/splash_screen.dart';
+import 'package:games_app/firebase_options.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +30,9 @@ import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Bloc.observer = MyBlocObserver();
   ServiceLocator().setup();
   CashHelper.init();

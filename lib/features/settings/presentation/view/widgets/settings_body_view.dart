@@ -102,6 +102,7 @@ class SettingsBodyView extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height*.05,),
 
               DefaultButton(
+                  width: double.infinity,
                   onPressed: (){},
                   borderRadius: BorderRadius.circular(12),
                   text: 'حفظ البيانات '

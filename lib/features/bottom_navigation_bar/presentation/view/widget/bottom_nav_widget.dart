@@ -37,20 +37,12 @@ class BottomNavWidget extends StatelessWidget {
               activeItem: Icon(Icons.settings, color: ColorManager.white),
               itemLabelWidget: Text('الإعدادات', style: TextStyle(color: ColorManager.white)),
             ),
-            BottomBarItem(
-              inActiveItem: Icon(Icons.menu, color: ColorManager.white),
-              activeItem: Icon(Icons.menu, color: ColorManager.white),
-              itemLabelWidget: Text('القائمة', style: TextStyle(color: ColorManager.white)),
-            ),
+
           ],
           showLabel: true,
           notchColor: ColorManager.primary,
           onTap: (index) {
-            if(index == 4){
-              BottomNavCubit.get(context).scaffoldKey.currentState!.openDrawer();
-            }else{
               BottomNavCubit.get(context).changeBottomNav(index);
-            }
           },
           notchBottomBarController: BottomNavCubit.get(context).notchBottomBarController,
           kIconSize: MediaQuery.of(context).size.height * 0.024,

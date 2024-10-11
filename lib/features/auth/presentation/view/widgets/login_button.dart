@@ -22,6 +22,7 @@ class LoginButton extends StatelessWidget {
       builder: (context, state) {
         var cubit=AuthCubit.get(context);
         return DefaultButton(
+          width: double.infinity,
           haveIcon: false,
           text: 'تسجيل الدخول',
           backgroundColor: ColorManager.primary ,

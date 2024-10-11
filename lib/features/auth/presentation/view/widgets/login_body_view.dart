@@ -63,7 +63,7 @@ class LoginBodyView extends StatelessWidget {
                       children: [
                         SizedBox(height: MediaQuery.of(context).size.height*.018,),
 
-                        Text('تسجيل الدخول :', style: TextStyles.textStyle24Bold),
+                        Text('تسجيل الدخول', style: TextStyles.textStyle24Bold),
 
                         SizedBox(height: MediaQuery.of(context).size.height*.038,),
 

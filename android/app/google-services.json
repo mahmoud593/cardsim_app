@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "132088450182",
+    "project_id": "news-app-3f5f8",
+    "storage_bucket": "news-app-3f5f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132088450182:android:5182986dacbaf4dc835507",
+        "android_client_info": {
+          "package_name": "com.game.games_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_WyY2fH7ZWFG1NgExlUHh85Ap-ms-oNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132088450182:android:b3a9609dc3bad051835507",
+        "android_client_info": {
+          "package_name": "com.news_last_app.news_last_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_WyY2fH7ZWFG1NgExlUHh85Ap-ms-oNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

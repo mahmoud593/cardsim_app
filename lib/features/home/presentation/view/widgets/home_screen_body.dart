@@ -22,11 +22,7 @@ class HomeScreenBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(
-            height: 8,
-          ),
-          const Text('مساء الخير, Mazen Gamal !'),
-          const SizedBox(
-            height: 12,
+            height: 5,
           ),
           Container(
             height: 40,

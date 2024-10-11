@@ -25,10 +25,6 @@ class BottomNavigationScreen extends StatelessWidget {
           /// bottom nav bar
           bottomNavigationBar: const BottomNavWidget(),
 
-
-          drawer: const Drawer(
-            child: DrawerWidget(),
-          ),
         );
       },
     );

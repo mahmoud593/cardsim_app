@@ -22,7 +22,6 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
     OrdersScreen(),
     BalanceScreen(),
     SettingsScreen(),
-    HomeScreen(),
   ];
 
   void changeBottomNav(int index) {
