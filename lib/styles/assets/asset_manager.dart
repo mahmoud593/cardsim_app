@@ -29,6 +29,8 @@ class AssetManager{
   static const String plasticImage = "assets/images/plastic.jpg";
   static const String glassImage = "assets/images/glass.jpg";
   static const String organicImage = "assets/images/organic.jpg";
+  static const String logoLight = "assets/images/logo-light.png";
+  static const String logoDark = "assets/images/logo-dark.png";
 
 
 }

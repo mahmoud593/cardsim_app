@@ -8,34 +8,35 @@ import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
 
-class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
-
+class RegisterButton extends StatelessWidget {
+  const RegisterButton({super.key,});
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit,AuthStates>(
-        listener: (context, state) {
-          if(state is LoginSuccessState){
-            customPushAndRemoveUntil(context, BottomNavigationScreen());
-          }
-        },
-      builder: (context, state) {
+      listener: (context, state) {
+         if(state is CreateAccountSuccessState){
+           customPushAndRemoveUntil(context, BottomNavigationScreen());
+         }
+      },
+      builder:  (context, state) {
         var cubit=AuthCubit.get(context);
         return DefaultButton(
           haveIcon: false,
-          text: 'تسجيل الدخول',
+          text: 'انشاء حساب',
           backgroundColor: ColorManager.primary ,
           borderRadius: BorderRadius.circular(12),
           onPressed: (){
-            if(cubit.loginKey.currentState!.validate()){
-              cubit.loginWithApi(
-                  email: cubit.emailLoginController.text,
-                  password: cubit.passwordLoginController.text
+            if(cubit.registerKey.currentState!.validate()){
+               cubit.createNewAccount(
+                  email: cubit.emailRegisterController.text,
+                  password: cubit.passwordRegisterController.text,
+                  name: cubit.nameRegisterController.text,
+                  phone: cubit.phoneRegisterController.text
               );
             }
           },
         );
-      },
+      }
     );
   }
 }
