@@ -15,7 +15,7 @@ class BottomNavWidget extends StatelessWidget {
       builder: (context, state) {
         return AnimatedNotchBottomBar(
           color: ColorManager.primary,
-          showBlurBottomBar: false,
+          showBlurBottomBar: true,
           bottomBarItems: const [
             BottomBarItem(
               inActiveItem: Icon(Icons.home, color: ColorManager.white),

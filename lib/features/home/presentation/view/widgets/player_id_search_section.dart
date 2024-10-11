@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
+import 'package:games_app/styles/text_styles/text_styles.dart';
 
 import '../../../../../styles/colors/color_manager.dart';
 
@@ -18,19 +19,11 @@ class PlayerIdSearchSection extends StatelessWidget {
             children: [
               TextSpan(
                 text: productsEntity.field!.name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyles.textStyle14Medium,
               ),
-              const TextSpan(
+               TextSpan(
                 text: ' (إجباري)',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style:TextStyles.textStyle14Medium.copyWith(color: Colors.red) ,
               )
             ],
           ),

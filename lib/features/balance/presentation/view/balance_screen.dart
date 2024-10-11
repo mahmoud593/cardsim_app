@@ -30,7 +30,7 @@ class BalanceScreen extends StatelessWidget {
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: ColorManager.white,
+            //color: ColorManager.white,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02),
               child:  Column(

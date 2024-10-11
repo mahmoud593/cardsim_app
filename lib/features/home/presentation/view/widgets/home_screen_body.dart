@@ -33,7 +33,7 @@ class HomeScreenBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(
                 child: Text(
-                  'اذا واجهت بتنجان رن علينا',
+                  'اذا واجهت اي مشاكل تواصل معنا',
                   style: TextStyles.textStyle18Medium.copyWith(
                       color: Colors.white),
                 )),

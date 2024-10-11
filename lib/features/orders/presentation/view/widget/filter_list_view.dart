@@ -9,6 +9,7 @@ class FilterListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocConsumer<OrdersCubit, OrdersStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -18,11 +19,18 @@ class FilterListWidget extends StatelessWidget {
             return ChoiceChip(
               label: Text(category),
               labelStyle: TextStyle(
-                color: OrdersCubit.get(context).selectedCategory == category ? Colors.white : ColorManager.black,
+                color: OrdersCubit.get(context).selectedCategory == category
+                    ? Colors.white
+                    : isLight
+                        ? ColorManager.black
+                        : ColorManager.white,
               ),
               selected: OrdersCubit.get(context).selectedCategory == category,
               selectedColor: ColorManager.primary,
               checkmarkColor: ColorManager.white,
+              backgroundColor: isLight
+                  ? ColorManager.white
+                  : ColorManager.darkThemeBackgroundLight,
               onSelected: (bool selected) {
                 OrdersCubit.get(context).changeCategory(category);
               },
