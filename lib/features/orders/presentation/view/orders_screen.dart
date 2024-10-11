@@ -13,6 +13,7 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocConsumer<OrdersCubit, OrdersStates>(
       listener: (context, state) {
         // TODO: implement listener
@@ -29,14 +30,13 @@ class OrdersScreen extends StatelessWidget {
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: ColorManager.white,
+            //color: ColorManager.white,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02),
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   const CustomSearchField(
                     hintText: "ابحث عن طلبك",
                     suffixIcon: Icons.search,

@@ -27,6 +27,7 @@ class CustomSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return TextFormField(
       initialValue: initialValue,
       maxLines: maxLines,
@@ -70,7 +71,7 @@ class CustomSearchField extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
             borderSide: const BorderSide(color: Color(0xFFE6E9E9))),
         filled: true,
-        fillColor: ColorManager.darkWhite,
+        fillColor:isLight? ColorManager.darkWhite :ColorManager.darkThemeBackgroundLight,
       ),
     );
   }

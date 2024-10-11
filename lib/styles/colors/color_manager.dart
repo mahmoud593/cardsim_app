@@ -28,4 +28,8 @@ class ColorManager {
   static const white = Color(0xFFFFFFFF);
   static const gray = Color(0xFFF3F3F3);
   static const black = Color(0xFF000000);
+
+  static const darkThemeBackground = Color(0xff111827);
+  static const darkThemeBackgroundLight = Color(0xff1F2937);
+
 }

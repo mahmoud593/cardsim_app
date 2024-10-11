@@ -18,6 +18,7 @@ class _CategoriesListViewState extends State<CategoriesListView> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
         if (state is CategoriesSuccess) {
@@ -46,11 +47,18 @@ class _CategoriesListViewState extends State<CategoriesListView> {
                     label: Text(
                       category.name,
                       style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.black,
+                        color: isSelected
+                            ? Colors.white
+                            : isLight
+                                ? Colors.black
+                                : Colors.white,
                       ),
                     ),
-                    backgroundColor:
-                    isSelected ? ColorManager.primary : Colors.grey[200],
+                    backgroundColor: isSelected
+                        ? ColorManager.primary
+                        : isLight
+                            ? Colors.grey[200]
+                            : ColorManager.darkThemeBackgroundLight,
                   ),
                 );
               },

@@ -26,6 +26,7 @@ import 'features/home/data/data_source/api_services.dart';
 import 'features/home/domain/repos/home_repo.dart';
 import 'features/home/presentation/controller/categories_cubit/categories_cubit.dart';
 import 'features/home/presentation/controller/companies_cubit/companies_cubit.dart';
+import 'features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'generated/l10n.dart';
 
 void main() async {
@@ -63,19 +64,28 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CategoriesCubit(getIt.get<HomeRepo>())..getCategories()),
+        BlocProvider(create: (context) => ThemeCubit()),
       ],
-      child: MaterialApp(
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: const Locale('ar'),
-        debugShowCheckedModeBanner: false,
-        theme: getApplicationTheme(context),
-        home:const SplashScreen(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, themeState) {
+          return MaterialApp(
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            locale: const Locale('ar'),
+            debugShowCheckedModeBanner: false,
+            theme: getApplicationTheme(context),
+            darkTheme: getDarkTheme(context),
+            themeMode: themeState == ThemeState.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }
