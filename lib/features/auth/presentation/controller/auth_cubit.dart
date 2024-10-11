@@ -89,7 +89,7 @@ class AuthCubit extends Cubit<AuthStates>{
     userInfoModel= await AuthRepoImplement().getUser();
     if(userInfoModel != null){
       emailProfileController.text=userInfoModel!.email!;
-      phoneProfileController.text=userInfoModel!.phone!;
+      phoneProfileController.text=userInfoModel!.phone??'';
       nameProfileController.text=userInfoModel!.name!;
       print('get user info');
       emit(GetUserSuccessState());
@@ -98,4 +98,40 @@ class AuthCubit extends Cubit<AuthStates>{
       emit(GetUserErrorState());
     }
   }
+
+  Future<void> loginWithGoogle()async{
+
+    await AuthRepoImplement().loginWithGoogle().then((value) async{
+      await loginWithAccessToken(accessToken: value);
+    });
+
+   emit(GetGoogleInfoState());
+
+  }
+
+  AuthModel? googleModel;
+
+  Future <void> loginWithAccessToken({
+    required String accessToken
+  })async{
+
+    emit(LoginWithGoogleLoadingState());
+
+    var googleModel = await AuthRepoImplement().loginWithAccessToken(
+        accessToken: accessToken
+    );
+
+   if(googleModel.token != ""){
+     print('Token: ${googleModel.token}');
+     await getUserInfo();
+     emit(LoginWithGoogleSuccessState());
+   }else {
+     customToast(title: 'حدث خطا حاول مره اخري', color: Colors.red);
+     emit(LoginWithGoogleErrorState());
+   }
+
+  }
+
+
+
 }

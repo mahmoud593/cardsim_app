@@ -9,4 +9,8 @@ abstract class AuthRepo{
 
   Future<UserInfoModel> getUser();
 
+  Future<dynamic> loginWithGoogle();
+
+  Future<AuthModel> loginWithAccessToken({required String accessToken});
+
 }

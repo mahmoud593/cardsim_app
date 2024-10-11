@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/api_handle/urls.dart';
 import 'package:games_app/features/auth/data/auth_repo/auth_repo.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepoImplement implements AuthRepo{
 
@@ -93,6 +96,53 @@ class AuthRepoImplement implements AuthRepo{
     userInfoModel=UserInfoModel.fromJson(response);
     print('Get user info: ${userInfoModel.toString()}');
     return userInfoModel??UserInfoModel();
+  }
+
+  @override
+  Future<dynamic> loginWithGoogle() async{
+      try {
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+        final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+
+        var user =await FirebaseAuth.instance.signInWithCredential(credential);
+
+        print(user.user!.email);
+
+        return googleAuth?.accessToken;
+      } on Exception catch (e) {
+        print('exception->$e');
+      }
+    }
+
+  @override
+  Future <AuthModel> loginWithAccessToken({required String accessToken }) async{
+
+    AuthModel authModel=AuthModel();
+
+    var parameter = {
+      "access_token" : accessToken
+    };
+
+   var response = await httpHelper.callService(
+        url: UrlConstants.loginWithGoogleUrl,
+        responseType: ResponseType.post,
+        authorization: false,
+        parameter:parameter,
+    );
+
+    authModel =AuthModel.fromJson(response);
+    UserDataFromStorage.setUserTokenFromStorage(authModel.token!);
+
+    print('login with google: ${authModel.toString()}');
+
+   return authModel??AuthModel();
+
   }
 
 

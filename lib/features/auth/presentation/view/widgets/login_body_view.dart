@@ -24,7 +24,7 @@ class LoginBodyView extends StatelessWidget {
     builder: (context, state) {
       var cubit=AuthCubit.get(context);
       return ModalProgressHUD(
-        inAsyncCall: state is LoginLoadingState,
+        inAsyncCall: state is LoginLoadingState || state is LoginWithGoogleLoadingState,
         progressIndicator: const CupertinoActivityIndicator(),
         child: Form(
           key: cubit.loginKey,

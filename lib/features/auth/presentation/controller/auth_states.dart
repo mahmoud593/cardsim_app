@@ -13,3 +13,9 @@ class LoginErrorState extends AuthStates {}
 class GetUserLoadingState extends AuthStates {}
 class GetUserSuccessState extends AuthStates {}
 class GetUserErrorState extends AuthStates {}
+
+class LoginWithGoogleLoadingState extends AuthStates {}
+class LoginWithGoogleSuccessState extends AuthStates {}
+class LoginWithGoogleErrorState extends AuthStates {}
+
+class GetGoogleInfoState extends AuthStates {}

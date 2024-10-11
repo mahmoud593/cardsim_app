@@ -10,6 +10,8 @@ class UrlConstants {
 
   static const String searchUrl = '$baseUrl/api/companies?search=';
 
+  static const String loginWithGoogleUrl = '$baseUrl/api/login/google';
+
   static String productsUrl(int companyId) =>
       '$baseUrl/api/products/$companyId';
 }
