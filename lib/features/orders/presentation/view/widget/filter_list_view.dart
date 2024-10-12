@@ -10,8 +10,7 @@ class FilterListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
-    return BlocConsumer<OrdersCubit, OrdersStates>(
-      listener: (context, state) {},
+    return BlocBuilder<OrdersCubit, OrdersStates>(
       builder: (context, state) {
         return Wrap(
           spacing: 8.0,
@@ -33,6 +32,34 @@ class FilterListWidget extends StatelessWidget {
                   : ColorManager.darkThemeBackgroundLight,
               onSelected: (bool selected) {
                 OrdersCubit.get(context).changeCategory(category);
+                switch (OrdersCubit.get(context).selectedCategory) {
+                  case "الكل":
+                    OrdersCubit.get(context).getOrders(search: "", status: "");
+                    break;
+
+                  case "قيد التنفيذ":
+                    OrdersCubit.get(context)
+                        .getOrders(search: "", status: "processing");
+                    break;
+
+                  case "مكتمل":
+                    OrdersCubit.get(context)
+                        .getOrders(search: "", status: "completed");
+                    break;
+
+                  case "مرفوضة":
+                    OrdersCubit.get(context)
+                        .getOrders(search: "", status: "reject");
+                    break;
+
+                  case "قيد الإنتظار":
+                    OrdersCubit.get(context)
+                        .getOrders(search: "", status: "pending");
+                    break;
+                  default:
+                    OrdersCubit.get(context).getOrders(search: "", status: "");
+                    break;
+                }
               },
             );
           }).toList(),

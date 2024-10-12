@@ -7,6 +7,8 @@ import 'package:games_app/features/orders/presentation/view/widget/order_card_wi
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/custom_search_field.dart';
+import 'package:games_app/styles/widgets/loading_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
@@ -15,9 +17,7 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocConsumer<OrdersCubit, OrdersStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -27,72 +27,63 @@ class OrdersScreen extends StatelessWidget {
             ),
             centerTitle: true,
           ),
-          body: Container(
+          body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            //color: ColorManager.white,
+
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02),
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomSearchField(
+                  /// Search field
+                  CustomSearchField(
                     hintText: "ابحث عن طلبك",
                     suffixIcon: Icons.search,
+                    controller: OrdersCubit.get(context).searchController,
+                    onChanged: (value) {
+                      OrdersCubit.get(context).getOrders(search: value, status: '');
+                    },
+                    onSubmitted: (value) {
+                      OrdersCubit.get(context).getOrders(search: value, status: '');
+                    },
+                    onClear: () {
+                      OrdersCubit.get(context).getOrders(search: "", status: '');
+                    },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
 
+                  /// Filter list
                   const FilterListWidget(),
 
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
 
                   Expanded(
-                    child: ListView(
-                      children: const [
-                        // Example of order cards
-                        GameOrderCard(
-                          transactionNumber: '12345',
-                          product: 'لعبة PUBG',
-                          playerName: 'Player1',
-                          priceForOne: 0.15,
-                          totalPrice: 0.60,
-                          quantity: 4,
-                          status: 'completed',
-                          purchaseDate: '2024-10-06',
-                        ),
-                        GameOrderCard(
-                          transactionNumber: '12346',
-                          product: 'لعبة Fortnite',
-                          playerName: 'Player2',
-                          priceForOne: 0.15,
-                          totalPrice: 0.60,
-                          quantity: 4,
-                          status: 'in_progress',
-                          purchaseDate: '2024-10-05',
-                        ),
-                        GameOrderCard(
-                          transactionNumber: '12347',
-                          product: 'لعبة FIFA',
-                          playerName: 'Player3',
-                          priceForOne: 0.15,
-                          totalPrice: 0.60,
-                          quantity: 4,
-                          status: 'pending',
-                          purchaseDate: '2024-10-04',
-                        ),
-                        GameOrderCard(
-                          transactionNumber: '12348',
-                          product: 'لعبة Apex Legends',
-                          playerName: 'Player4',
-                          priceForOne: 0.15,
-                          totalPrice: 0.60,
-                          quantity: 4,
-                          status: 'reject',
-                          rejectReason: "لم يتم الانتهاء من العملية",
-                          purchaseDate: '2024-10-03',
-                        ),
-                      ],
+                    child: ModalProgressHUD(
+                      inAsyncCall: state is GetOrdersLoadingState,
+                      progressIndicator: const LoadingAnimationWidget(),
+                      color: Colors.transparent,
+                      child: state is GetOrdersLoadingState? Container():ListView.builder(
+                        itemCount: OrdersCubit.get(context).ordersModel.orders.length,
+                          itemBuilder: (context, index){
+                            return OrdersCubit.get(context).ordersModel.orders.isNotEmpty ? GameOrderCard(
+                              transactionNumber: OrdersCubit.get(context).ordersModel.orders[index].id.toString(),
+                              product: OrdersCubit.get(context).ordersModel.orders[index].productName,
+                              playerName: OrdersCubit.get(context).ordersModel.orders[index].field.name,
+                              priceForOne: OrdersCubit.get(context).ordersModel.orders[index].productPrice,
+                              totalPrice: OrdersCubit.get(context).ordersModel.orders[index].orderTotal,
+                              quantity: OrdersCubit.get(context).ordersModel.orders[index].quantity,
+                              status: OrdersCubit.get(context).ordersModel.orders[index].status,
+                              purchaseDate: OrdersCubit.get(context).ordersModel.orders[index].createdAt,
+                            ) : Center(
+                              child: Text(
+                                'لايوجد بيانات لعرضها',
+                                style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),
+                              ),
+                            );
+                          },
+                      ),
                     ),
                   ),
 
