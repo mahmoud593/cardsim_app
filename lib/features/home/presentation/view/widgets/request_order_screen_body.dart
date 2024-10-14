@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:games_app/features/home/presentation/view/widgets/notes_list_view_item.dart';
 import 'package:games_app/features/home/presentation/view/widgets/player_id_search_section.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_button.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_grid_view.dart';
@@ -22,6 +21,9 @@ class RequestOrderScreenBody extends StatefulWidget {
 class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
   int? selectedProductIndex = 0;
   final TextEditingController _amountController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +59,11 @@ class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
                   if (state.products[selectedProductIndex!].field != null)
                     PlayerIdSearchSection(
                       productsEntity: state.products[selectedProductIndex!],
+                      formKey: _formKey,
                     ),
                 ],
                 const SizedBox(height: 32),
-                const RequestOrderButton(),
+                RequestOrderButton(formKey: _formKey,),
               ],
             ),
           );
@@ -77,6 +80,3 @@ class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
     super.dispose();
   }
 }
-
-
-
