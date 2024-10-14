@@ -10,6 +10,7 @@ import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart'
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/home/data/repos/home_repo_imp.dart';
+import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/features/level_structure/presentation/view/level_structure_screen.dart';
 import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_cubit.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeState == ThemeState.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            home: const SplashScreen(),
+            home: const HomeScreen(),
           );
         },
       ),
