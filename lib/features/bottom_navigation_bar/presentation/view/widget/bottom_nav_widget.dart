@@ -13,40 +13,39 @@ class BottomNavWidget extends StatelessWidget {
     return BlocConsumer<BottomNavCubit, BottomNavStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return AnimatedNotchBottomBar(
-          color: ColorManager.primary,
-          showBlurBottomBar: true,
-          bottomBarItems: const [
-            BottomBarItem(
-              inActiveItem: Icon(Icons.home, color: ColorManager.white),
-              activeItem: Icon(Icons.home, color: ColorManager.white),
-              itemLabelWidget: Text('الرئيسية', style: TextStyle(color: ColorManager.white)),
-            ),
-            BottomBarItem(
-              inActiveItem: Icon(Icons.shopping_cart, color: ColorManager.white),
-              activeItem: Icon(Icons.shopping_cart, color: ColorManager.white),
-              itemLabelWidget: Text('الطلبات', style: TextStyle(color: ColorManager.white)),
-            ),
-            BottomBarItem(
-              inActiveItem: Icon(Icons.wallet_outlined, color: ColorManager.white),
-              activeItem: Icon(Icons.wallet_outlined, color: ColorManager.white),
-              itemLabelWidget: Text('الرصيد', style: TextStyle(color: ColorManager.white)),
-            ),
-            BottomBarItem(
-              inActiveItem: Icon(Icons.settings, color: ColorManager.white),
-              activeItem: Icon(Icons.settings, color: ColorManager.white),
-              itemLabelWidget: Text('الإعدادات', style: TextStyle(color: ColorManager.white)),
-            ),
-
-          ],
-          showLabel: true,
-          notchColor: ColorManager.primary,
-          onTap: (index) {
-              BottomNavCubit.get(context).changeBottomNav(index);
+        return BottomNavigationBar(
+          currentIndex: BottomNavCubit.get(context).currentIndex,
+          onTap: (value) {
+            BottomNavCubit.get(context).changeBottomNav(value);
           },
-          notchBottomBarController: BottomNavCubit.get(context).notchBottomBarController,
-          kIconSize: MediaQuery.of(context).size.height * 0.024,
-          kBottomRadius: MediaQuery.of(context).size.height * 0.01,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedLabelStyle: const TextStyle(
+            color: ColorManager.primary,
+            fontWeight: FontWeight.bold,
+          ),
+          selectedItemColor: ColorManager.primary,
+          unselectedItemColor: ColorManager.lightGrey,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'الطلبات',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.wallet),
+              label: 'الرصيد',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'الإعدادات',
+            ),
+          ],
         );
       }
     );
