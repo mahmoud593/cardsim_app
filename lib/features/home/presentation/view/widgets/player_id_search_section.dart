@@ -11,32 +11,34 @@ class PlayerIdSearchSection extends StatefulWidget {
     super.key,
     required this.productsEntity,
     required this.formKey,
+    required this.idController,
   });
 
   final ProductsEntity productsEntity;
   final GlobalKey<FormState> formKey;
+  final TextEditingController idController;
 
   @override
   State<PlayerIdSearchSection> createState() => _PlayerIdSearchSectionState();
 }
 
 class _PlayerIdSearchSectionState extends State<PlayerIdSearchSection> {
-  TextEditingController idController = TextEditingController();
+  //TextEditingController idController = TextEditingController();
   bool isButtonEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    idController.addListener(() {
+    widget.idController.addListener(() {
       setState(() {
-        isButtonEnabled = idController.text.isNotEmpty;
+        isButtonEnabled = widget.idController.text.isNotEmpty;
       });
     });
   }
 
   @override
   void dispose() {
-    idController.dispose();
+    widget.idController.dispose();
     super.dispose();
   }
 
@@ -44,6 +46,7 @@ class _PlayerIdSearchSectionState extends State<PlayerIdSearchSection> {
   Widget build(BuildContext context) {
     return BlocBuilder<RequestCubit, RequestState>(
       builder: (context, state) {
+        var cubit = context.read<RequestCubit>();
         return Form(
           key: widget.formKey,
           child: Column(
@@ -72,7 +75,7 @@ class _PlayerIdSearchSectionState extends State<PlayerIdSearchSection> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      controller: idController,
+                      controller: widget.idController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'هذا الحقل مطلوب';
@@ -100,7 +103,7 @@ class _PlayerIdSearchSectionState extends State<PlayerIdSearchSection> {
                       onPressed: isButtonEnabled
                           ? () {
                               context.read<RequestCubit>().checkIdField(
-                                  idController.text,
+                                  widget.idController.text,
                                   widget.productsEntity.field!.fieldCheckType!);
                             }
                           : null,
@@ -148,9 +151,9 @@ class _PlayerIdSearchSectionState extends State<PlayerIdSearchSection> {
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   decoration: InputDecoration(
                     hintText: state is CheckFieldSuccess
-                        ? state.checkFieldEntity.result == 'success'
-                            ? state.checkFieldEntity.playerName
-                            : state.checkFieldEntity.message
+                        ? cubit.checkFieldEntity!.result == 'success'
+                            ? cubit.checkFieldEntity!.playerName
+                            : cubit.checkFieldEntity!.message
                         : '',
                     hintStyle: const TextStyle(
                       color: Colors.white,

@@ -7,6 +7,7 @@ import '../../../../core/network/api_handle/http_request_handler.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../models/categories_model.dart';
 import '../models/check_field_model.dart';
+import '../models/create_order_model.dart';
 import '../models/products_model.dart';
 
 class ApiServices {
@@ -99,4 +100,29 @@ class ApiServices {
           errorMessageModel: ErrorMessageModel.fromJson(response.data));
     }
   }
+
+  Future<CreateOrderModel> createOrder(int productId, int quantity, String field) async {
+    //print(">>>>>>>>> $productId ,,,, $quantity ,,,, $field <<<<<<<<<<");
+    var parameter = {
+      'product': productId,
+      'quantity': quantity,
+      'field': field
+    };
+
+    final response = await _dio.post(
+      UrlConstants.createOrderUrl,
+      data: parameter,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${UrlConstants.token}',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return CreateOrderModel.fromJson(response.data);
+    } else {
+      throw ServerExceptions(
+          errorMessageModel: ErrorMessageModel.fromJson(response.data));
+    }
+}
 }

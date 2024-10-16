@@ -11,8 +11,6 @@ import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/home/data/repos/home_repo_imp.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
-import 'package:games_app/features/level_structure/presentation/view/level_structure_screen.dart';
-import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:games_app/features/our_agent/presentation/cubit/our_agent_cubit.dart';
 import 'package:games_app/features/payment_history/presentation/cubit/payment_history_cubit.dart';
@@ -22,7 +20,6 @@ import 'package:games_app/firebase_options.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
 import 'features/home/data/data_source/api_services.dart';
 import 'features/home/domain/repos/home_repo.dart';
 import 'features/home/presentation/controller/categories_cubit/categories_cubit.dart';
@@ -40,7 +37,7 @@ void main() async {
   CashHelper.init();
   SharedPreferences.getInstance();
   UserDataFromStorage.getData();
-  //await HomeRepoImp(ApiServices()).getProducts(24);
+  //await HomeRepoImp(ApiServices()).createOrder(6, 1, 'test');
   runApp(const MyApp());
 }
 

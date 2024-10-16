@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:games_app/features/home/data/models/check_field_model.dart';
+import 'package:games_app/features/home/domain/entities/check_field_entity.dart';
+import 'package:games_app/features/home/domain/entities/create_order_entity.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../entities/categories_entity.dart';
@@ -13,5 +14,9 @@ abstract class HomeRepo {
 
   Future<Either<Failure, List<ProductsEntity>>> getProducts(int companyId);
 
-  Future<Either<Failure,CheckFieldModel>> checkField(String playerId , String type);
+  Future<Either<Failure, CheckFieldEntity>> checkField(
+      String playerId, String type);
+
+  Future<Either<Failure, CreateOrderEntity>> createOrder(
+      int productId, int quantity, String field);
 }

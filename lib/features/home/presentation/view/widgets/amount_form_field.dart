@@ -26,6 +26,7 @@ class _AmountFormFieldState extends State<AmountFormField> {
 
   @override
   Widget build(BuildContext context) {
+//    var cubit = ProductsCubit.get(context);
     return TextFormField(
       controller: widget.controller,
       textAlign: TextAlign.center,
