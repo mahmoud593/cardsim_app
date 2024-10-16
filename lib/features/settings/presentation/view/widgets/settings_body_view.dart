@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
@@ -16,7 +17,8 @@ class SettingsBodyView extends StatelessWidget {
     return  BlocBuilder<AuthCubit,AuthStates>(
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
-        return SingleChildScrollView(
+        return cubit.userInfoModel != null ?
+        SingleChildScrollView(
           child: Column(
             children: [
 
@@ -109,6 +111,14 @@ class SettingsBodyView extends StatelessWidget {
               ),
 
             ],
+          ),
+        ):
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            child: const CupertinoActivityIndicator(
+              color: ColorManager.primary,
+            ),
           ),
         );
       },
