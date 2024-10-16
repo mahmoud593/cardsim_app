@@ -82,21 +82,21 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           ),
           border: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: ColorManager.gray,
+              color: ColorManager.lightGrey2,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: ColorManager.gray,
+              color: ColorManager.lightGrey2,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: ColorManager.gray,
+              color: ColorManager.lightGrey2,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),
@@ -110,7 +110,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           ),
           disabledBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: ColorManager.gray,
+              color: ColorManager.lightGrey2,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).height*0.01),

@@ -13,10 +13,12 @@ class CustomSearchField extends StatelessWidget {
     this.initialValue,
     this.suffixIcon,
     this.onSubmitted,
+    this.onClear,
   });
 
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
+  final Function()? onClear;
   final String? hintText;
   final String? initialValue;
   final bool? obscureText;
@@ -45,6 +47,7 @@ class CustomSearchField extends StatelessWidget {
             IconButton(
               onPressed: () {
                 controller?.clear();
+                onClear!();
               },
               icon: const Icon(Icons.close, color: Color(0xffC9CECF)),
             ),

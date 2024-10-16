@@ -9,8 +9,8 @@ class OurAgentCubit extends Cubit<OurAgentStates> {
 
   static OurAgentCubit get(context) => BlocProvider.of(context);
 
-  void launchWhatsApp({required String phoneNumber, required String message}) async {
-    final whatsappUrl = "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}";
+  void launchWhatsApp({required String phoneNumber}) async {
+    final whatsappUrl = "https://wa.me/$phoneNumber";
 
     if (await canLaunch(whatsappUrl)) {
       await launch(whatsappUrl);
@@ -22,8 +22,8 @@ class OurAgentCubit extends Cubit<OurAgentStates> {
     emit(LaunchWhatsAppSuccessState());
   }
 
-  void launchTelegram({required String username}) async {
-    final telegramUrl = "https://t.me/$username";
+  void launchTelegram({required String phoneNumber}) async {
+    final telegramUrl = "https://t.me/$phoneNumber";
 
     if (await canLaunch(telegramUrl)) {
       await launch(telegramUrl);

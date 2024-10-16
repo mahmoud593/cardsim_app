@@ -68,7 +68,9 @@ class CallCenterScreen extends StatelessWidget {
                     children: [
                       // whatsapp
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          OurAgentCubit.get(context).launchWhatsApp(phoneNumber: "+905367247415");
+                        },
                         icon: FaIcon(FontAwesomeIcons.whatsapp, color: ColorManager.white, size: SizeConfig.height * 0.025),
                         label: Text(
                           'عن طريق واتساب',
@@ -85,7 +87,7 @@ class CallCenterScreen extends StatelessWidget {
                       // telegram
                       ElevatedButton.icon(
                         onPressed: () {
-                          OurAgentCubit.get(context).launchTelegram(username: "@mohamed_mmdouh156");
+                          OurAgentCubit.get(context).launchTelegram(phoneNumber:  "+905367247415");
                         },
                         icon: FaIcon(FontAwesomeIcons.telegram, color: ColorManager.white, size: SizeConfig.height * 0.025),
                         label: Text(

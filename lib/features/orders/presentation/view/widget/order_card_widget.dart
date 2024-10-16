@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:intl/intl.dart';
 
 class GameOrderCard extends StatelessWidget {
   final String transactionNumber;
@@ -10,7 +11,7 @@ class GameOrderCard extends StatelessWidget {
   final double totalPrice;
   final int quantity;
   final String status;
-  final String purchaseDate;
+  final DateTime purchaseDate;
   final String? rejectReason;
 
   const GameOrderCard({
@@ -100,8 +101,8 @@ class GameOrderCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    'تاريخ الشراء: $purchaseDate',
-                    style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
+                    'تاريخ الشراء: ${DateFormat('yyyy-MM-dd h:mm a').format(purchaseDate)}',
+                    style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey, fontSize: 12),
                   ),
                 ),
               ],
@@ -126,7 +127,7 @@ class GameOrderCard extends StatelessWidget {
     switch (status) {
       case 'completed':
         return ColorManager.success;
-      case 'in_progress':
+      case 'processing':
         return ColorManager.warning;
       case 'pending':
         return ColorManager.primary;
@@ -141,7 +142,7 @@ class GameOrderCard extends StatelessWidget {
     switch (status) {
       case 'completed':
         return 'مكتمل';
-      case 'in_progress':
+      case 'processing':
         return 'قيد التنفيذ';
       case 'pending':
         return 'قيد الإنتظار';
