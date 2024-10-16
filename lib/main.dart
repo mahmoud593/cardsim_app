@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeState == ThemeState.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            home: const HomeScreen(),
+            home: const SplashScreen(),
           );
         },
       ),

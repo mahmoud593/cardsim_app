@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
 import 'package:games_app/features/splash/preentation/view/widgets/logo_image.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
@@ -52,6 +54,8 @@ class _SplashScreenState extends State<SplashBodyView>
 
 void timeDelay({required BuildContext context}) {
   Future.delayed(const Duration(seconds: 2), () async {
+     UserDataFromStorage.userTokenFromStorage != "" ?
+    customPushAndRemoveUntil(context, const BottomNavigationScreen()):
     customPushAndRemoveUntil(context, const LoginScreen());
   });
 }
