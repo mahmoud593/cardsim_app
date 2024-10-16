@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
 import 'package:meta/meta.dart';
 
@@ -9,7 +11,10 @@ part 'products_state.dart';
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit(this.homeRepo) : super(ProductsInitial());
 
+  static ProductsCubit get(context) => BlocProvider.of(context);
+
   final HomeRepo homeRepo;
+  //final TextEditingController amountController = TextEditingController();
 
   Future<void> getProducts(int companyId) async {
     emit(ProductsLoading());

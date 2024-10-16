@@ -49,7 +49,7 @@ class OffersGridViewItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          companiesEntity.name,
+                          companiesEntity.name /*+' '+companiesEntity.id.toString()*/,
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
