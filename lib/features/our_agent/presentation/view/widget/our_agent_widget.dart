@@ -19,8 +19,10 @@ class AgentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
+      color: isLight? ColorManager.primary: ColorManager.darkThemeBackgroundLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),

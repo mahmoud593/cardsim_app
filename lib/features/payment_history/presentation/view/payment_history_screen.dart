@@ -11,6 +11,7 @@ class PaymentHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocConsumer<PaymentHistoryCubit, PaymentHistoryStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -24,9 +25,9 @@ class PaymentHistoryScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
-                color: ColorManager.black,
+                color: isLight == true ? ColorManager.black: ColorManager.white,
               ),
             ),
             centerTitle: true,
@@ -34,9 +35,8 @@ class PaymentHistoryScreen extends StatelessWidget {
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: ColorManager.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02, vertical: MediaQuery.of(context).size.height * 0.02),
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

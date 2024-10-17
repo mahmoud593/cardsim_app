@@ -38,6 +38,8 @@ class BalanceScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
+                  SizedBox(height: SizeConfig.height * 0.01,),
+
                   const CustomSearchField(
                     hintText: "البحث...",
                     suffixIcon: Icons.search,

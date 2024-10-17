@@ -11,6 +11,7 @@ class OurAgentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return BlocConsumer<OurAgentCubit, OurAgentStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -24,19 +25,18 @@ class OurAgentScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
-                color: ColorManager.black,
+                color: isLight ? ColorManager.black : ColorManager.white,
               ),
             ),
             centerTitle: true,
           ),
-          body: Container(
+          body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: ColorManager.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02, vertical: MediaQuery.of(context).size.height * 0.02),
               child:  GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
