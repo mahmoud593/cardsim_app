@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:games_app/features/our_agent/presentation/cubit/our_agent_cubit.dart';
 import 'package:games_app/features/our_agent/presentation/cubit/our_agent_state.dart';
-import 'package:games_app/features/our_agent/presentation/view/widget/our_agent_widget.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
-
 import '../../../../core/helper/app_size_config.dart';
 
 class CallCenterScreen extends StatelessWidget {
@@ -14,8 +12,8 @@ class CallCenterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OurAgentCubit, OurAgentStates>(
-      listener: (context, state) {},
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+    return BlocBuilder<OurAgentCubit, OurAgentStates>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -27,17 +25,16 @@ class CallCenterScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
-                color: ColorManager.black,
+                color: isLight ? ColorManager.black: ColorManager.white,
               ),
             ),
             centerTitle: true,
           ),
-          body: Container(
+          body: SizedBox(
             height: SizeConfig.height,
             width: SizeConfig.width,
-            color: ColorManager.white,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: SizeConfig.height * 0.02),
               child:  Column(
@@ -45,7 +42,7 @@ class CallCenterScreen extends StatelessWidget {
 
 
                   Image.asset(
-                    'assets/images/call_center.jpg',
+                    'assets/images/call_center.png',
                     width: SizeConfig.width,
                     height: SizeConfig.height * 0.4,
                   ),

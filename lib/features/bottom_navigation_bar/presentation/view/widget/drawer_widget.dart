@@ -14,15 +14,13 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BottomNavCubit, BottomNavStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+    return BlocBuilder<BottomNavCubit, BottomNavStates>(
       builder: (context, state) {
         return Container(
           width: MediaQuery.of(context).size.width * 0.6,
           height: MediaQuery.of(context).size.height,
-          color: ColorManager.primary,
+          color: isLight ? ColorManager.primary : ColorManager.darkThemeBackground,
           child: Column(
             children: [
               SizedBox(

@@ -29,8 +29,10 @@ class GameOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
+      color: isLight ? ColorManager.white : ColorManager.darkThemeBackgroundLight,
       margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01, horizontal: MediaQuery.of(context).size.height * 0.01),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.012)),
       child: Padding(

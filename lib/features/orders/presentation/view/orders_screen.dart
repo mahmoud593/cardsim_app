@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:games_app/features/orders/presentation/cubit/orders_state.dart';
 import 'package:games_app/features/orders/presentation/view/widget/filter_list_view.dart';
@@ -37,6 +38,9 @@ class OrdersScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  SizedBox(height: SizeConfig.height * 0.01,),
+
                   /// Search field
                   CustomSearchField(
                     hintText: "ابحث عن طلبك",

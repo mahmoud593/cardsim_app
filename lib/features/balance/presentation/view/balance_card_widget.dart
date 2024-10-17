@@ -24,8 +24,10 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
+      color: isLight? ColorManager.primary: ColorManager.darkThemeBackgroundLight,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.height * 0.01)),
       child: Padding(
         padding: EdgeInsets.all(SizeConfig.height * 0.015),
