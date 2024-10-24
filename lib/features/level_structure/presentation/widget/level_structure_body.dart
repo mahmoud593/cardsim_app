@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/constants/constants.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/level_structure/presentation/widget/level_structure_widget.dart';
 import 'package:games_app/features/notification/presentation/widget/notification_item_widget.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
@@ -25,7 +26,9 @@ class LevelStructureBody extends StatelessWidget {
                     horizontal: MediaQuery.sizeOf(context).height*.02,
                   ),
                   child: Text('${index+1}- ${Constants.levelTitles[index]}',
-                    style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),
+                    style: TextStyles.textStyle18Medium.copyWith(
+                        color:  UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black
+                    ),
                   ),
                 );
               },

@@ -37,6 +37,9 @@ class OrdersScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+
                   /// Search field
                   CustomSearchField(
                     hintText: "ابحث عن طلبك",

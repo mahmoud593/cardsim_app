@@ -7,6 +7,7 @@ import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/services/service_locator.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/coupons/presentation/cubit/coupons_cubit.dart';
@@ -81,9 +82,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: getApplicationTheme(context),
             darkTheme: getDarkTheme(context),
-            themeMode: themeState == ThemeState.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
+            themeMode: UserDataFromStorage.themeIsDarkMode
+                ? ThemeMode.dark
+                : ThemeMode.light,
             home: const SplashScreen(),
           );
         },

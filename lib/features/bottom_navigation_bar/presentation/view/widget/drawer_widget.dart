@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/widget/drawer_ltem.dart';
 import 'package:games_app/features/call_center/presentation/view/call_center_screen.dart';
 import 'package:games_app/features/coupons/presentation/view/coupons_screen.dart';
+import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/our_agent/presentation/view/our_agent_screen.dart';
 import 'package:games_app/features/payment_history/presentation/view/payment_history_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
@@ -42,6 +44,15 @@ class DrawerWidget extends StatelessWidget {
                   BottomNavCubit.get(context).changeBottomNav(1);
                 },
               ),
+
+              DrawerItem(
+                icon: Icons.notifications_active,
+                title: 'الاشعارات',
+                onTap: () {
+                  customPushNavigator(context, const NotificationScreen());
+                },
+              ),
+
               DrawerItem(
                 icon: Icons.wallet,
                 title: 'الرصيد',
@@ -64,6 +75,7 @@ class DrawerWidget extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const CouponsScreen(),));
                 },
               ),
+
 
               DrawerItem(
                 icon: Icons.people,
