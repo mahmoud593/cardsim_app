@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
@@ -88,6 +89,9 @@ class AuthCubit extends Cubit<AuthStates>{
     emit(GetUserLoadingState());
     userInfoModel= await AuthRepoImplement().getUser();
     if(userInfoModel != null){
+      UserDataFromStorage.setFullName(userInfoModel!.name!);
+      UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
+      UserDataFromStorage.setEmail(userInfoModel!.email!);
       emailProfileController.text=userInfoModel!.email!;
       phoneProfileController.text=userInfoModel!.phone??'';
       nameProfileController.text=userInfoModel!.name!;

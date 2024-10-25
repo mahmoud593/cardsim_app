@@ -68,7 +68,7 @@ class SettingsBodyView extends StatelessWidget {
                     return 'كلمة المرور مطلوبه';
                   }
                 },
-                keyboardType: TextInputType.emailAddress ,
+                keyboardType: TextInputType.phone ,
                 fillColor: ColorManager.gray ,
                 textInputAction: TextInputAction.done,
                 hintText: 'الهاتف',

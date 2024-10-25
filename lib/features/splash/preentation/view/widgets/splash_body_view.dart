@@ -20,6 +20,7 @@ class _SplashScreenState extends State<SplashBodyView>
 
   @override
   void initState() {
+    UserDataFromStorage.getData();
     timeDelay(context: context);
     super.initState();
     animationController =
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashBodyView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.primary,
+      backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +56,7 @@ class _SplashScreenState extends State<SplashBodyView>
 void timeDelay({required BuildContext context}) {
   Future.delayed(const Duration(seconds: 2), () async {
      UserDataFromStorage.userTokenFromStorage != "" ?
-    customPushAndRemoveUntil(context, const BottomNavigationScreen()):
+    customPushAndRemoveUntil(context, const LoginScreen()):
     customPushAndRemoveUntil(context, const LoginScreen());
   });
 }

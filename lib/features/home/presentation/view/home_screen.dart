@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/home/presentation/view/widgets/home_screen_body.dart';
+import 'package:games_app/features/level_structure/presentation/view/level_structure_screen.dart';
+import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
+import 'package:games_app/styles/assets/asset_manager.dart';
 
 import '../../../../styles/text_styles/text_styles.dart';
 import '../../../bottom_navigation_bar/presentation/view/widget/drawer_widget.dart';
@@ -17,10 +23,19 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         titleSpacing: 0.0,
         title: Text(
-          'مساء الخير, Mazen Gamal !',
+          ' مساء الخير, ${UserDataFromStorage.fullNameFromStorage} !',
           style: TextStyles.textStyle18Bold.copyWith(),
         ),
         actions: [
+          GestureDetector(
+            onTap: (){
+              customPushNavigator(context, const LevelStructureScreen());
+            },
+            child: Image(
+              height: MediaQuery.of(context).size.height * 0.04,
+              image: const AssetImage('assets/images/rank.png'),
+            ),
+          ),
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return IconButton(
