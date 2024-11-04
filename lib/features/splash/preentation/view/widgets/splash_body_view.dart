@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashBodyView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.primary,
+      backgroundColor: Theme.of(context).primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

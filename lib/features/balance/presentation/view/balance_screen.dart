@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_state.dart';
 import 'package:games_app/features/balance/presentation/view/balance_card_widget.dart';
@@ -10,6 +11,7 @@ import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/custom_search_field.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
+import 'package:games_app/styles/widgets/default_text_field.dart';
 
 class BalanceScreen extends StatelessWidget {
   const BalanceScreen({super.key});
@@ -61,7 +63,7 @@ class BalanceScreen extends StatelessWidget {
                         ),
                       ),
                       DefaultButton(
-                        onPressed: (){},
+                        onPressed: ()=>showCustomCodeDialog(context),
                         borderRadius: BorderRadius.circular(SizeConfig.height*0.01),
                         text: "الشحن بقسيمة",
                         haveIcon: true,
@@ -107,4 +109,46 @@ class BalanceScreen extends StatelessWidget {
       },
     );
   }
+}
+
+
+void showCustomCodeDialog(BuildContext context) {
+
+  TextEditingController customCodeController = TextEditingController();
+
+  showDialog(context: context, builder: (context){
+    return AlertDialog(
+     backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.lightGrey : ColorManager.darkThemeBackground,
+      title: Text('إدخال القسيمة', style: TextStyles.textStyle18Bold.copyWith(
+        color: UserDataFromStorage.themeIsDarkMode ? ColorManager.black : ColorManager.white
+      ),),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DefaultTextField(
+              isCode: true,
+              controller: customCodeController,
+              hintText: 'xxxx-xxxx-xxxx-xxxx',
+              validator: (value){
+                return '';
+              },
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              fillColor: ColorManager.gray
+          ),
+
+          SizedBox( height: MediaQuery.of(context).size.height*.02, ),
+
+          DefaultButton(
+              backgroundColor: ColorManager.primary,
+              onPressed: (){},
+              borderRadius: BorderRadius.circular(10.0),
+              text: 'التحقق من القسيمه'
+          ),
+        ],
+      )
+    );
+  });
+
+
 }

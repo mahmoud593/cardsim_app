@@ -38,8 +38,8 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   ServiceLocator().setup();
   CashHelper.init();
-  SharedPreferences.getInstance();
-  UserDataFromStorage.getData();
+  await SharedPreferences.getInstance();
+  await UserDataFromStorage.getData();
   //await HomeRepoImp(ApiServices()).createOrder(6, 1, 'test');
   runApp(const MyApp());
 }

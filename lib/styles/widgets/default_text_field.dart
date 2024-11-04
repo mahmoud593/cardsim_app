@@ -12,6 +12,7 @@ class DefaultTextField extends StatefulWidget {
   bool isPassword;
   bool viewPassword;
   bool? enable;
+  bool? isCode;
   IconData? suffixIcon;
   int? maxLines;
   Color? fillColor;
@@ -28,6 +29,7 @@ class DefaultTextField extends StatefulWidget {
      this.viewPassword=true,
     this.suffixIcon,
     this.enable = true,
+    this.isCode = false,
     this.maxLines = 1,
      required this.fillColor,
   }) : super(key: key);
@@ -41,6 +43,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
+        maxLength: widget.isCode == true ? 16 : null,
         textDirection: TextDirection.ltr,
         enabled: widget.enable,
         style: TextStyle(
