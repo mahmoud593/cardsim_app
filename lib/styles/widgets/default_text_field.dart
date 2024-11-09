@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:get/get.dart';
 
 
 class DefaultTextField extends StatefulWidget {
@@ -16,6 +18,7 @@ class DefaultTextField extends StatefulWidget {
   IconData? suffixIcon;
   int? maxLines;
   Color? fillColor;
+  ValueChanged<String>? onChanged;
 
    DefaultTextField({
     Key? key,
@@ -30,6 +33,7 @@ class DefaultTextField extends StatefulWidget {
     this.suffixIcon,
     this.enable = true,
     this.isCode = false,
+    this.onChanged ,
     this.maxLines = 1,
      required this.fillColor,
   }) : super(key: key);
@@ -48,8 +52,9 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         enabled: widget.enable,
         style: TextStyle(
           fontSize: MediaQuery.sizeOf(context).height*0.02,
-          color: ColorManager.black,
+          color: UserDataFromStorage.themeIsDarkMode? ColorManager.primary:ColorManager.black,
         ),
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
           filled:  true,
           fillColor: widget.fillColor,

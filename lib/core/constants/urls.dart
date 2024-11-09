@@ -12,9 +12,27 @@ class UrlConstants {
 
   static const String loginWithGoogleUrl = '$baseUrl/api/login/google';
 
+  static const String logoutUrl = '$baseUrl/api/logout';
+
+  static const String forgetPasswordUrl = '$baseUrl/api/forget-password';
+
   static const String checkIdFieldUrl = '$baseUrl/api/orders/check-field';
 
   static const String createOrderUrl = '$baseUrl/api/orders/create';
+
+  static const String getPaymentMethodUrl = '$baseUrl/api/payment-methods';
+
+  static const String getCurrencyUrl = '$baseUrl/api/currencies';
+
+  static const String getAllTransactionUrl = '$baseUrl/api/transactions';
+
+  static const String createCustomCode = '$baseUrl/api/voucher-charge';
+
+  static const String createTransaction = '$baseUrl/api/new-transaction';
+
+  static const String getAllClients = '$baseUrl/api/dist/clients';
+
+  static const String addClient = '$baseUrl/api/dist/clients/create';
 
   static String productsUrl(int companyId) =>
       '$baseUrl/api/products/$companyId';

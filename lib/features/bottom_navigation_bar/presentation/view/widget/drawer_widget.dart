@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/widget/drawer_ltem.dart';
 import 'package:games_app/features/call_center/presentation/view/call_center_screen.dart';
+import 'package:games_app/features/clients/presentation/view/clients_screen.dart';
 import 'package:games_app/features/coupons/presentation/view/coupons_screen.dart';
 import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/our_agent/presentation/view/our_agent_screen.dart';
@@ -67,6 +71,14 @@ class DrawerWidget extends StatelessWidget {
               ),
 
               DrawerItem(
+                icon: Icons.people_alt,
+                title: 'العملاء',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientsScreen(),));
+                },
+              ),
+
+              DrawerItem(
                 icon: Icons.card_membership,
                 title: 'القسائم',
                 onTap: () {
@@ -92,7 +104,17 @@ class DrawerWidget extends StatelessWidget {
               DrawerItem(
                 icon: Icons.settings,
                 title: 'الإعدادات',
-                onTap: () {},
+                onTap: () {
+                  BottomNavCubit.get(context).changeBottomNav(3);
+                },
+              ),
+              DrawerItem(
+                icon: Icons.logout,
+                title: 'تسجيل الخروج',
+                onTap: () {
+                  AuthCubit.get(context).logout();
+                  customPushAndRemoveUntil(context, const LoginScreen());
+                },
               ),
             ],
           ),

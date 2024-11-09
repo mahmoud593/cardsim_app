@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/balance/presentation/view/view_transication_image.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 
@@ -8,7 +11,7 @@ class BalanceCard extends StatelessWidget {
   final String proofOfPayment;
   final int transactionId;
   final String paymentMethod;
-  final double amount;
+  final String amount;
   final String status;
   final String transactionDate;
 
@@ -39,7 +42,7 @@ class BalanceCard extends StatelessWidget {
               children: [
                 Text(
                   'رقم العملية: $transactionId',
-                  style: TextStyles.textStyle14Medium,
+                  style: TextStyles.textStyle14Medium
                 ),
               ],
             ),
@@ -51,11 +54,15 @@ class BalanceCard extends StatelessWidget {
               children: [
                 Text(
                   'وسيلة الدفع: $paymentMethod',
-                  style: TextStyles.textStyle14Medium,
+                  style: TextStyles.textStyle14Medium.copyWith(
+                      color:  ColorManager.white
+                  ),
                 ),
                 Text(
-                  'المبلغ: \$${amount.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.success),
+                  'المبلغ: \$${amount}',
+                  style: TextStyles.textStyle14Medium.copyWith(
+                      color: UserDataFromStorage.themeIsDarkMode? ColorManager.success:  ColorManager.secondPrimary
+                  ),
                 ),
               ],
             ),
@@ -80,14 +87,18 @@ class BalanceCard extends StatelessWidget {
                 ),
                 Text(
                   'بتاريخ: $transactionDate',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
+                  style: TextStyles.textStyle14Medium.copyWith(
+                     color: UserDataFromStorage.themeIsDarkMode? ColorManager.lightGrey:  ColorManager.secondPrimary
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             // Button to navigate to the payment proof screen
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                customPushNavigator(context, ViewTransicationImage(image:proofOfPayment));
+              },
               child: const Text('عرض إثبات الدفع'),
             ),
           ],
@@ -103,7 +114,7 @@ class BalanceCard extends StatelessWidget {
       case 'in_progress':
         return ColorManager.warning;
       case 'pending':
-        return ColorManager.primary;
+        return UserDataFromStorage.themeIsDarkMode? ColorManager.primary: ColorManager.secondPrimary;
       case 'reject':
         return ColorManager.error;
       default:
