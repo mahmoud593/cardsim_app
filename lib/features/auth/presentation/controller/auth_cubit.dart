@@ -134,6 +134,7 @@ class AuthCubit extends Cubit<AuthStates>{
      emit(LoginWithGoogleSuccessState());
    }else {
      customToast(title: 'حدث خطا حاول مره اخري', color: Colors.red);
+
      emit(LoginWithGoogleErrorState());
    }
 
