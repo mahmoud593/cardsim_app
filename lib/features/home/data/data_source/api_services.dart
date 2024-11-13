@@ -3,6 +3,7 @@ import 'package:games_app/features/home/data/models/companies_model.dart';
 
 import '../../../../core/constants/urls.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../../core/local/shared_preference/shared_preference.dart';
 import '../../../../core/network/api_handle/http_request_handler.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../models/categories_model.dart';
@@ -20,11 +21,12 @@ class ApiServices {
       UrlConstants.companiesUrl,
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${UrlConstants.token}',
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
         },
       ),
     );
     if (response.statusCode == 200) {
+     print('PROFILE API SERVICES>>>>>>>>>Bearer ${UserDataFromStorage.userTokenFromStorage}');
       return List<CompaniesModel>.from(
         (response.data['data'] as List).map(
           (e) => CompaniesModel.fromJson(e),
@@ -41,7 +43,7 @@ class ApiServices {
       UrlConstants.categoriesUrl,
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${UrlConstants.token}',
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
         },
       ),
     );
@@ -62,7 +64,7 @@ class ApiServices {
       UrlConstants.productsUrl(companyId),
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${UrlConstants.token}',
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
         },
       ),
     );
@@ -89,7 +91,7 @@ class ApiServices {
       data: parameter,
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${UrlConstants.token}',
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
         },
       ),
     );
@@ -114,7 +116,7 @@ class ApiServices {
       data: parameter,
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${UrlConstants.token}',
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
         },
       ),
     );

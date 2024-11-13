@@ -5,8 +5,10 @@ import 'package:games_app/styles/colors/color_manager.dart';
 import '../../../../../styles/text_styles/text_styles.dart';
 
 class DealingsListViewItem extends StatelessWidget {
-  const DealingsListViewItem({super.key});
+  const DealingsListViewItem({super.key, required this.value, required this.title});
 
+  final String value ;
+  final String title ;
   @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
@@ -23,16 +25,16 @@ class DealingsListViewItem extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 12),
-        title: const Text(
-          '0',
-          style: TextStyle(
+        title:  Text(
+          value,
+          style: const TextStyle(
             fontSize: 25,
             height: 1,
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle:
-            Text('طلبات قيد الانتظار', style: TextStyles.textStyle16Medium),
+            Text(title, style: TextStyles.textStyle16Medium),
         trailing: IconButton(
           icon: const Icon(Icons.more_vert),
           onPressed: () {},
