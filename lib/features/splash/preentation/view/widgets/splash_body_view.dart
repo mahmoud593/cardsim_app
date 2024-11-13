@@ -20,6 +20,7 @@ class _SplashScreenState extends State<SplashBodyView>
 
   @override
   void initState() {
+    UserDataFromStorage.getData();
     timeDelay(context: context);
     super.initState();
     animationController =
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashBodyView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.primary,
+      backgroundColor: Theme.of(context).primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

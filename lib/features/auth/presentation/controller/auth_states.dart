@@ -10,6 +10,14 @@ class LoginLoadingState extends AuthStates {}
 class LoginSuccessState extends AuthStates {}
 class LoginErrorState extends AuthStates {}
 
+class LogoutLoadingState extends AuthStates {}
+class LogoutSuccessState extends AuthStates {}
+class LogoutErrorState extends AuthStates {}
+
+class ForgetPasswordLoadingState extends AuthStates {}
+class ForgetPasswordSuccessState extends AuthStates {}
+class ForgetPasswordErrorState extends AuthStates {}
+
 class GetUserLoadingState extends AuthStates {}
 class GetUserSuccessState extends AuthStates {}
 class GetUserErrorState extends AuthStates {}

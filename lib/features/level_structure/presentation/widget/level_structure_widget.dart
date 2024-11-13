@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/constants/constants.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 
@@ -24,16 +25,24 @@ class LevelStructureWidget extends StatelessWidget {
                   Image(
                     height:  MediaQuery.sizeOf(context).height*.1,
                     width: MediaQuery.sizeOf(context).height*.1,
-                    image: AssetImage('assets/images/rank.png'),
+                    image: const AssetImage('assets/images/rank.png'),
                   ),
                   SizedBox( height: MediaQuery.sizeOf(context).height*.03, ),
-                  Text('المستوي : Vip 1',style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),),
+                  Text('المستوي : Vip 1',style: TextStyles.textStyle18Medium.copyWith(
+                      color:  UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black
+                  ),),
                   SizedBox( height: MediaQuery.sizeOf(context).height*.022, ),
-                  Text('الهدف : 1000',style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),),
+                  Text('الهدف : 1000',style: TextStyles.textStyle18Medium.copyWith(
+                      color:  UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black
+                  ),),
                   SizedBox( height: MediaQuery.sizeOf(context).height*.022, ),
-                  Text('نقطه الامان : 900',style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),),
+                  Text('نقطه الامان : 900',style: TextStyles.textStyle18Medium.copyWith(
+                      color:  UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black
+                  ),),
                   SizedBox( height: MediaQuery.sizeOf(context).height*.022, ),
-                  Text('الخصم بنسبه % : 0',style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),),
+                  Text('الخصم بنسبه % : 0',style: TextStyles.textStyle18Medium.copyWith(
+                      color:  UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black
+                  ),),
                 ],
               ),
             ],
@@ -51,7 +60,7 @@ class LevelStructureWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: ColorManager.primary.withOpacity(.8),
+          color: UserDataFromStorage.themeIsDarkMode?  ColorManager.darkThemeBackgroundLight:ColorManager.primary.withOpacity(.8),
         ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,14 +69,14 @@ class LevelStructureWidget extends StatelessWidget {
               Image(
                 height:  MediaQuery.sizeOf(context).height*.1,
                 width: MediaQuery.sizeOf(context).height*.1,
-                image: AssetImage('assets/images/rank.png'),
+                image: const AssetImage('assets/images/rank.png'),
               ),
 
               SizedBox( height: MediaQuery.sizeOf(context).height*.02, ),
 
               Text("Vip ${index+1}",
                 style: TextStyles.textStyle24Bold.copyWith(
-                    color: ColorManager.white,
+                    color: UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.white,
                     fontSize: MediaQuery.sizeOf(context).height*.025
                 ),),
 

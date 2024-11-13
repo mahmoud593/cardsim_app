@@ -6,7 +6,7 @@ class UserDataFromStorage {
   static late bool firstTime;
   static late bool userIsGuest;
   static late bool userIsLogin;
-  static late bool themeIsDarkMode;
+  static late bool themeIsDarkMode=false;
   static late bool onBoardingIsOpen;
   static late String userPhoneTypeFromStorage;
   static String languageCodeFromStorage='ar';

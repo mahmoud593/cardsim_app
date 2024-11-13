@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/app_logo.dart';
@@ -36,8 +37,8 @@ class RegisterViewBody extends StatelessWidget {
 
                 Container(
                     padding: EdgeInsets.zero,
-                    decoration: const BoxDecoration(
-                      color: ColorManager.primary,
+                    decoration:  BoxDecoration(
+                      color: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.primary,
                     ),
                     height: MediaQuery.sizeOf(context).height*.17,
                     child: Column(
@@ -54,8 +55,8 @@ class RegisterViewBody extends StatelessWidget {
                         horizontal: MediaQuery.of(context).size.width*.05,
                         vertical: MediaQuery.of(context).size.height*.02
                     ),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
+                    decoration:  BoxDecoration(
+                        color: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackgroundLight : Colors.white,
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(35),
                           topLeft: Radius.circular(35),

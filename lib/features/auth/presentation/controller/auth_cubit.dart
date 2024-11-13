@@ -2,10 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/constants/urls.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 
 class AuthCubit extends Cubit<AuthStates>{
@@ -88,6 +92,9 @@ class AuthCubit extends Cubit<AuthStates>{
     emit(GetUserLoadingState());
     userInfoModel= await AuthRepoImplement().getUser();
     if(userInfoModel != null){
+      UserDataFromStorage.setFullName(userInfoModel!.name!);
+      UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
+      UserDataFromStorage.setEmail(userInfoModel!.email!);
       emailProfileController.text=userInfoModel!.email!;
       phoneProfileController.text=userInfoModel!.phone??'';
       nameProfileController.text=userInfoModel!.name!;
@@ -127,11 +134,71 @@ class AuthCubit extends Cubit<AuthStates>{
      emit(LoginWithGoogleSuccessState());
    }else {
      customToast(title: 'حدث خطا حاول مره اخري', color: Colors.red);
+
      emit(LoginWithGoogleErrorState());
    }
 
   }
 
+
+  HttpHelper httpHelper = HttpHelper();
+
+  Future <void> logout()async{
+
+    emit(LogoutLoadingState());
+
+     try{
+       var response =  await httpHelper.callService(
+         responseType: ResponseType.post,
+         url: UrlConstants.logoutUrl,
+         authorization: true,
+       );
+       UserDataFromStorage.setUserTokenFromStorage('');
+       print(UserDataFromStorage.userTokenFromStorage);
+
+       print('Logout Successfully');
+       emit(LogoutSuccessState());
+     }catch(error){
+       print('error in logout is $error');
+       emit(LogoutErrorState());
+     }
+
+
+  }
+
+
+  Future <void> forgetPassword({
+   required String email
+  })async{
+
+    emit(ForgetPasswordLoadingState());
+
+    try{
+      var response =  await httpHelper.callService(
+        responseType: ResponseType.post,
+        url: UrlConstants.forgetPasswordUrl,
+        authorization: true,
+        parameter: {
+          'email':email,
+        }
+      );
+
+      if(response['message'] == 'User not Found'){
+        customToast(title: 'البريد الالكتروني غير موجود', color:ColorManager.error);
+      }else if(response['message'] == 'Password reset link sent to your email.'){
+        customToast(title: 'تم ارسال رابط تغيير كلمه السر', color:ColorManager.primary);
+      }else{
+        customToast(title: 'حدث خطا حاول مره اخري', color: Colors.red);
+      }
+
+      emit(ForgetPasswordSuccessState());
+    }catch(error){
+      print('error in forget password is $error');
+      emit(ForgetPasswordErrorState());
+    }
+
+
+  }
 
 
 }

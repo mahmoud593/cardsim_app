@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
 class CustomSearchField extends StatelessWidget {
@@ -39,7 +40,7 @@ class CustomSearchField extends StatelessWidget {
       obscureText: obscureText!,
       onChanged: onChanged,
       onFieldSubmitted: onSubmitted,
-      style: const TextStyle(color: ColorManager.primary),
+      style:  TextStyle(color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black),
       decoration: InputDecoration(
         suffixIcon: Row(
           mainAxisSize: MainAxisSize.min,
