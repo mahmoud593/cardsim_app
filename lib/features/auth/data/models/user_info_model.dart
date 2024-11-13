@@ -9,6 +9,7 @@ class UserInfoModel {
   String? is_active;
   String? created_at;
   int? id;
+  String? distProfit;
 
 
   UserInfoModel({
@@ -21,7 +22,8 @@ class UserInfoModel {
     this.google_2fa,
     this.is_active,
     this.created_at,
-    this.id
+    this.id,
+    this.distProfit
   });
 
 
@@ -36,6 +38,7 @@ class UserInfoModel {
     is_active = json['is_active'];
     created_at = json['created_at'];
     id = json['id'];
+    distProfit = json['dist_profit'];
 
   }
 
@@ -51,6 +54,7 @@ class UserInfoModel {
     data['is_active'] = is_active;
     data['created_at'] = created_at;
     data['id'] = id;
+    data['dist_profit'] = distProfit;
     return data;
   }
 }

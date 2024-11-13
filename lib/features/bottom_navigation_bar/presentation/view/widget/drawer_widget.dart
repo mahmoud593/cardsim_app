@@ -13,6 +13,7 @@ import 'package:games_app/features/coupons/presentation/view/coupons_screen.dart
 import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/our_agent/presentation/view/our_agent_screen.dart';
 import 'package:games_app/features/payment_history/presentation/view/payment_history_screen.dart';
+import 'package:games_app/features/withdraws/presentation/views/withdraws_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -75,6 +76,14 @@ class DrawerWidget extends StatelessWidget {
                 title: 'العملاء',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientsScreen(),));
+                },
+              ),
+
+              DrawerItem(
+                icon: Icons.history,
+                title: 'الأرباح',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WithdrawsScreen(),));
                 },
               ),
 

@@ -15,11 +15,11 @@ class DealingsListView extends StatelessWidget {
         autoPlay: true,
       ),
       items: const [
-        DealingsListViewItem(),
-        DealingsListViewItem(),
-        DealingsListViewItem(),
-        DealingsListViewItem(),
-        DealingsListViewItem(),
+        DealingsListViewItem(value: 'test.00\$', title: 'الرصيد'),
+        DealingsListViewItem(value: 'test', title: 'الطلبات قيد الانتظار'),
+        DealingsListViewItem(value: 'test.00\$', title: 'عمليات قيد الانتظار'),
+        DealingsListViewItem(value: 'test', title: 'طلبات مرفوضه'),
+        DealingsListViewItem(value: 'test', title: 'جميع الطلبات'),
       ],
     );
   }

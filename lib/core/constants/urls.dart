@@ -1,8 +1,8 @@
 class UrlConstants {
   static const String baseUrl = 'https://cardsim.net';
 
-  static const String token =
-      '44SBJqp3HCpSDDriVEPS70NXH2i1BSDcPJxb1Qp2dfcb27a4';
+  // static const String token =
+  //     '44SBJqp3HCpSDDriVEPS70NXH2i1BSDcPJxb1Qp2dfcb27a4';
 
   static const String companiesUrl = '$baseUrl/api/companies?search=&name=';
 
@@ -34,6 +34,14 @@ class UrlConstants {
 
   static const String addClient = '$baseUrl/api/dist/clients/create';
 
+  static const String createWithdrawUrl = '$baseUrl/api/dist/withdraws/new';
+
   static String productsUrl(int companyId) =>
       '$baseUrl/api/products/$companyId';
+
+  static const String withdrawsUrl =
+      '$baseUrl/api/dist/withdraws?search=&page=1';
+
+  static const String clientOrdersUrl =
+      '$baseUrl/api/dist/client-orders?search=';
 }

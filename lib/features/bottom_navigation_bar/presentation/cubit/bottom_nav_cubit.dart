@@ -8,6 +8,11 @@ import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/features/orders/presentation/view/orders_screen.dart';
 import 'package:games_app/features/settings/presentation/view/screens/settings_screen.dart';
 
+import '../../../../core/constants/app_session.dart';
+import '../../../../styles/widgets/toast.dart';
+import '../../../auth/data/auth_repo_implement/auth_repo_implement.dart';
+import '../../../auth/data/models/user_info_model.dart';
+
 class BottomNavCubit extends Cubit<BottomNavStates> {
   BottomNavCubit() : super(BottomNavInitialState());
 
@@ -27,6 +32,20 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
   void changeBottomNav(int index) {
     currentIndex = index;
     emit(BottomNavChangeState());
+  }
+  UserInfoModel? userInfoModel;
+  Future<void> getUserInfo() async {
+    emit(GetUserLoadingState());
+    userInfoModel = await AuthRepoImplement().getUser();
+    if (userInfoModel != null) {
+      AppSession.userInfoModel = userInfoModel;
+      print('get user info');
+      print(userInfoModel!.distProfit!);
+      emit(GetUserSuccessState());
+    } else {
+      customToast(title: 'حدث خطا اثناء الحصول ع البيانات', color: Colors.red);
+      emit(GetUserErrorState());
+    }
   }
 
 

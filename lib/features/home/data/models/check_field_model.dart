@@ -2,7 +2,11 @@ import '../../domain/entities/check_field_entity.dart';
 
 class CheckFieldModel extends CheckFieldEntity {
   CheckFieldModel(
-      super.result, super.playerId, super.playerName, super.message);
+    super.result,
+    super.playerId,
+    super.playerName,
+    super.message,
+  );
 
   factory CheckFieldModel.fromJson(Map<String, dynamic> json) {
     return CheckFieldModel(

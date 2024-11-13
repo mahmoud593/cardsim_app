@@ -5,7 +5,16 @@ class Assets {
   static const String fontsTajawalBold = 'assets/fonts/Tajawal-Bold.ttf';
   static const String fontsTajawalMedium = 'assets/fonts/Tajawal-Medium.ttf';
   static const String fontsTajawalRegular = 'assets/fonts/Tajawal-Regular.ttf';
+  static const String imagesCallCenter = 'assets/images/call_center.png';
   static const String imagesCardSim = 'assets/images/cardSim.png';
+  static const String imagesCash = 'assets/images/cash.svg';
   static const String imagesCat = 'assets/images/cat.png';
+  static const String imagesDeviceTablet = 'assets/images/device_tablet.svg';
+  static const String imagesDollarSquare = 'assets/images/dollar_square.svg';
+  static const String imagesGoogle = 'assets/images/google.png';
+  static const String imagesLogo = 'assets/images/logo.png';
+  static const String imagesLogoDark = 'assets/images/logo-dark.png';
+  static const String imagesLogoLight = 'assets/images/logo-light.png';
+  static const String imagesRank = 'assets/images/rank.png';
 
 }
