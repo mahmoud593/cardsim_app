@@ -30,7 +30,7 @@ class BalanceCard extends StatelessWidget {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
-      color: isLight? ColorManager.primary: ColorManager.darkThemeBackgroundLight,
+      color: isLight? ColorManager.darkWhite: ColorManager.darkThemeBackgroundLight,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.height * 0.01)),
       child: Padding(
         padding: EdgeInsets.all(SizeConfig.height * 0.015),
@@ -54,9 +54,7 @@ class BalanceCard extends StatelessWidget {
               children: [
                 Text(
                   'وسيلة الدفع: $paymentMethod',
-                  style: TextStyles.textStyle14Medium.copyWith(
-                      color:  ColorManager.white
-                  ),
+                  style: TextStyles.textStyle14Medium,
                 ),
                 Text(
                   'المبلغ: \$${amount}',

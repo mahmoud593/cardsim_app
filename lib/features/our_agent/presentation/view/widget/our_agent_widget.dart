@@ -22,7 +22,7 @@ class AgentCard extends StatelessWidget {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
-      color: isLight? ColorManager.primary: ColorManager.darkThemeBackgroundLight,
+      color: isLight? ColorManager.darkWhite: ColorManager.darkThemeBackgroundLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),

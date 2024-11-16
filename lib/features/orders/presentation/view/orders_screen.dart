@@ -82,8 +82,8 @@ class OrdersScreen extends StatelessWidget {
                               purchaseDate: OrdersCubit.get(context).ordersModel.orders[index].createdAt,
                             ) : Center(
                               child: Text(
-                                'لايوجد بيانات لعرضها',
-                                style: TextStyles.textStyle18Medium.copyWith(color: ColorManager.black),
+                                'لا يوجد بيانات لعرضها',
+                                style: TextStyles.textStyle18Medium,
                               ),
                             );
                           },

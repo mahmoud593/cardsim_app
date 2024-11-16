@@ -8,7 +8,7 @@ class CouponsCard extends StatelessWidget {
   final String createdAt;
   final String coupon;
   final String username;
-  final double amount;
+  final String amount;
   final String status;
   final String buyedAtDate;
 
@@ -27,7 +27,7 @@ class CouponsCard extends StatelessWidget {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return Card(
       elevation: 4.0,
-      color: isLight? ColorManager.primary: ColorManager.darkThemeBackgroundLight,
+      color: isLight? ColorManager.darkWhite: ColorManager.darkThemeBackgroundLight,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.height * 0.01)),
       child: Padding(
         padding: EdgeInsets.all(SizeConfig.height * 0.015),
@@ -44,11 +44,11 @@ class CouponsCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   decoration: BoxDecoration(
-                    color: getStatusColor(status),
+                    color: ColorManager.success,
                     borderRadius: BorderRadius.circular(SizeConfig.height * 0.01),
                   ),
                   child: Text(
-                    getStatusText(status),
+                    status == 'new' ? 'جديده' : status,
                     style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.white),
                   ),
                 ),
@@ -65,7 +65,7 @@ class CouponsCard extends StatelessWidget {
                   style: TextStyles.textStyle14Medium,
                 ),
                 Text(
-                  'المبلغ: \$${amount.toStringAsFixed(2)}',
+                  'المبلغ: \$$amount',
                   style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.success),
                 ),
               ],
@@ -82,10 +82,10 @@ class CouponsCard extends StatelessWidget {
                   'تاريخ الشراء: $buyedAtDate',
                   style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
                 ),
-                Text(
-                  'تاريخ الإنشاء: $createdAt',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
-                ),
+                // Text(
+                //   'تاريخ الإنشاء: $createdAt',
+                //   style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
+                // ),
               ],
             ),
 
@@ -97,7 +97,7 @@ class CouponsCard extends StatelessWidget {
 
   Color getStatusColor(String status) {
     switch (status) {
-      case 'completed':
+      case 'new':
         return ColorManager.success;
       case 'in_progress':
         return ColorManager.warning;
@@ -112,8 +112,8 @@ class CouponsCard extends StatelessWidget {
 
   String getStatusText(String status) {
     switch (status) {
-      case 'completed':
-        return 'مكتمل';
+      case 'new':
+        return 'جديده';
       case 'in_progress':
         return 'قيد التنفيذ';
       case 'pending':

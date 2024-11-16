@@ -44,4 +44,10 @@ class UrlConstants {
 
   static const String clientOrdersUrl =
       '$baseUrl/api/dist/client-orders?search=';
+
+  static const String createCouponUrl =
+      '$baseUrl/dist/vouchers/new';
+
+  static getUserOrdersUrl(String search, String status) => '$baseUrl/orders?search=$search&status=$status';
+  static getCouponsUrl(String search) => '$baseUrl/api/dist/vouchers?search=$search&page';
 }

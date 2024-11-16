@@ -10,6 +10,7 @@ class UserInfoModel {
   String? created_at;
   int? id;
   String? distProfit;
+  double? balance;
 
 
   UserInfoModel({
@@ -23,7 +24,8 @@ class UserInfoModel {
     this.is_active,
     this.created_at,
     this.id,
-    this.distProfit
+    this.distProfit,
+    this.balance
   });
 
 
@@ -39,7 +41,7 @@ class UserInfoModel {
     created_at = json['created_at'];
     id = json['id'];
     distProfit = json['dist_profit'];
-
+    balance = json['balance'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +57,7 @@ class UserInfoModel {
     data['created_at'] = created_at;
     data['id'] = id;
     data['dist_profit'] = distProfit;
+    data['balance'] = balance;
     return data;
   }
 }

@@ -32,7 +32,8 @@ class RegisterButton extends StatelessWidget {
                   email: cubit.emailRegisterController.text,
                   password: cubit.passwordRegisterController.text,
                   name: cubit.nameRegisterController.text,
-                  phone: cubit.phoneRegisterController.text
+                  phone: cubit.phoneRegisterController.text,
+                 context: context
               );
             }
           },

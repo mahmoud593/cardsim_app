@@ -10,6 +10,8 @@ import 'package:games_app/features/auth/presentation/controller/auth_states.dart
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 
+import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart';
+
 class AuthCubit extends Cubit<AuthStates>{
 
   AuthCubit() : super(AuthInitialState());
@@ -41,7 +43,8 @@ class AuthCubit extends Cubit<AuthStates>{
     required String email,
     required String password,
     required String name,
-    required String phone
+    required String phone,
+    required BuildContext context
    })async{
 
     emit(CreateAccountLoadingState());
@@ -68,6 +71,7 @@ class AuthCubit extends Cubit<AuthStates>{
   Future<void> loginWithApi({
     required String email,
     required String password,
+    required BuildContext context
   })async{
 
     emit(LoginLoadingState());
@@ -104,10 +108,10 @@ class AuthCubit extends Cubit<AuthStates>{
     }
   }
 
-  Future<void> loginWithGoogle()async{
+  Future<void> loginWithGoogle({required BuildContext context})async{
 
     await AuthRepoImplement().loginWithGoogle().then((value) async{
-      await loginWithAccessToken(accessToken: value);
+      await loginWithAccessToken(accessToken: value, context: context);
     });
 
    emit(GetGoogleInfoState());
@@ -117,7 +121,8 @@ class AuthCubit extends Cubit<AuthStates>{
   AuthModel? googleModel;
 
   Future <void> loginWithAccessToken({
-    required String accessToken
+    required String accessToken,
+    required BuildContext context
   })async{
 
     emit(LoginWithGoogleLoadingState());

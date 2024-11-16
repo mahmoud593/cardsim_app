@@ -28,7 +28,7 @@ class LoginWithGoogleButton extends StatelessWidget {
               child: MaterialButton(
                   color: ColorManager.primary,
                   onPressed: () async{
-                     await cubit.loginWithGoogle();
+                     await cubit.loginWithGoogle(context: context);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)

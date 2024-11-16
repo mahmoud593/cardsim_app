@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view_item.dart';
 
 class DealingsListView extends StatelessWidget {
@@ -14,10 +15,10 @@ class DealingsListView extends StatelessWidget {
         enlargeCenterPage: true,
         autoPlay: true,
       ),
-      items: const [
-        DealingsListViewItem(value: 'test.00\$', title: 'الرصيد'),
+      items: [
+        DealingsListViewItem(value: '\$ ${UserDataFromStorage.balanceFromStorage.toStringAsFixed(2)}', title: 'الرصيد'),
         DealingsListViewItem(value: 'test', title: 'الطلبات قيد الانتظار'),
-        DealingsListViewItem(value: 'test.00\$', title: 'عمليات قيد الانتظار'),
+        DealingsListViewItem(value: 'test.00 ', title: 'عمليات قيد الانتظار'),
         DealingsListViewItem(value: 'test', title: 'طلبات مرفوضه'),
         DealingsListViewItem(value: 'test', title: 'جميع الطلبات'),
       ],

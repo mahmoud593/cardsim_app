@@ -5,6 +5,8 @@ import 'package:games_app/features/our_agent/presentation/cubit/our_agent_state.
 import 'package:games_app/features/our_agent/presentation/view/widget/our_agent_widget.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:games_app/styles/widgets/loading_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class OurAgentScreen extends StatelessWidget {
   const OurAgentScreen({super.key});
@@ -15,48 +17,51 @@ class OurAgentScreen extends StatelessWidget {
     return BlocConsumer<OurAgentCubit, OurAgentStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'وكلاؤنا',
-              style: TextStyles.textStyle24Medium,
-            ),
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: isLight ? ColorManager.black : ColorManager.white,
+        return ModalProgressHUD(
+          inAsyncCall: state is GetAgentLoadingState ? true : false,
+          progressIndicator: const LoadingAnimationWidget(),
+          color: Colors.transparent,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'وكلاؤنا',
+                style: TextStyles.textStyle24Medium,
               ),
-            ),
-            centerTitle: true,
-          ),
-          body: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02, vertical: MediaQuery.of(context).size.height * 0.02),
-              child:  GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
-                  childAspectRatio: 0.75,
-                ),
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return AgentCard(
-                    agentName: "الإدارة العامة",
-                    agentImageUrl: "https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg",
-                    onContactPressed: () {
-                      OurAgentCubit.get(context).launchWhatsApp(
-                        phoneNumber: "+905367247415",
-                      );
-                    },
-                  );
+              leading: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
                 },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: isLight ? ColorManager.black : ColorManager.white,
+                ),
               ),
+              centerTitle: true,
+            ),
+            body: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: state is !GetAgentLoadingState && OurAgentCubit.get(context).agentModel.data.isNotEmpty ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.02, vertical: MediaQuery.of(context).size.height * 0.02),
+                child:  GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemCount: OurAgentCubit.get(context).agentModel.data.length,
+                  itemBuilder: (context, index) {
+                    return AgentCard(
+                      agentName: OurAgentCubit.get(context).agentModel.data[index].name,
+                      agentImageUrl: OurAgentCubit.get(context).agentModel.data[index].image,
+                      onContactPressed: () {
+                        OurAgentCubit.get(context).launchWhatsAppLink(link: OurAgentCubit.get(context).agentModel.data[index].whatsapp);
+                      },
+                    );
+                  },
+                ),
+              ): Center(child: Text('لا يوجد وكلاء', style: TextStyles.textStyle24Medium,),),
             ),
           ),
         );

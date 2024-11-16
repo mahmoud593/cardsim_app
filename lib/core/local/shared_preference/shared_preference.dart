@@ -10,8 +10,8 @@ class UserDataFromStorage {
   static late bool onBoardingIsOpen;
   static late String userPhoneTypeFromStorage;
   static String languageCodeFromStorage='ar';
+  static String appCurrencyFromStorage='USD';
   static String languageNameFromStorage="langArabic";
-
   static late String fullNameFromStorage;
   static late String userTokenFromStorage;
   static late String emailFromStorage;
@@ -84,6 +84,10 @@ class UserDataFromStorage {
 
   static  setPhoneNumber(String value)  {
     phoneNumberFromStorage=value;
+    _setData();
+  }
+  static  setAppCurrency(String value)  {
+    appCurrencyFromStorage=value;
     _setData();
   }
   static  setCountry(String value)  {
@@ -167,7 +171,7 @@ class UserDataFromStorage {
     prefs.setString("languageCodeFromStorage",languageCodeFromStorage);
     prefs.setString("languageNameFromStorage",languageNameFromStorage);
     prefs.setString("userTokenFromStorage",userTokenFromStorage);
-
+    prefs.setString("appCurrencyFromStorage",appCurrencyFromStorage);
     prefs.setString("fullNameFromStorage",fullNameFromStorage);
     prefs.setString("emailFromStorage",emailFromStorage);
     prefs.setString("phoneNumberFromStorage",phoneNumberFromStorage);
@@ -198,7 +202,7 @@ class UserDataFromStorage {
     languageCodeFromStorage = prefs.getString("languageCodeFromStorage")??'ar';
     languageNameFromStorage = prefs.getString("languageNameFromStorage")??'langArabic';
     userPhoneTypeFromStorage = prefs.getString("userPhoneTypeFromStorage")??'';
-
+    appCurrencyFromStorage = prefs.getString("appCurrencyFromStorage")??'USD';
     fullNameFromStorage = prefs.getString("fullNameFromStorage")??'';
     userTokenFromStorage = prefs.getString("userTokenFromStorage")??'';
     emailFromStorage = prefs.getString("emailFromStorage")??'';

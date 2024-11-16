@@ -6,11 +6,10 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 
 class PaymentHistoryCard extends StatelessWidget {
   final String transactionId;
-  final double transactionAmount;
-  final double balanceBefore;
-  final double balanceAfter;
+  final String transactionAmount;
+  final String balanceBefore;
+  final String balanceAfter;
   final String transactionType;
-  final String transactionDate;
 
   const PaymentHistoryCard({
     super.key,
@@ -19,7 +18,6 @@ class PaymentHistoryCard extends StatelessWidget {
     required this.balanceBefore,
     required this.balanceAfter,
     required this.transactionType,
-    required this.transactionDate,
   });
 
   @override
@@ -41,23 +39,23 @@ class PaymentHistoryCard extends StatelessWidget {
             ),
             const Divider(),
 
+            Text(
+              'القيمة: \$$transactionAmount',
+              style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.warning),
+            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'القيمة: \$${transactionAmount.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.warning),
+                  'الرصيد قبل : \$$balanceBefore',
+                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
                 ),
                 Text(
-                  'بتاريخ: $transactionDate',
+                  'الرصيد بعد : \$$balanceAfter',
                   style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
                 ),
               ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'الرصيد (قبل - بعد): \$${balanceBefore.toStringAsFixed(2)} - \$${balanceAfter.toStringAsFixed(2)}',
-              style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
             ),
 
             const SizedBox(height: 10),

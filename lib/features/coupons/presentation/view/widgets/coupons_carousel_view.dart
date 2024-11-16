@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:games_app/features/coupons/presentation/view/widgets/coupon_card_count_widget.dart';
 
 class CouponsCarouselView extends StatelessWidget {
-  const CouponsCarouselView({super.key});
+  final int total;
+  final int used;
+  final int unused;
+  const CouponsCarouselView({super.key, required this.total, required this.used, required this.unused});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +17,10 @@ class CouponsCarouselView extends StatelessWidget {
         enlargeCenterPage: true,
         autoPlay: true,
       ),
-      items: const [
-        CouponCardCountWidget(count: 2, title: 'عدد القسائم',),
-        CouponCardCountWidget(count: 0, title: 'تم استخدامها',),
-        CouponCardCountWidget(count: 2, title: 'لم يتم استخدامها',),
+      items:  [
+        CouponCardCountWidget(count: total, title: 'عدد القسائم',),
+        CouponCardCountWidget(count: total, title: 'تم استخدامها',),
+        CouponCardCountWidget(count: total, title: 'لم يتم استخدامها',),
       ],
     );
   }

@@ -31,7 +31,8 @@ class LoginButton extends StatelessWidget {
             if(cubit.loginKey.currentState!.validate()){
               cubit.loginWithApi(
                   email: cubit.emailLoginController.text,
-                  password: cubit.passwordLoginController.text
+                  password: cubit.passwordLoginController.text,
+                  context: context
               );
             }
           },
