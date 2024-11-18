@@ -62,8 +62,8 @@ class CouponsScreen extends StatelessWidget {
                   ),
                   CouponsCarouselView(
                       total: CouponsCubit.get(context).couponDataModel.total,
-                      used: CouponsCubit.get(context).couponDataModel.total,
-                      unused: CouponsCubit.get(context).couponDataModel.total),
+                      used: CouponsCubit.get(context).couponDataModel.used,
+                      unused: CouponsCubit.get(context).couponDataModel.notUsed),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),

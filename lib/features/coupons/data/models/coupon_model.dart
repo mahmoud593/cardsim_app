@@ -1,23 +1,35 @@
 class CouponsDataModel {
   final bool status;
   final int total;
+  final int totalCount;
+  final int used;
+  final int notUsed;
   final List<CouponModel> data;
 
   CouponsDataModel({
     required this.status,
     required this.total,
+    required this.totalCount,
+    required this.used,
+    required this.notUsed,
     required this.data,
   });
 
   factory CouponsDataModel.fromMap(Map<String, dynamic> json) => CouponsDataModel(
     status: json["status"]?? false,
     total: json["total"] ?? -1,
+    totalCount: json["total_count"] ?? -1,
+    used: json["used"] ?? -1,
+    notUsed: json["not_used"] ?? -1,
     data: json["data"] == null ? [] : List<CouponModel>.from(json["data"].map((x) => CouponModel.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
     "status": status,
     "total": total,
+    "total_count": totalCount,
+    "used": used,
+    "not_used": notUsed,
     "data": List<dynamic>.from(data.map((x) => x.toMap())),
   };
 }

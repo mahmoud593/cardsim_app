@@ -26,6 +26,10 @@ class CouponsCubit extends Cubit<CouponsStates> {
       status: false,
       total: 0,
       data: [],
+    totalCount: 0,
+      used: 0,
+    notUsed: 0
+
   );
 
   Future <void> getCoupons({required String search}) async {
@@ -33,6 +37,9 @@ class CouponsCubit extends Cubit<CouponsStates> {
       status: false,
       total: 0,
       data: [],
+        totalCount: 0,
+        used: 0,
+        notUsed: 0
     );
     emit(GetCouponsLoadingState());
     try {
