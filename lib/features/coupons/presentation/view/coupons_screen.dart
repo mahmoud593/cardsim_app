@@ -14,8 +14,20 @@ import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/loading_widget.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class CouponsScreen extends StatelessWidget {
+class CouponsScreen extends StatefulWidget {
   const CouponsScreen({super.key});
+
+  @override
+  State<CouponsScreen> createState() => _CouponsScreenState();
+}
+
+class _CouponsScreenState extends State<CouponsScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    CouponsCubit.get(context).getCoupons(search: "");
+  }
 
   @override
   Widget build(BuildContext context) {

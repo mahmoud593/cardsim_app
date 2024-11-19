@@ -17,7 +17,7 @@ class WithdrawsModel extends WithdrawsEntity {
 
   factory WithdrawsModel.fromJson(Map<String, dynamic> json) {
     return WithdrawsModel(
-      total: json['total'],
+      total: json['total']??0,
       data: List<WithdrawsDataModel>.from(
           json['data'].map((x) => WithdrawsDataModel.fromJson(x))),
       currentPage: json['current_page'],

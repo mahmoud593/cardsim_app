@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/constants/constants.dart';
@@ -37,6 +38,7 @@ class WithdrawsCarousalItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
+              color: UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.black,
               image,
               width: 40,
               height: 40,

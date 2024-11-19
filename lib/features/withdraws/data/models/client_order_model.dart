@@ -15,7 +15,7 @@ class ClientOrderModel extends ClientOrderEntity {
 
   factory ClientOrderModel.fromJson(Map<String, dynamic> json) =>
       ClientOrderModel(
-        total: json["total"],
+        total: json["total"]??0,
         orders: List<OrdersClientModel>.from(
             json["orders"].map((x) => OrdersClientModel.fromJson(x))),
         currentPage: json["current_page"],

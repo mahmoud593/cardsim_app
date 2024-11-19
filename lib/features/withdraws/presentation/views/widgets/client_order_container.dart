@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/withdraws/presentation/controller/withdraws_cubit/withdraws_cubit.dart';
 import 'package:games_app/features/withdraws/presentation/views/widgets/client_order_list_view.dart';
 import 'package:svg_flutter/svg.dart';
@@ -38,10 +39,11 @@ class ClientOrderContainer extends StatelessWidget {
                             height: 30,
                           ),
                           const SizedBox(width: 8),
-                          const Text(
+                           Text(
                             'العمليات',
                             style: TextStyle(
                               fontSize: 20,
+                              color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

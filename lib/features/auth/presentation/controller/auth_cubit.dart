@@ -56,6 +56,7 @@ class AuthCubit extends Cubit<AuthStates>{
       );
       if(registerModel!.token != null){
         print('Token: ${registerModel!.token}');
+        UserDataFromStorage.setGender(registerModel!.role!);
         await getUserInfo();
         emit(CreateAccountSuccessState());
       }else{
@@ -79,8 +80,9 @@ class AuthCubit extends Cubit<AuthStates>{
         email: email,
         password: password,
     );
-    if(loginModel!.token != ""){
+    if(loginModel!.token != "" && loginModel!.token !=null){
       print('Token: ${loginModel!.token}');
+      UserDataFromStorage.setGender(loginModel!.role!);
       await getUserInfo();
       emit(LoginSuccessState());
     }else {
@@ -97,6 +99,7 @@ class AuthCubit extends Cubit<AuthStates>{
       UserDataFromStorage.setFullName(userInfoModel!.name!);
       UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
       UserDataFromStorage.setEmail(userInfoModel!.email!);
+      UserDataFromStorage.setBalance(double.parse(userInfoModel!.balance!.toString()));
       emailProfileController.text=userInfoModel!.email!;
       phoneProfileController.text=userInfoModel!.phone??'';
       nameProfileController.text=userInfoModel!.name!;
@@ -131,8 +134,9 @@ class AuthCubit extends Cubit<AuthStates>{
         accessToken: accessToken
     );
 
-   if(googleModel.token != ""){
+   if(googleModel.token != "" && googleModel.token != null){
      print('Token: ${googleModel.token}');
+     UserDataFromStorage.setGender(googleModel.role!);
      await getUserInfo();
      emit(LoginWithGoogleSuccessState());
    }else {

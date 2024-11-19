@@ -17,10 +17,10 @@ class DealingsListView extends StatelessWidget {
       ),
       items: [
         DealingsListViewItem(value: '\$ ${UserDataFromStorage.balanceFromStorage.toStringAsFixed(2)}', title: 'الرصيد'),
-        DealingsListViewItem(value: 'test', title: 'الطلبات قيد الانتظار'),
-        DealingsListViewItem(value: 'test.00 ', title: 'عمليات قيد الانتظار'),
-        DealingsListViewItem(value: 'test', title: 'طلبات مرفوضه'),
-        DealingsListViewItem(value: 'test', title: 'جميع الطلبات'),
+        DealingsListViewItem(value: '${UserDataFromStorage.orderWaiting}', title: 'الطلبات قيد الانتظار'),
+        DealingsListViewItem(value: '${UserDataFromStorage.progressWaiting} ', title: 'عمليات مكتمله'),
+        DealingsListViewItem(value: '${UserDataFromStorage.orderRefuse}', title: 'طلبات مرفوضه'),
+        DealingsListViewItem(value: '${UserDataFromStorage.allOrders}', title: 'جميع الطلبات'),
       ],
     );
   }

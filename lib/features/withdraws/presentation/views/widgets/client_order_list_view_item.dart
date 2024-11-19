@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/withdraws/domain/entities/client_order_entity.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
 
 import '../../../domain/entities/orders_client_entity.dart';
 
@@ -21,25 +23,34 @@ class ClientOrderListViewItem extends StatelessWidget {
         Expanded(
             child: Center(
           child: Text(
-            clientOrderEntity.tracking,
+            clientOrderEntity.tracking,style: TextStyle(
+            color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
+
+          ),
           ),
         )),
         Expanded(
             child: Center(
           child: Text(
-            clientOrderEntity.orderTotal.toString(),
+            clientOrderEntity.orderTotal.toString(),style: TextStyle(
+            color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
+          ),
           ),
         )),
         Expanded(
             child: Center(
               child: Text(
-                clientOrderEntity.profit.toString(),
+                clientOrderEntity.profit.toString(),style: TextStyle(
+                color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
+              ),
               ),
             )),
         Expanded(
             child: Center(
           child: Text(
-            clientOrderEntity.status,
+            clientOrderEntity.status,style: TextStyle(
+            color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
+          ),
           ),
         )),
       ],

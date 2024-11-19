@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/withdraws/presentation/controller/withdraws_cubit/withdraws_cubit.dart';
 import 'package:games_app/features/withdraws/presentation/views/widgets/withdraws_list_view.dart';
 import 'package:games_app/generated/assets.dart';
@@ -24,7 +25,7 @@ class WithdrawsContainer extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Card(
-            color: Colors.white,
+            color: UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.white,
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
@@ -39,15 +40,17 @@ class WithdrawsContainer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           SvgPicture.asset(
+                            color: UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
                             Assets.imagesDollarSquare,
                             width: 30,
                             height: 30,
                           ),
                           const SizedBox(width: 8),
-                          const Text(
+                           Text(
                             'الأرباح',
                             style: TextStyle(
                               fontSize: 20,
+                              color:UserDataFromStorage.themeIsDarkMode? ColorManager.black : ColorManager.darkGrey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -81,7 +84,7 @@ class WithdrawsContainer extends StatelessWidget {
                                         .start,
                                     children: [
                                       const Text(
-                                          "المبلغ (أدنى مبلغ للسحب: 5\$) *"),
+                                          "المبلغ (أدنى مبلغ للسحب: 5\$) *",style: TextStyle(),),
                                       const SizedBox(height: 6),
                                       TextFormField(
                                         controller: withdrawController,

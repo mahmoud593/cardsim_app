@@ -7,7 +7,7 @@
         </intent>
     </queries>
     <application
-        android:label="games_app"
+        android:label="Card Sim"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

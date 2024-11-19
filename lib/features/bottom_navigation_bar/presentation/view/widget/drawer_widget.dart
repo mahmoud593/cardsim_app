@@ -16,8 +16,21 @@ import 'package:games_app/features/payment_history/presentation/view/payment_his
 import 'package:games_app/features/withdraws/presentation/views/withdraws_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
+
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    AuthCubit.get(context).getUserInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +84,7 @@ class DrawerWidget extends StatelessWidget {
                 },
               ),
 
+              if(UserDataFromStorage.genderFromStorage=='distributor')
               DrawerItem(
                 icon: Icons.people_alt,
                 title: 'العملاء',
@@ -79,7 +93,8 @@ class DrawerWidget extends StatelessWidget {
                 },
               ),
 
-              DrawerItem(
+              if(UserDataFromStorage.genderFromStorage=='distributor')
+                DrawerItem(
                 icon: Icons.history,
                 title: 'الأرباح',
                 onTap: () {
@@ -87,7 +102,8 @@ class DrawerWidget extends StatelessWidget {
                 },
               ),
 
-              DrawerItem(
+              if(UserDataFromStorage.genderFromStorage=='distributor')
+                DrawerItem(
                 icon: Icons.card_membership,
                 title: 'القسائم',
                 onTap: () {

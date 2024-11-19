@@ -10,7 +10,7 @@ class UserInfoModel {
   String? created_at;
   int? id;
   String? distProfit;
-  double? balance;
+  num? balance;
 
 
   UserInfoModel({

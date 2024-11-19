@@ -28,6 +28,10 @@ class UserDataFromStorage {
   static late double cReductionFromStorage;
   static late double detectionFromStorage;
   static late double suspendedBalanceFromStorage;
+  static late double orderWaiting;
+  static late double orderRefuse;
+  static late double allOrders;
+  static late double progressWaiting;
 
 
   static setFirstTimeApp(bool value) {
@@ -132,6 +136,27 @@ class UserDataFromStorage {
     _setData();
   }
 
+  static setOrdersWaiting(double value)  {
+    orderWaiting=value;
+    _setData();
+  }
+
+  static setOrdersRefuse(double value)  {
+    orderRefuse=value;
+    _setData();
+  }
+
+
+  static setAllOrders(double value)  {
+    allOrders=value;
+    _setData();
+  }
+
+  static setProgressWaiting(double value)  {
+    progressWaiting=value;
+    _setData();
+  }
+
 
   static  setDateOfBrith(String value)  {
     dateOfBrithFromStorage=value;
@@ -187,6 +212,10 @@ class UserDataFromStorage {
     prefs.setDouble("balanceFromStorage",balanceFromStorage);
     prefs.setDouble("detectionFromStorage",detectionFromStorage);
     prefs.setDouble("suspendedBalanceFromStorage",suspendedBalanceFromStorage);
+    prefs.setDouble("orderWaiting",orderWaiting);
+    prefs.setDouble("allOrders",allOrders);
+    prefs.setDouble("orderRefuse",orderRefuse);
+    prefs.setDouble("progressWaiting",progressWaiting);
 
   }
 
@@ -219,6 +248,10 @@ class UserDataFromStorage {
     balanceFromStorage = prefs.getDouble("balanceFromStorage")??0.0;
     detectionFromStorage = prefs.getDouble("detectionFromStorage")??0.0;
     suspendedBalanceFromStorage = prefs.getDouble("suspendedBalanceFromStorage")??0.0;
+    orderRefuse = prefs.getDouble("orderRefuse")??0.0;
+    orderWaiting = prefs.getDouble("orderWaiting")??0.0;
+    allOrders = prefs.getDouble("allOrders")??0.0;
+    progressWaiting = prefs.getDouble("progressWaiting")??0.0;
   }
 
 //#endregion

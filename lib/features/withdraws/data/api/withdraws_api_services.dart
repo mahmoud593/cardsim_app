@@ -25,6 +25,7 @@ class WithdrawsApiServices {
       ),
     );
     if (response.statusCode == 200) {
+      print(response.data);
       return WithdrawsModel.fromJson(response.data);
     } else {
       throw ServerExceptions(

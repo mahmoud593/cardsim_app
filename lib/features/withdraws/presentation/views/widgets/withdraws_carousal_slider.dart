@@ -25,7 +25,7 @@ class WithdrawsCarousalSlider extends StatelessWidget {
       ),
       items: [
          WithdrawsCarousalItem(
-          image: Assets.imagesDollarSquare,
+          image:  Assets.imagesDollarSquare,
           value: AppSession.userInfoModel!.distProfit!,
           title: 'الأرباح',
         ),

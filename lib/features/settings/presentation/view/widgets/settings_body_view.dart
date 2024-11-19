@@ -33,7 +33,7 @@ class SettingsBodyView extends StatelessWidget {
               DefaultTextField(
                 validator: (value){
                   if(value!.isEmpty){
-                    return 'كلمة المرور مطلوبه';
+                    return 'الاسم مطلوب';
                   }
                 },
                 keyboardType: TextInputType.emailAddress ,
@@ -49,7 +49,7 @@ class SettingsBodyView extends StatelessWidget {
               DefaultTextField(
                 validator: (value){
                   if(value!.isEmpty){
-                    return 'كلمة المرور مطلوبه';
+                    return 'البريد الالكتروني مطلوب';
                   }
                 },
                 keyboardType: TextInputType.emailAddress ,
@@ -65,7 +65,7 @@ class SettingsBodyView extends StatelessWidget {
               DefaultTextField(
                 validator: (value){
                   if(value!.isEmpty){
-                    return 'كلمة المرور مطلوبه';
+                    return 'الهاتف مطلوب';
                   }
                 },
                 keyboardType: TextInputType.phone ,

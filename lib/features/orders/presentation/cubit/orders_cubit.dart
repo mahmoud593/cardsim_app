@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/errors/exceptions.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/error_message_model.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
@@ -41,6 +42,8 @@ class OrdersCubit extends Cubit<OrdersStates> {
     to: 0,
   );
 
+  int orderWaitingLenght=0;
+  int orderRefuseLenght=0;
   Future <void> getOrders({required String search, required String status}) async {
     ordersModel = OrdersModel(
       total: 0,
@@ -54,7 +57,17 @@ class OrdersCubit extends Cubit<OrdersStates> {
     emit(GetOrdersLoadingState());
     try {
       ordersModel = await OrdersRepoImplement().getOrders(search: search, status: status);
+      ordersModel.orders.forEach((element) {
+        if(element.status == "pending"){
+          orderWaitingLenght+=1;
+        }else if(element.status == "reject"){
+          orderRefuseLenght+=1;
+        }
+      });
       debugPrint("get orders >***************************************> ${ordersModel.orders.length}");
+      UserDataFromStorage.setAllOrders(double.parse(ordersModel.orders.length.toString()));
+      UserDataFromStorage.setOrdersWaiting(double.parse(orderWaitingLenght.toString()));
+      UserDataFromStorage.setOrdersRefuse(double.parse(orderRefuseLenght.toString()));
       emit(GetOrdersSuccessState());
     } catch (e) {
       emit(GetOrdersErrorState());
