@@ -5,6 +5,7 @@ class CompaniesEntity {
   final String image;
   final int id;
   final String category;
+  final String status;
   final List<NotesEntity>? notes;
 
   CompaniesEntity({
@@ -12,6 +13,7 @@ class CompaniesEntity {
     required this.image,
     required this.id,
     required this.category,
+    required this.status,
     this.notes,
   });
 

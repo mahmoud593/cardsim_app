@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/home/presentation/controller/companies_cubit/companies_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view.dart';
+import 'package:games_app/features/home/presentation/view/widgets/image_carousal_widget.dart';
+import 'package:games_app/features/home/presentation/view/widgets/text_slider_widget.dart';
 import 'package:games_app/generated/assets.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
@@ -24,20 +26,7 @@ class HomeScreenBody extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: ColorManager.primary,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Center(
-                child: Text(
-                  'اذا واجهت اي مشاكل تواصل معنا',
-                  style: TextStyles.textStyle18Medium.copyWith(
-                      color: Colors.white),
-                )),
-          ),
+          const TextSliderWidget(),
           const SizedBox(
             height: 16,
           ),
@@ -45,12 +34,7 @@ class HomeScreenBody extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(Constants.defaultRadius),
-            child: Image.asset(
-              Assets.imagesCardSim,
-            ),
-          ),
+          const ImageCarousalWidget(),
           const SizedBox(
             height: 16,
           ),
@@ -71,6 +55,13 @@ class HomeScreenBody extends StatelessWidget {
                   controller: searchController,
                   hintText: 'البحث...',
                   suffixIcon: Icons.search,
+                  onClear: (){
+                    if (searchController.text.isNotEmpty) {
+                      searchController.clear();
+                      context.read<CompaniesCubit>()
+                          .getCompanies(query: searchController.text);
+                    }
+                  },
                   onSubmitted: (value) {
                     if (searchController.text.isNotEmpty) {
                       context.read<CompaniesCubit>()

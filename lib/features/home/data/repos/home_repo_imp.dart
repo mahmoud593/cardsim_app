@@ -1,10 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:games_app/features/home/data/data_source/api_services.dart';
 import 'package:games_app/features/home/data/models/check_field_model.dart';
+import 'package:games_app/features/home/data/models/image_slider_model.dart';
 import 'package:games_app/features/home/domain/entities/categories_entity.dart';
 import 'package:games_app/features/home/domain/entities/companies_entity.dart';
-import 'package:games_app/features/home/domain/entities/create_order_entity.dart';
+import 'package:games_app/features/home/domain/entities/image_slider_entity.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
+import 'package:games_app/features/home/domain/entities/settings_entity.dart';
+import 'package:games_app/features/home/domain/entities/text_slider_entity.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -67,6 +70,26 @@ class HomeRepoImp implements HomeRepo {
     final result = await apiServices.createOrder(productId, quantity, field);
     try {
       print(result);
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ImageSliderEntity>>> getImageSlider() async {
+    final result = await apiServices.getImageSlider();
+    try {
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TextSliderEntity>>> getTextSlider() async{
+   final result = await apiServices.getTextSlider();
+    try {
       return Right(result);
     } on ServerExceptions catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

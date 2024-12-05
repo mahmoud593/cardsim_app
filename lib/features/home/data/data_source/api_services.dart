@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:games_app/features/home/data/models/companies_model.dart';
+import 'package:games_app/features/home/data/models/image_slider_model.dart';
 
 import '../../../../core/constants/urls.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -10,6 +11,7 @@ import '../models/categories_model.dart';
 import '../models/check_field_model.dart';
 import '../models/create_order_model.dart';
 import '../models/products_model.dart';
+import '../models/text_slider_model.dart';
 
 class ApiServices {
   final Dio _dio = Dio();
@@ -26,7 +28,8 @@ class ApiServices {
       ),
     );
     if (response.statusCode == 200) {
-     print('PROFILE API SERVICES>>>>>>>>>Bearer ${UserDataFromStorage.userTokenFromStorage}');
+      print(
+          'PROFILE API SERVICES>>>>>>>>>Bearer ${UserDataFromStorage.userTokenFromStorage}');
       return List<CompaniesModel>.from(
         (response.data['data'] as List).map(
           (e) => CompaniesModel.fromJson(e),
@@ -103,7 +106,8 @@ class ApiServices {
     }
   }
 
-  Future<CreateOrderModel> createOrder(int productId, int quantity, String field) async {
+  Future<CreateOrderModel> createOrder(
+      int productId, int quantity, String field) async {
     //print(">>>>>>>>> $productId ,,,, $quantity ,,,, $field <<<<<<<<<<");
     var parameter = {
       'product': productId,
@@ -126,5 +130,47 @@ class ApiServices {
       throw ServerExceptions(
           errorMessageModel: ErrorMessageModel.fromJson(response.data));
     }
-}
+  }
+
+  Future<List<ImageSliderModel>> getImageSlider() async {
+    final response = await _dio.get(
+      UrlConstants.settingsUrl,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return List<ImageSliderModel>.from(
+        (response.data['images_slider'] as List).map(
+          (e) => ImageSliderModel.fromJson(e),
+        ),
+      );
+    } else {
+      throw ServerExceptions(
+          errorMessageModel: ErrorMessageModel.fromJson(response.data));
+    }
+  }
+
+  Future<List<TextSliderModel>> getTextSlider() async {
+    final response = await _dio.get(
+      UrlConstants.settingsUrl,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${UserDataFromStorage.userTokenFromStorage}',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return List<TextSliderModel>.from(
+        (response.data['texts_slider'] as List).map(
+              (e) => TextSliderModel.fromJson(e),
+        ),
+      );
+    } else {
+      throw ServerExceptions(
+          errorMessageModel: ErrorMessageModel.fromJson(response.data));
+    }
+  }
 }
