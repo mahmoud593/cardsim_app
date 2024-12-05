@@ -8,6 +8,7 @@ class CompaniesModel extends CompaniesEntity {
     required super.image,
     required super.id,
     required super.category,
+    required super.status,
     super.notes,
   });
 
@@ -17,6 +18,7 @@ class CompaniesModel extends CompaniesEntity {
       image: json['image'],
       id: json['id'],
       category: json['category'],
+      status: json['status'],
       notes: (json['notes'] is List)
           ? (json['notes'] as List<dynamic>)
           .map((noteJson) => NotesModel.fromJson(noteJson))

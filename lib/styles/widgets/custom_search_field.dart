@@ -47,8 +47,8 @@ class CustomSearchField extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                controller?.clear();
                 onClear!();
+               /* controller?.clear();*/
               },
               icon: const Icon(Icons.close, color: Color(0xffC9CECF)),
             ),

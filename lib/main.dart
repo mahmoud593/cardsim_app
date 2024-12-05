@@ -20,9 +20,12 @@ import 'package:games_app/features/splash/preentation/view/screen/splash_screen.
 import 'package:games_app/firebase_options.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'features/home/domain/repos/home_repo.dart';
 import 'features/home/presentation/controller/categories_cubit/categories_cubit.dart';
 import 'features/home/presentation/controller/companies_cubit/companies_cubit.dart';
+import 'features/home/presentation/controller/image_sliders_cubit/image_sliders_cubit.dart';
+import 'features/home/presentation/controller/text_slider_cubit/text_slider_cubit.dart';
 import 'features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'generated/l10n.dart';
 
@@ -49,14 +52,24 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => CurrencyCubit()..getCurrency()),
         BlocProvider(create: (context) => BottomNavCubit()..getUserInfo()),
-        BlocProvider(create: (context) => OrdersCubit()..getOrders(search: "", status: "")),
+        BlocProvider(
+            create: (context) =>
+                OrdersCubit()..getOrders(search: "", status: "")),
         BlocProvider(create: (context) => BalanceCubit()),
         BlocProvider(create: (context) => AuthCubit()..getUserInfo()),
         BlocProvider(create: (context) => SettingsCubit()),
-        BlocProvider(create: (context) => PaymentHistoryCubit()..getPaymentHistory()),
+        BlocProvider(
+            create: (context) => PaymentHistoryCubit()..getPaymentHistory()),
         BlocProvider(create: (context) => OurAgentCubit()..getAgent()),
-        BlocProvider(create: (context) => CouponsCubit()..getCoupons(search: "")),
+        BlocProvider(
+            create: (context) => CouponsCubit()..getCoupons(search: "")),
         BlocProvider(create: (context) => ClientCubit()),
+        BlocProvider(
+            create: (context) =>
+                TextSliderCubit(getIt.get<HomeRepo>())..getTextSlider()),
+        BlocProvider(
+            create: (context) =>
+                ImageSlidersCubit(getIt.get<HomeRepo>())..getImageSlider()),
         BlocProvider(
           create: (context) =>
               CompaniesCubit(getIt.get<HomeRepo>())..getCompanies(),

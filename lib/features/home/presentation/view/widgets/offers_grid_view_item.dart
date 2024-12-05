@@ -12,13 +12,18 @@ class OffersGridViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isInactive = companiesEntity.status == "inactive";
+
     return GestureDetector(
-      onTap: () {
+      onTap: isInactive
+          ? null
+          : () {
         customPushNavigator(
-            context,
-            RequestOrderScreen(
-              companiesEntity: companiesEntity,
-            ));
+          context,
+          RequestOrderScreen(
+            companiesEntity: companiesEntity,
+          ),
+        );
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -49,7 +54,7 @@ class OffersGridViewItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          companiesEntity.name /*+' '+companiesEntity.id.toString()*/,
+                          companiesEntity.name,
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
@@ -64,10 +69,21 @@ class OffersGridViewItem extends StatelessWidget {
             left: 8.5,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: companiesEntity.image,
-                scale: 1.88,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+              child: ColorFiltered(colorFilter: isInactive
+                  ? const ColorFilter.mode(
+                Colors.grey, // Converts to grayscale
+                BlendMode.saturation,
+              )
+                  : const ColorFilter.mode(
+                Colors.transparent,
+                BlendMode.multiply,
+              ),
+                child: CachedNetworkImage(
+                  imageUrl: companiesEntity.image,
+                  scale: 1.88,
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
+                ),
               ),
             ),
           )

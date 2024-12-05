@@ -36,6 +36,8 @@ class UrlConstants {
 
   static const String createWithdrawUrl = '$baseUrl/api/dist/withdraws/new';
 
+  static const String settingsUrl = '$baseUrl/api/settings';
+
   static String productsUrl(int companyId) =>
       '$baseUrl/api/products/$companyId';
 
