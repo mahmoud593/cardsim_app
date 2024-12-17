@@ -9,8 +9,22 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/loading_widget.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class PaymentHistoryScreen extends StatelessWidget {
+class PaymentHistoryScreen extends StatefulWidget {
   const PaymentHistoryScreen({super.key});
+
+  @override
+  State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
+}
+
+class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    PaymentHistoryCubit.get(context).getPaymentHistory();
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -55,11 +55,11 @@ class Data {
   String? tracking;
   String? payment;
   int? amount;
-  double? tax;
-  double? total;
+  dynamic? tax;
+  dynamic? total;
   String? image;
   String? status;
-  Null? notes;
+  dynamic? notes;
   String? createdAt;
 
   Data(

@@ -68,10 +68,12 @@ class OrdersScreen extends StatelessWidget {
                       inAsyncCall: state is GetOrdersLoadingState,
                       progressIndicator: const LoadingAnimationWidget(),
                       color: Colors.transparent,
-                      child: state is GetOrdersLoadingState? Container():ListView.builder(
+                      child: state is GetOrdersLoadingState?
+                      Container():
+                      OrdersCubit.get(context).ordersModel.orders.isNotEmpty? ListView.builder(
                         itemCount: OrdersCubit.get(context).ordersModel.orders.length,
                           itemBuilder: (context, index){
-                            return OrdersCubit.get(context).ordersModel.orders.isNotEmpty ? GameOrderCard(
+                            return GameOrderCard(
                               transactionNumber: OrdersCubit.get(context).ordersModel.orders[index].id.toString(),
                               product: OrdersCubit.get(context).ordersModel.orders[index].productName,
                               playerName: OrdersCubit.get(context).ordersModel.orders[index].field.name,
@@ -80,13 +82,13 @@ class OrdersScreen extends StatelessWidget {
                               quantity: OrdersCubit.get(context).ordersModel.orders[index].quantity,
                               status: OrdersCubit.get(context).ordersModel.orders[index].status,
                               purchaseDate: OrdersCubit.get(context).ordersModel.orders[index].createdAt,
-                            ) : Center(
-                              child: Text(
-                                'لا يوجد بيانات لعرضها',
-                                style: TextStyles.textStyle18Medium,
-                              ),
                             );
                           },
+                      ) : Center(
+                        child: Text(
+                          'لا يوجد بيانات لعرضها',
+                          style: TextStyles.textStyle18Medium,
+                        ),
                       ),
                     ),
                   ),

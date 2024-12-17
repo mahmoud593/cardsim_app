@@ -49,11 +49,11 @@ class PaymentHistoryCard extends StatelessWidget {
               children: [
                 Text(
                   'الرصيد قبل : \$$balanceBefore',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
+                  style: TextStyles.textStyle14Medium,
                 ),
                 Text(
                   'الرصيد بعد : \$$balanceAfter',
-                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.lightGrey),
+                  style: TextStyles.textStyle14Medium,
                 ),
               ],
             ),
