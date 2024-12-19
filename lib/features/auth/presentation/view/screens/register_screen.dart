@@ -10,11 +10,14 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.primary,
-      body:  SafeArea(
-        child: RegisterViewBody(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager
+            .darkThemeBackground : ColorManager.primary,
       ),
+      backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager
+          .darkThemeBackground : ColorManager.primary,
+      body: const RegisterViewBody(),
     );
   }
 }

@@ -104,14 +104,26 @@ class ClientCubit extends Cubit<ClientState> {
     
     try{
 
-      var parameter =
-      {
-        "name" : name,
-        "email" : email,
-        "phone" : phone,
-        "earning_dist_value": earningDistValue,
-        "password" : password
-      };
+      var parameter={};
+      if(earningDistValue!=0){
+         parameter =
+        {
+          "name" : name,
+          "email" : email,
+          "phone" : phone,
+          "earning_dist_value": earningDistValue,
+          "password" : password
+        };
+      }else{
+         parameter =
+        {
+          "name" : name,
+          "email" : email,
+          "phone" : phone,
+          "password" : password
+        };
+      }
+
 
       var response= await httpHelper.callService(
           url: UrlConstants.addClient,
