@@ -99,6 +99,8 @@ class AuthCubit extends Cubit<AuthStates>{
       UserDataFromStorage.setFullName(userInfoModel!.name!);
       UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
       UserDataFromStorage.setEmail(userInfoModel!.email!);
+      UserDataFromStorage.setDistCustomEarning(userInfoModel!.dist_custom_earning!);
+      print('Value of custom dist: ${userInfoModel!.dist_custom_earning}');
       UserDataFromStorage.setBalance(double.parse(userInfoModel!.balance!.toString()));
       emailProfileController.text=userInfoModel!.email!;
       phoneProfileController.text=userInfoModel!.phone??'';

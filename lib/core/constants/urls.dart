@@ -38,6 +38,8 @@ class UrlConstants {
 
   static const String settingsUrl = '$baseUrl/api/settings';
 
+  static const String getLevelsUrl = '$baseUrl/api/levels-info';
+
   static String productsUrl(int companyId) =>
       '$baseUrl/api/products/$companyId';
 

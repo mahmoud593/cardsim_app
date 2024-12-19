@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/clients/presentation/cubit/client_cubit.dart';
 import 'package:games_app/features/clients/presentation/cubit/client_state.dart';
 import 'package:games_app/features/coupons/presentation/cubit/coupons_cubit.dart';
@@ -108,19 +109,22 @@ class CreateClient extends StatelessWidget {
                       ),
               
                       SizedBox(height: SizeConfig.height * 0.025),
-              
-                      DefaultTextField(
-                        controller: cubit.earningController,
-                        hintText: 'إضافة نسبة الربح %',
-                        validator: (value) {
-                          if(value!.isEmpty){
-                            return "برجاء ادخال نسبة الربح";
 
-                          }
-                        },
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        fillColor: Colors.transparent,
+                      Visibility(
+                        visible: UserDataFromStorage.distCustomEarning==true,
+                        child: DefaultTextField(
+                          controller: cubit.earningController,
+                          hintText: 'إضافة نسبة الربح %',
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return "برجاء ادخال نسبة الربح";
+
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          fillColor: Colors.transparent,
+                        ),
                       ),
               
                       SizedBox(height: SizeConfig.height * 0.025),
@@ -145,8 +149,7 @@ class CreateClient extends StatelessWidget {
                                  email: cubit.emailController.text,
                                  phone: cubit.phoneController.text,
                                  password: cubit.passwordController.text,
-                                 earningDistValue: num.parse(cubit.earningController.text
-                                 )
+                                 earningDistValue:cubit.earningController.text == '' ? 0 : num.parse(cubit.earningController.text)
                              );
                           }
                         },

@@ -40,11 +40,10 @@ class RegisterViewBody extends StatelessWidget {
                     decoration:  BoxDecoration(
                       color: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.primary,
                     ),
-                    height: MediaQuery.sizeOf(context).height*.17,
-                    child: Column(
+                    height: MediaQuery.sizeOf(context).height*.14,
+                    child: const Column(
                       children: [
-                        SizedBox(height: MediaQuery.of(context).size.height*.03,),
-                        const AppLogo(),
+                        AppLogo(),
                       ],
                     )
                 ),
@@ -57,7 +56,7 @@ class RegisterViewBody extends StatelessWidget {
                     ),
                     decoration:  BoxDecoration(
                         color: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackgroundLight : Colors.white,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(35),
                           topLeft: Radius.circular(35),
                         )
@@ -114,7 +113,7 @@ class RegisterViewBody extends StatelessWidget {
                             keyboardType: TextInputType.phone ,
                             fillColor: ColorManager.gray ,
                             textInputAction: TextInputAction.next,
-                            hintText: 'االهاتف',
+                            hintText: 'الهاتف',
                             controller: cubit.phoneRegisterController,
 
 

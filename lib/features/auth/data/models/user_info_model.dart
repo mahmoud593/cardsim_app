@@ -6,6 +6,7 @@ class UserInfoModel {
   String? image;
   bool? email_2fa;
   bool? google_2fa;
+  bool? dist_custom_earning;
   String? is_active;
   String? created_at;
   int? id;
@@ -21,6 +22,7 @@ class UserInfoModel {
     this.image,
     this.email_2fa,
     this.google_2fa,
+    this.dist_custom_earning,
     this.is_active,
     this.created_at,
     this.id,
@@ -37,6 +39,7 @@ class UserInfoModel {
     image = json['image'];
     email_2fa = json['email_2fa'];
     google_2fa = json['google_2fa'];
+    dist_custom_earning = json['dist_custom_earning'];
     is_active = json['is_active'];
     created_at = json['created_at'];
     id = json['id'];
@@ -53,6 +56,7 @@ class UserInfoModel {
     data['image'] = image;
     data['email_2fa'] = email_2fa;
     data['google_2fa'] = google_2fa;
+    data['dist_custom_earning'] = dist_custom_earning;
     data['is_active'] = is_active;
     data['created_at'] = created_at;
     data['id'] = id;

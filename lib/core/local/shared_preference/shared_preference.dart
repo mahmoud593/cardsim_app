@@ -8,6 +8,7 @@ class UserDataFromStorage {
   static late bool userIsLogin;
   static late bool themeIsDarkMode=false;
   static late bool onBoardingIsOpen;
+  static late bool distCustomEarning;
   static late String userPhoneTypeFromStorage;
   static String languageCodeFromStorage='ar';
   static String appCurrencyFromStorage='USD';
@@ -55,6 +56,11 @@ class UserDataFromStorage {
   }
   static setThemeIsDarkMode(bool darkMode) {
     themeIsDarkMode = darkMode;
+    _setData();
+  }
+
+  static setDistCustomEarning(bool distCustomEarning) {
+    distCustomEarning = distCustomEarning;
     _setData();
   }
 
@@ -193,6 +199,7 @@ class UserDataFromStorage {
     prefs.setBool("firstTime",firstTime);
     prefs.setBool("themeIsDarkMode",themeIsDarkMode);
     prefs.setBool("onBoardingIsOpen",onBoardingIsOpen);
+    prefs.setBool("distCustomEarning",distCustomEarning);
     prefs.setString("languageCodeFromStorage",languageCodeFromStorage);
     prefs.setString("languageNameFromStorage",languageNameFromStorage);
     prefs.setString("userTokenFromStorage",userTokenFromStorage);
@@ -228,6 +235,7 @@ class UserDataFromStorage {
     firstTime = prefs.getBool("firstTime")?? true;
     themeIsDarkMode = prefs.getBool("themeIsDarkMode")?? false;
     onBoardingIsOpen = prefs.getBool("onBoardingIsOpen")?? false;
+    distCustomEarning = prefs.getBool("distCustomEarning")?? false;
     languageCodeFromStorage = prefs.getString("languageCodeFromStorage")??'ar';
     languageNameFromStorage = prefs.getString("languageNameFromStorage")??'langArabic';
     userPhoneTypeFromStorage = prefs.getString("userPhoneTypeFromStorage")??'';
