@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/features/orders/data/models/orders_model.dart';
+import 'package:games_app/features/orders/presentation/view/order_details_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../../core/helper/app_size_config.dart';
 
 class GameOrderCard extends StatelessWidget {
   final String transactionNumber;
@@ -13,6 +18,7 @@ class GameOrderCard extends StatelessWidget {
   final String status;
   final DateTime purchaseDate;
   final String? rejectReason;
+  final Order data;
 
   const GameOrderCard({
     super.key,
@@ -25,6 +31,7 @@ class GameOrderCard extends StatelessWidget {
     required this.status,
     required this.purchaseDate,
     this.rejectReason,
+    required this.data,
   });
 
   @override
@@ -118,6 +125,24 @@ class GameOrderCard extends StatelessWidget {
                   style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.error),
                 ),
               ),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'تفاصيل الطلب : ',
+                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.success),
+                ),
+                IconButton(
+                    onPressed: (){
+                      customPushNavigator(context, OrderDetailsScreen(orderDetails: data));
+                    },
+                    icon: const Icon(Icons.visibility_outlined, color: ColorManager.primary,),
+                    iconSize: SizeConfig.height * 0.03
+                ),
+              ],
+            ),
           ],
         ),
       ),
