@@ -82,6 +82,7 @@ class OrdersScreen extends StatelessWidget {
                               quantity: OrdersCubit.get(context).ordersModel.orders[index].quantity,
                               status: OrdersCubit.get(context).ordersModel.orders[index].status,
                               purchaseDate: OrdersCubit.get(context).ordersModel.orders[index].createdAt,
+                              data: OrdersCubit.get(context).ordersModel.orders[index],
                             );
                           },
                       ) : Center(
