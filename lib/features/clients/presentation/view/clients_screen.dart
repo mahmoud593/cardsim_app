@@ -103,17 +103,22 @@ class _ClientsScreenState extends State<ClientsScreen> {
                   state is GetAllClientsLoadingState?
                   const Center(child: CupertinoActivityIndicator()):
                   Expanded(
-                    child: ListView.separated(
-                        itemBuilder: (context, index) => ClientsCardWidget(
-                          username: cubit.clientsList[index].name!,
-                          phone: cubit.clientsList[index].phone!,
-                          email: cubit.clientsList[index].email!,
-                          balance: cubit.clientsList[index].balance!,
-                          createdAt: cubit.clientsList[index].createdAt!,
-                          rate: cubit.clientsList[index].distEarningRate!,
-                        ),
-                        separatorBuilder: (context, index) => SizedBox(height: SizeConfig.height * 0.02),
-                        itemCount: cubit.clientsList.length
+                    child: RefreshIndicator(
+                      onRefresh: ()async{
+                        cubit.getAllClients();
+                      },
+                      child: ListView.separated(
+                          itemBuilder: (context, index) => ClientsCardWidget(
+                            username: cubit.clientsList[index].name!,
+                            phone: cubit.clientsList[index].phone!,
+                            email: cubit.clientsList[index].email!,
+                            balance: cubit.clientsList[index].balance!,
+                            createdAt: cubit.clientsList[index].createdAt!,
+                            rate: cubit.clientsList[index].distEarningRate!,
+                          ),
+                          separatorBuilder: (context, index) => SizedBox(height: SizeConfig.height * 0.02),
+                          itemCount: cubit.clientsList.length
+                      ),
                     )
                   ),
 

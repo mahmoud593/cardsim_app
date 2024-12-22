@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:shimmer/shimmer.dart'; // Import shimmer package
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -20,8 +22,8 @@ class ImageCarousalWidget extends StatelessWidget {
           return SizedBox(
             height: 180,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[200]!,
-              highlightColor: Colors.grey[100]!,
+              baseColor:UserDataFromStorage.themeIsDarkMode? ColorManager.darkThemeBackground :Colors.grey.shade300,
+              highlightColor: UserDataFromStorage.themeIsDarkMode?ColorManager.darkThemeBackgroundLight:Colors.grey.shade100,
               direction: ShimmerDirection.rtl,
               child: Skeletonizer(
                 child: ListView.builder(
@@ -34,7 +36,7 @@ class ImageCarousalWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Constants.defaultRadius),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          color: Colors.grey[300],
+                          color: UserDataFromStorage.themeIsDarkMode? ColorManager.darkThemeBackground :Colors.grey.shade300,
                         ),
                       ),
                     );

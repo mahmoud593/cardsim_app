@@ -20,7 +20,11 @@ class CreateClient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ClientCubit, ClientState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is AddClientSuccessState){
+           Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
         var cubit=ClientCubit.get(context);
         return Scaffold(
@@ -108,7 +112,10 @@ class CreateClient extends StatelessWidget {
                         fillColor: Colors.transparent,
                       ),
               
-                      SizedBox(height: SizeConfig.height * 0.025),
+                      Visibility(
+                          visible: UserDataFromStorage.distCustomEarning==true,
+                          child: SizedBox(height: SizeConfig.height * 0.025)
+                      ),
 
                       Visibility(
                         visible: UserDataFromStorage.distCustomEarning==true,

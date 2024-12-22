@@ -56,7 +56,7 @@ class RequestOrderListViewItem extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            productsEntity.name  + ' ' + productsEntity.id.toString(),
+                             '${productsEntity.name}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,

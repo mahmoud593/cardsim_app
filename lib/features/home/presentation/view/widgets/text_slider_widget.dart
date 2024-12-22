@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:marquee/marquee.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -20,13 +21,13 @@ class TextSliderWidget extends StatelessWidget {
             height: 40,
             width: double.infinity,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[200]!,
-              highlightColor: Colors.grey[100]!,
+              baseColor: UserDataFromStorage.themeIsDarkMode? ColorManager.darkThemeBackground :Colors.grey.shade300,
+              highlightColor: UserDataFromStorage.themeIsDarkMode?ColorManager.darkThemeBackgroundLight:Colors.grey.shade100,
               direction:  ShimmerDirection.rtl,
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: UserDataFromStorage.themeIsDarkMode? ColorManager.darkThemeBackground :Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),

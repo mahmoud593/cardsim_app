@@ -24,7 +24,15 @@ class CreateNewBalanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<BalanceCubit, BalanceStates>(
       listener: (context,state){
-
+         if(state is CreateTransactionSuccessState){
+           BalanceCubit.get(context).paymentId='';
+           BalanceCubit.get(context).currencyId='';
+           BalanceCubit.get(context).image=null;
+           BalanceCubit.get(context).amountController.text='';
+           BalanceCubit.get(context).totalAmountController.text='';
+           customCodeController.text='';
+           Navigator.pop(context);
+         }
       },
       builder: (context, state) {
         var cubit = BalanceCubit.get(context);
@@ -35,12 +43,14 @@ class CreateNewBalanceWidget extends StatelessWidget {
             title: Text('شحن الرصيد',style: TextStyles.textStyle24Medium,
             ),
           ),
-          body: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: ModalProgressHUD(
-                inAsyncCall:  state is CreateTransactionLoadingState,
-                progressIndicator: const CupertinoActivityIndicator(),
+          body: ModalProgressHUD(
+            inAsyncCall:  state is CreateCustomCodeLoadingState,
+            progressIndicator: const CupertinoActivityIndicator(
+              color:  ColorManager.primary,
+            ),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
                 child: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width*.05,
@@ -69,12 +79,16 @@ class CreateNewBalanceWidget extends StatelessWidget {
                                   if(cubit.currencyId==''){
                                     customToast(title: ' يرجى اختيار العملة', color: Colors.red);
                                   }else{
-                                    cubit.createTransaction(
-                                      paymentId: cubit.paymentId,
-                                      currencyId: cubit.currencyId,
-                                      image: cubit.image!.path,
-                                      amount: cubit.amountController.text,
-                                    );
+                                    if(cubit.image ==null){
+                                      customToast(title: ' يرجى ارفاق صوره التحويل', color: Colors.red);
+                                    }else{
+                                      cubit.createTransaction(
+                                        paymentId: cubit.paymentId,
+                                        currencyId: cubit.currencyId,
+                                        image: cubit.image!.path,
+                                        amount: cubit.amountController.text,
+                                      );
+                                    }
                                   }
                                 }
 

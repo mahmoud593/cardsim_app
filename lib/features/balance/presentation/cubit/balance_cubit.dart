@@ -264,6 +264,7 @@ class BalanceCubit extends Cubit<BalanceStates> {
       transcationModel = TranscationModel.fromJson(response);
 
       print('transcationModel  is ${transcationModel!.message!}');
+      getAllTransactions();
 
       emit(CreateTransactionSuccessState());
     }catch(error){
@@ -322,7 +323,7 @@ class BalanceCubit extends Cubit<BalanceStates> {
   var picker = ImagePicker();
   File? image;
 
-  Future<void> pickMoneyTransactionImage() async {
+  void pickMoneyTransactionImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     print('pickedFile is ${pickedFile}');
     if (pickedFile != null) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/home/presentation/controller/companies_cubit/companies_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view.dart';
 import 'package:games_app/features/home/presentation/view/widgets/image_carousal_widget.dart';
@@ -23,10 +24,13 @@ class HomeScreenBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Text(
+            ' مساء الخير, ${UserDataFromStorage.fullNameFromStorage}',
+            style: TextStyles.textStyle18Bold.copyWith(),
+          ),
           const SizedBox(
             height: 5,
           ),
-          const TextSliderWidget(),
           const SizedBox(
             height: 16,
           ),
@@ -38,12 +42,14 @@ class HomeScreenBody extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Center(
-            child: Text(
-              ' جميع العروض',
-              style: TextStyles.textStyle24Bold,
-            ),
-          ),
+          const TextSliderWidget(),
+
+          // Center(
+          //   child: Text(
+          //     ' جميع العروض',
+          //     style: TextStyles.textStyle24Bold,
+          //   ),
+          // ),
           const SizedBox(
             height: 16,
           ),
@@ -58,8 +64,7 @@ class HomeScreenBody extends StatelessWidget {
                   onClear: (){
                     if (searchController.text.isNotEmpty) {
                       searchController.clear();
-                      context.read<CompaniesCubit>()
-                          .getCompanies(query: searchController.text);
+                      context.read<CompaniesCubit>().getCompanies(query: searchController.text);
                     }
                   },
                   onSubmitted: (value) {

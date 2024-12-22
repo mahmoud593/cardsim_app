@@ -28,10 +28,6 @@ class HomeScreen extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         titleSpacing: 0.0,
-        title: Text(
-          ' مساء الخير, ${UserDataFromStorage.fullNameFromStorage} !',
-          style: TextStyles.textStyle18Bold.copyWith(),
-        ),
         actions: [
           BlocBuilder<CurrencyCubit, CurrencyStates>(
             builder: (context, state) {

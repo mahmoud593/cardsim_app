@@ -15,6 +15,8 @@ class CategoriesListView extends StatefulWidget {
 
 class _CategoriesListViewState extends State<CategoriesListView> {
   String? selectedCategory;
+  bool isAll=false;
+  bool isSelected=false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,46 +26,80 @@ class _CategoriesListViewState extends State<CategoriesListView> {
         if (state is CategoriesSuccess) {
           return SizedBox(
             height: 50,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final category = state.categories![index];
-                final isSelected = category.name == selectedCategory;
-
-                return GestureDetector(
+            child: Row(
+              children: [
+                GestureDetector(
                   onTap: () {
                     setState(() {
-                      if (selectedCategory == category.name) {
-                        selectedCategory = null;
-                      } else {
-                        selectedCategory = category.name;
-                      }
-                    });
-                    context
-                        .read<CompaniesCubit>()
-                        .getCompanies(category: selectedCategory);
+                    isAll=true;
+                    selectedCategory='';
+                    context.read<CompaniesCubit>().getCompanies(category: null);
+                  });
                   },
                   child: Chip(
                     label: Text(
-                      category.name,
+                      'الكل',
                       style: TextStyle(
-                        color: isSelected
+                        color: isAll
                             ? Colors.white
                             : isLight
-                                ? Colors.black
-                                : Colors.white,
+                            ? Colors.black
+                            : Colors.white,
                       ),
                     ),
-                    backgroundColor: isSelected
+                    backgroundColor: isAll
                         ? ColorManager.primary
                         : isLight
-                            ? Colors.grey[200]
-                            : ColorManager.darkThemeBackgroundLight,
+                        ? Colors.grey[200]
+                        : ColorManager.darkThemeBackgroundLight,
                   ),
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(width: 8),
-              itemCount: state.categories!.length,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final category = state.categories![index];
+                      isSelected = category.name == selectedCategory;
+                              
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectedCategory == category.name) {
+                              selectedCategory = null;
+                            } else {
+                              selectedCategory = category.name;
+                            }
+                            isAll=false;
+                          });
+                          context
+                              .read<CompaniesCubit>()
+                              .getCompanies(category: selectedCategory);
+                        },
+                        child: Chip(
+                          label: Text(
+                            category.name,
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Colors.white
+                                  : isLight
+                                      ? Colors.black
+                                      : Colors.white,
+                            ),
+                          ),
+                          backgroundColor: isSelected
+                              ? ColorManager.primary
+                              : isLight
+                                  ? Colors.grey[200]
+                                  : ColorManager.darkThemeBackgroundLight,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(width: 8),
+                    itemCount: state.categories!.length,
+                  ),
+                ),
+              ],
             ),
           );
         } else if (state is CategoriesLoading) {

@@ -4,6 +4,7 @@ import 'package:games_app/features/home/domain/entities/companies_entity.dart';
 import 'package:games_app/features/home/presentation/controller/products_cubit/products_cubit.dart';
 import 'package:games_app/features/home/presentation/controller/request_cubit/request_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_screen_body.dart';
+import 'package:games_app/styles/text_styles/text_styles.dart';
 
 import '../../../../../core/services/service_locator.dart';
 import '../../../domain/repos/home_repo.dart';
@@ -27,6 +28,9 @@ class RequestOrderScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('انشاء طلب',style: TextStyles.textStyle24Medium,),),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SafeArea(

@@ -116,17 +116,22 @@ class _BalanceScreenState extends State<BalanceScreen> {
                     state is GetTransactionsLoadingState?
                     const Center(child: CupertinoActivityIndicator()):
                     Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) => BalanceCard(
-                            proofOfPayment: cubit.allTransactionModel!.data![index].image!,
-                            transactionId: cubit.allTransactionModel!.data![index].id!,
-                            paymentMethod: cubit.allTransactionModel!.data![index].payment!,
-                            amount: '${cubit.allTransactionModel!.data![index].amount!}',
-                            status: cubit.allTransactionModel!.data![index].status!,
-                            transactionDate: cubit.allTransactionModel!.data![index].createdAt!,
-                          ),
-                          separatorBuilder: (context, index) => SizedBox(height: SizeConfig.height * 0.02,),
-                          itemCount: cubit.allTransactionModel!.data!.length
+                      child: RefreshIndicator(
+                        onRefresh:()async{
+                          BalanceCubit.get(context).getAllTransactions();
+                        } ,
+                        child: ListView.separated(
+                            itemBuilder: (context, index) => BalanceCard(
+                              proofOfPayment: cubit.allTransactionModel!.data![index].image!,
+                              transactionId: cubit.allTransactionModel!.data![index].id!,
+                              paymentMethod: cubit.allTransactionModel!.data![index].payment!,
+                              amount: '${cubit.allTransactionModel!.data![index].amount!}',
+                              status: cubit.allTransactionModel!.data![index].status!,
+                              transactionDate: cubit.allTransactionModel!.data![index].createdAt!,
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(height: SizeConfig.height * 0.02,),
+                            itemCount: cubit.allTransactionModel!.data!.length
+                        ),
                       ),
                     ),
 

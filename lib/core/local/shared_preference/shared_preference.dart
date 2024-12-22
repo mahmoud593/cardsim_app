@@ -59,8 +59,8 @@ class UserDataFromStorage {
     _setData();
   }
 
-  static setDistCustomEarning(bool distCustomEarning) {
-    distCustomEarning = distCustomEarning;
+  static setDistCustomEarning(bool value) {
+    distCustomEarning = value;
     _setData();
   }
 
