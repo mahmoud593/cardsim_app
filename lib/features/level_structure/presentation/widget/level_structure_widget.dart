@@ -31,7 +31,7 @@ class LevelStructureWidget extends StatelessWidget {
                       Image(
                         height:  MediaQuery.sizeOf(context).height*.1,
                         width: MediaQuery.sizeOf(context).height*.1,
-                        image: const AssetImage('assets/images/rank.png'),
+                        image: NetworkImage('${cubit.levels[index].image}'),
                       ),
                       SizedBox( height: MediaQuery.sizeOf(context).height*.03, ),
                       Text('المستوي : ${cubit.levels[index].name}',style: TextStyles.textStyle18Medium.copyWith(
@@ -75,7 +75,7 @@ class LevelStructureWidget extends StatelessWidget {
                   Image(
                     height:  MediaQuery.sizeOf(context).height*.1,
                     width: MediaQuery.sizeOf(context).height*.1,
-                    image: const AssetImage('assets/images/rank.png'),
+                    image:  NetworkImage('${cubit.levels[index].image}'),
                   ),
 
                   SizedBox( height: MediaQuery.sizeOf(context).height*.02, ),

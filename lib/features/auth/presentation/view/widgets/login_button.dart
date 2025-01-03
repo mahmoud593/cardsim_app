@@ -15,7 +15,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit,AuthStates>(
         listener: (context, state) {
-          if(state is LoginSuccessState){
+          if(state is GetUserSuccessState){
             customPushAndRemoveUntil(context, BottomNavigationScreen());
           }
         },

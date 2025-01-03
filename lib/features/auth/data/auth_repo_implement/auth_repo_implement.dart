@@ -7,6 +7,8 @@ import 'package:games_app/features/auth/data/auth_repo/auth_repo.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+
 
 class AuthRepoImplement implements AuthRepo{
 
@@ -73,7 +75,8 @@ class AuthRepoImplement implements AuthRepo{
       print('register success');
 
     }catch(e){
-      print('Error in login: ${e.toString()}');
+
+      print('Error in Register: ${e.toString()}');
     }
 
     return authModel??AuthModel();

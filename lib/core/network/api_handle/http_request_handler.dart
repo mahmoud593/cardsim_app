@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_exception.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
@@ -80,6 +81,10 @@ dynamic responseExceptionHandler(http.Response response) {
     case 200:
       return json.decode(response.body);
     case 401:
+
+    case 422:
+      return customToast(title: json.decode(response.body)['message'], color: Colors.red);
+
     case 403:
       debugPrint('Unauthorised Exception');
 

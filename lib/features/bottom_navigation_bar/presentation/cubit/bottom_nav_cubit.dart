@@ -42,6 +42,13 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
     if (userInfoModel != null) {
       AppSession.userInfoModel = userInfoModel;
       print('get user info');
+      UserDataFromStorage.setFullName(userInfoModel!.name!);
+      UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
+      UserDataFromStorage.setEmail(userInfoModel!.email!);
+      UserDataFromStorage.setDistCustomEarning(userInfoModel!.dist_custom_earning!);
+      print('Value of custom dist: ${userInfoModel!.dist_custom_earning}');
+      UserDataFromStorage.setBalance(double.parse(userInfoModel!.balance!.toString()));
+      print('get user info');
       print(userInfoModel!.distProfit!);
       emit(GetUserSuccessState());
     } else {

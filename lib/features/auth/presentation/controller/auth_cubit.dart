@@ -61,7 +61,7 @@ class AuthCubit extends Cubit<AuthStates>{
         emit(CreateAccountSuccessState());
       }else{
         print('Error in register ${registerModel}');
-        customToast(title: 'الحساب مسجل من قبل', color: Colors.red);
+        customToast(title: 'هذه القيمة مُستخدمة من قبل.', color: Colors.red);
         emit(CreateAccountErrorState());
 
     }
