@@ -47,7 +47,7 @@ class FilterListWidget extends StatelessWidget {
                         .getOrders(search: "", status: "completed");
                     break;
 
-                  case "مرفوضة":
+                  case "مرفوض":
                     OrdersCubit.get(context)
                         .getOrders(search: "", status: "reject");
                     break;

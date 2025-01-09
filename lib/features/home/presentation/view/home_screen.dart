@@ -32,9 +32,9 @@ class HomeScreen extends StatelessWidget {
           BlocBuilder<CurrencyCubit, CurrencyStates>(
             builder: (context, state) {
               return state is GetCurrencyLoadingState ? const LoadingAnimationWidget() : CurrencyDropdown(
-                initialValue: CurrencyCubit.get(context).initialCurrency,
+                initialValue: UserDataFromStorage.appCurrencyFromStorage,
                 onCurrencyChanged: (value) async {
-                  await CurrencyCubit.get(context).currencyConvert(UserDataFromStorage.appCurrencyFromStorage, value);
+                  await CurrencyCubit.get(context).currencyConvert(UserDataFromStorage.appCurrencyFromStorage, value, UserDataFromStorage.balanceFromStorage);
                 },
               );
             },

@@ -20,17 +20,6 @@ class CurrencyCubit extends Cubit<CurrencyStates> {
 
   double totalPrice = 0.0;
 
-  Future<void> currencyConvert(String from, String to) async {
-    emit(ChangeCurrencyLoadingState());
-    try {
-      UserDataFromStorage.setAppCurrency(to);
-      emit(ChangeCurrencySuccessState());
-    } catch (error) {
-      debugPrint("Error when change currency =================> ${error.toString()}");
-      emit(ChangeCurrencyErrorState());
-    }
-  }
-
   CurrencyModel ?currencyModel ;
 
   List<String> currencyList = [];
@@ -64,6 +53,58 @@ class CurrencyCubit extends Cubit<CurrencyStates> {
       emit(GetCurrencyErrorState());
     }
 
+  }
+
+  Future<void> currencyConvert(String from, String to, double amount) async {
+    emit(ChangeCurrencyLoadingState());
+    try {
+      debugPrint("Starting currency conversion from: $from to: $to, amount: $amount");
+
+      // Ensure currencyModel is valid
+      if (currencyModel == null || currencyModel!.data == null) {
+        throw Exception("Currency data is not available.");
+      }
+
+      // Retrieve currencies
+      final fromCurrency = currencyModel!.data!.firstWhere(
+            (currency) => currency.short == from,
+        orElse: () => throw Exception("From currency not found."),
+      );
+      final toCurrency = currencyModel!.data!.firstWhere(
+            (currency) => currency.short == to,
+        orElse: () => throw Exception("To currency not found."),
+      );
+
+      // Debug: Log exchange rates
+      debugPrint("From exchange rate: ${fromCurrency.exchangeRate}, To exchange rate: ${toCurrency.exchangeRate}");
+
+      // Validate exchange rates
+      num fromExchangeRate = fromCurrency.exchangeRate ?? 0;
+      num toExchangeRate = toCurrency.exchangeRate ?? 0;
+
+      if (fromExchangeRate == 0 || toExchangeRate == 0) {
+        throw Exception("Invalid exchange rates: From($fromExchangeRate), To($toExchangeRate)");
+      }
+
+      // Perform the conversion
+      double amountInUSD = amount / fromExchangeRate;
+      double convertedAmount = amountInUSD * toExchangeRate;
+
+      // Debug: Log intermediate conversion results
+      debugPrint("Amount in USD: $amountInUSD, Converted Amount: $convertedAmount");
+
+      // Update totalPrice with the converted amount
+      totalPrice = convertedAmount;
+
+      // Save the balance and selected currency
+      UserDataFromStorage.setBalance(totalPrice);
+      UserDataFromStorage.setAppCurrency(to);
+
+      emit(ChangeCurrencySuccessState());
+    } catch (error) {
+      debugPrint("Error in currency conversion: ${error.toString()}");
+      emit(ChangeCurrencyErrorState());
+    }
   }
 
 

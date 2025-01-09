@@ -74,7 +74,7 @@ class OrdersScreen extends StatelessWidget {
                         itemCount: OrdersCubit.get(context).ordersModel.orders.length,
                           itemBuilder: (context, index){
                             return GameOrderCard(
-                              transactionNumber: OrdersCubit.get(context).ordersModel.orders[index].id.toString(),
+                              transactionNumber: OrdersCubit.get(context).ordersModel.orders[index].tracking.toString(),
                               product: OrdersCubit.get(context).ordersModel.orders[index].productName,
                               playerName: OrdersCubit.get(context).ordersModel.orders[index].field.name,
                               priceForOne: OrdersCubit.get(context).ordersModel.orders[index].productPrice,

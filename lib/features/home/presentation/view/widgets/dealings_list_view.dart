@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_cubit.dart';
+import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_states.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view_item.dart';
 
 class DealingsListView extends StatelessWidget {
@@ -9,10 +12,16 @@ class DealingsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of items
     final items = [
-      DealingsListViewItem(
-          value:
-              '\$ ${UserDataFromStorage.balanceFromStorage.toStringAsFixed(2)}',
-          title: 'الرصيد'),
+      BlocBuilder<CurrencyCubit, CurrencyStates>(
+        builder: (context, state) {
+          return DealingsListViewItem(
+              value:
+              '${UserDataFromStorage
+                  .appCurrencyFromStorage} ${UserDataFromStorage
+                  .balanceFromStorage.toStringAsFixed(2)}',
+              title: 'الرصيد');
+        },
+      ),
       DealingsListViewItem(
           value: '${UserDataFromStorage.orderWaiting}',
           title: 'الطلبات قيد الانتظار'),
@@ -30,7 +39,8 @@ class DealingsListView extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
-        separatorBuilder: (context, index) => const SizedBox(
+        separatorBuilder: (context, index) =>
+        const SizedBox(
           width: 8,
         ),
         itemBuilder: (context, index) {
