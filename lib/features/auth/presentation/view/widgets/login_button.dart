@@ -17,6 +17,8 @@ class LoginButton extends StatelessWidget {
         listener: (context, state) {
           if(state is GetUserSuccessState){
             customPushAndRemoveUntil(context, BottomNavigationScreen());
+            AuthCubit.get(context).emailLoginController.clear();
+            AuthCubit.get(context).passwordLoginController.clear();
           }
         },
       builder: (context, state) {

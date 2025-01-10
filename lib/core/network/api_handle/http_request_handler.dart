@@ -83,7 +83,7 @@ dynamic responseExceptionHandler(http.Response response) {
     case 401:
 
     case 422:
-      return customToast(title: json.decode(response.body)['message'], color: Colors.red);
+    debugPrint('Unauthorised Exception');
 
     case 403:
       debugPrint('Unauthorised Exception');

@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthStates>{
 
     emit(GetUserLoadingState());
     userInfoModel= await AuthRepoImplement().getUser();
-    if(userInfoModel != null){
+    if(userInfoModel != null && userInfoModel!.name != null){
       UserDataFromStorage.setFullName(userInfoModel!.name!);
       UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
       UserDataFromStorage.setEmail(userInfoModel!.email!);
@@ -108,7 +108,7 @@ class AuthCubit extends Cubit<AuthStates>{
       print('get user info');
       emit(GetUserSuccessState());
     }else {
-      customToast(title: 'حدث خطا اثناء الحصول ع البيانات', color: Colors.red);
+      // customToast(title: 'حدث خطا اثناء الحصول ع البيانات', color: Colors.red);
       emit(GetUserErrorState());
     }
   }
@@ -152,28 +152,7 @@ class AuthCubit extends Cubit<AuthStates>{
 
   HttpHelper httpHelper = HttpHelper();
 
-  Future <void> logout()async{
 
-    emit(LogoutLoadingState());
-
-     try{
-       var response =  await httpHelper.callService(
-         responseType: ResponseType.post,
-         url: UrlConstants.logoutUrl,
-         authorization: true,
-       );
-       UserDataFromStorage.setUserTokenFromStorage('');
-       print(UserDataFromStorage.userTokenFromStorage);
-
-       print('Logout Successfully');
-       emit(LogoutSuccessState());
-     }catch(error){
-       print('error in logout is $error');
-       emit(LogoutErrorState());
-     }
-
-
-  }
 
 
   Future <void> forgetPassword({

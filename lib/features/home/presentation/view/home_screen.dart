@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
+import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_cubit.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_states.dart';
 import 'package:games_app/features/home/presentation/view/widgets/CurrencyDropdown.dart';
@@ -34,7 +36,18 @@ class HomeScreen extends StatelessWidget {
               return state is GetCurrencyLoadingState ? const LoadingAnimationWidget() : CurrencyDropdown(
                 initialValue: UserDataFromStorage.appCurrencyFromStorage,
                 onCurrencyChanged: (value) async {
-                  await CurrencyCubit.get(context).currencyConvert(UserDataFromStorage.appCurrencyFromStorage, value, UserDataFromStorage.balanceFromStorage);
+                  UserDataFromStorage.setAppCurrency(value);
+                  await BalanceCubit.get(context).getCurrency().then((v){
+                    if(value=='TRY'){
+                      BalanceCubit.get(context).selectCustomCurrency(value: '₺');
+                    }else if(value=='EGP'){
+                      BalanceCubit.get(context).selectCustomCurrency(value: 'LE');
+                    }else{
+                      BalanceCubit.get(context).selectCustomCurrency(value: value);
+                    }
+                  });
+                  print('value is $value');
+                  // await CurrencyCubit.get(context).currencyConvert(UserDataFromStorage.appCurrencyFromStorage, value, UserDataFromStorage.balanceFromStorage);
                 },
               );
             },

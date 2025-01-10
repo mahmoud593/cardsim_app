@@ -95,9 +95,10 @@ class AuthRepoImplement implements AuthRepo{
     );
 
     print(response);
-
-    userInfoModel=UserInfoModel.fromJson(response);
-    print('Get user info: ${userInfoModel.toString()}');
+    if(response !=null){
+      userInfoModel=UserInfoModel.fromJson(response);
+      print('Get user info: ${userInfoModel.toString()}');
+    }
     return userInfoModel??UserInfoModel();
   }
 

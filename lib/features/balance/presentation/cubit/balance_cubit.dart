@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/features/balance/data/models/create_custom_code_model.dart';
@@ -46,6 +47,8 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
   String currency = '';
   num chargeRate = 1;
+  num numOfCharge = 1;
+  String currencyCharge = '';
   String currencyId='';
 
   void selectCurrency({required String value,}) {
@@ -59,6 +62,31 @@ class BalanceCubit extends Cubit<BalanceStates> {
     });
     currency = value;
     emit(SelectCurrencyState());
+  }
+
+  void selectCustomCurrency({required String value,}) {
+    print('Test is ${value}');
+    if(value!='USD'){
+      currencyModel!.data!.forEach((element) {
+        print('element.code is ${element.code}');
+        if(element.code==value){
+          numOfCharge=element.exchangeRate!;
+          currencyCharge=value;
+          CashHelper.saveData(key: 'numOfCharge', value: numOfCharge);
+          CashHelper.saveData(key: 'currencyCharge', value: currencyCharge);
+          print('numOfCharge is ${numOfCharge}');
+          emit(SelectCurrencyState());
+        }
+      });
+    }else{
+      numOfCharge=1;
+      currencyCharge=value;
+      CashHelper.saveData(key: 'numOfCharge', value: numOfCharge);
+      CashHelper.saveData(key: 'currencyCharge', value: currencyCharge);
+      print('numOfCharge is ${numOfCharge}');
+      emit(SelectCurrencyState());
+    }
+
   }
 
   PaymentMethodModel ?paymentMethodModel;

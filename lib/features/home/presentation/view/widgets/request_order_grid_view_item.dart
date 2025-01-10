@@ -1,4 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
+import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
+import 'package:games_app/features/balance/presentation/cubit/balance_state.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
 
 class RequestOrderListViewItem extends StatelessWidget {
@@ -82,11 +88,17 @@ class RequestOrderListViewItem extends StatelessWidget {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                         ),
-                        Text(
-                          '${productsEntity.price}LE',
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 14),
-                        ),
+                        CashHelper.getData(key: 'currencyCharge')!='USD'?
+                        BlocBuilder<BalanceCubit,BalanceStates>(
+                          builder: (context, state) {
+                            return Text(
+                              '${(double.parse(productsEntity.price)*CashHelper.getData(key: 'numOfCharge')).toStringAsFixed(2)}${CashHelper.getData(key: 'currencyCharge')}',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 14),
+                            );
+                          },
+
+                        ):Container(),
                       ],
                     ),
                   ),

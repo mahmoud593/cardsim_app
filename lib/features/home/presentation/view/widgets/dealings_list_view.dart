@@ -15,9 +15,7 @@ class DealingsListView extends StatelessWidget {
       BlocBuilder<CurrencyCubit, CurrencyStates>(
         builder: (context, state) {
           return DealingsListViewItem(
-              value:
-              '${UserDataFromStorage
-                  .appCurrencyFromStorage} ${UserDataFromStorage
+              value: '\$ ${UserDataFromStorage
                   .balanceFromStorage.toStringAsFixed(2)}',
               title: 'الرصيد');
         },

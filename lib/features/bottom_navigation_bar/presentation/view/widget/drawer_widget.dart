@@ -136,8 +136,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               DrawerItem(
                 icon: Icons.logout,
                 title: 'تسجيل الخروج',
-                onTap: () {
-                  AuthCubit.get(context).logout();
+                onTap: () async {
+                  await BottomNavCubit.get(context).logout();
                   customPushAndRemoveUntil(context, const LoginScreen());
                 },
               ),
