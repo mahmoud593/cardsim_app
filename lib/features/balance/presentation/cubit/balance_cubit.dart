@@ -19,7 +19,7 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/default_text_field.dart';
 import 'package:games_app/styles/widgets/toast.dart';
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BalanceCubit extends Cubit<BalanceStates> {
@@ -264,20 +264,12 @@ class BalanceCubit extends Cubit<BalanceStates> {
   TextEditingController notesController = TextEditingController();
 
   Future<void> createTransaction({
-    required String paymentId,
-    required String currencyId,
-    required String image,
-    required String amount,
+    required var parameter,
   }) async {
 
     emit(CreateCustomCodeLoadingState());
 
-    var parameter={
-      'payment_id':paymentId,
-      'currency_id':currencyId,
-      // 'image':AssetManager.logout,
-      'amount':amount,
-    };
+
 
     try{
       var response = await httpHelper.callService(
@@ -350,12 +342,14 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
   var picker = ImagePicker();
   File? image;
+  String filePath='';
 
   void pickMoneyTransactionImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     print('pickedFile is ${pickedFile}');
     if (pickedFile != null) {
       print('pickedFile.path is ${pickedFile.path}');
+      filePath = pickedFile.path;
       image = File(pickedFile.path);
       emit(ImagePickerSuccessState());
     } else {

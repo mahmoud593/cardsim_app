@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/balance/data/models/create_transaction_model.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_state.dart';
 import 'package:games_app/styles/assets/asset_manager.dart';
@@ -11,9 +14,15 @@ import 'package:games_app/styles/widgets/default_text_field.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class CreateNewBalanceWidget extends StatelessWidget {
+
+class CreateNewBalanceWidget extends StatefulWidget {
    CreateNewBalanceWidget({super.key});
 
+  @override
+  State<CreateNewBalanceWidget> createState() => _CreateNewBalanceWidgetState();
+}
+
+class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
   String paymentMethod='';
 
   TextEditingController customCodeController = TextEditingController();
@@ -71,7 +80,7 @@ class CreateNewBalanceWidget extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            onPressed: (){
+                            onPressed: ()async{
                               if(formKey.currentState!.validate()){
                                 if(cubit.paymentId==''){
                                   customToast(title: ' يرجى اختيار طريقة الدفع', color: Colors.red);
@@ -82,12 +91,31 @@ class CreateNewBalanceWidget extends StatelessWidget {
                                     if(cubit.image ==null){
                                       customToast(title: ' يرجى ارفاق صوره التحويل', color: Colors.red);
                                     }else{
-                                      cubit.createTransaction(
-                                        paymentId: cubit.paymentId,
-                                        currencyId: cubit.currencyId,
-                                        image: cubit.image!.path,
-                                        amount: cubit.amountController.text,
+                                      print(cubit.filePath);
+                                      MultipartFile file = await MultipartFile.fromFile(
+                                        cubit.filePath,
+                                        filename: cubit.filePath.split('/').last,
                                       );
+
+                                      var parameter={
+                                        'payment_id':cubit.paymentId,
+                                        'currency_id':cubit.currencyId,
+                                        'image':file,
+                                        'amount':cubit.amountController.text,
+                                      };
+
+
+                                        await createTransaction(
+                                        context: context,
+                                        paymentId:cubit.paymentId,
+                                        currencyId:cubit.currencyId,
+                                        filePath:cubit.filePath,
+                                        amount:cubit.amountController.text,
+                                        ).then((value){
+                                          customToast(title: 'تم ارسال الطلب', color: ColorManager.primary);
+                                          Navigator.pop(context);
+                                        });
+
                                     }
                                   }
                                 }
@@ -261,5 +289,51 @@ class CreateNewBalanceWidget extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+
+Future<void> createTransaction({
+  required String filePath,
+  required String paymentId,
+  required String currencyId,
+  required String amount,
+  required BuildContext context,
+}) async {
+
+  try {
+    MultipartFile file = await MultipartFile.fromFile(
+      filePath,
+      filename: filePath.split('/').last,
+    );
+
+    // تجهيز FormData
+    FormData formData = FormData.fromMap({
+      'payment_id': paymentId,
+      'currency_id': currencyId,
+      'image': file,
+      'amount': amount,
+    });
+
+    Dio dio = Dio();
+    var response = await dio.post(
+      UrlConstants.createTransaction,
+      data: formData,
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': "Bearer ${UserDataFromStorage.userTokenFromStorage}",
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
+    );
+
+    print(TranscationModel.fromJson(response.data).message);
+
+    BalanceCubit.get(context).getAllTransactions();
+
+  } catch (error) {
+    customToast(title: 'حدث خطا يرجي المحاولة مرة اخرى', color: ColorManager.error);
+    print('Error in getting transaction: $error');
   }
 }

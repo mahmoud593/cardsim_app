@@ -9,7 +9,7 @@ import 'package:games_app/styles/text_styles/text_styles.dart';
 
 class BalanceCard extends StatelessWidget {
   final String proofOfPayment;
-  final int transactionId;
+  final String transactionId;
   final String paymentMethod;
   final String amount;
   final String status;

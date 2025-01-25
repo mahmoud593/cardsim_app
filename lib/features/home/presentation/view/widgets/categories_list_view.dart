@@ -15,7 +15,7 @@ class CategoriesListView extends StatefulWidget {
 
 class _CategoriesListViewState extends State<CategoriesListView> {
   String? selectedCategory;
-  bool isAll=false;
+  bool isAll=true;
   bool isSelected=false;
 
   @override

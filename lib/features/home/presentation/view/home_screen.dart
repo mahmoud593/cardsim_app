@@ -26,10 +26,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: UserDataFromStorage.userTokenFromStorage != ""?
+      AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         titleSpacing: 0.0,
+
         actions: [
           BlocBuilder<CurrencyCubit, CurrencyStates>(
             builder: (context, state) {
@@ -90,6 +92,44 @@ class HomeScreen extends StatelessWidget {
                           key: ValueKey('dark'), size: 30)
                       : const Icon(Icons.dark_mode,
                           key: ValueKey('light'), size: 30),
+                ),
+              );
+            },
+          ),
+        ],
+      ):AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        titleSpacing: 0.0,
+        actions: [
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, themeState) {
+              return IconButton(
+                onPressed: () {
+                  context.read<ThemeCubit>().toggleTheme();
+                },
+                icon: AnimatedSwitcher(
+                  duration:
+                  const Duration(milliseconds: 300), // Animation duration
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    return RotationTransition(
+                      turns: child.key == const ValueKey('dark')
+                          ? Tween<double>(begin: 1.0, end: 0.75)
+                          .animate(animation)
+                          : Tween<double>(begin: 0.75, end: 1.0)
+                          .animate(animation),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: themeState == ThemeState.dark
+                      ? const Icon(Icons.light_mode,
+                      key: ValueKey('dark'), size: 30)
+                      : const Icon(Icons.dark_mode,
+                      key: ValueKey('light'), size: 30),
                 ),
               );
             },

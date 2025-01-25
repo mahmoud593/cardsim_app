@@ -123,7 +123,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
                         child: ListView.separated(
                             itemBuilder: (context, index) => BalanceCard(
                               proofOfPayment: cubit.allTransactionModel!.data![index].image!,
-                              transactionId: cubit.allTransactionModel!.data![index].id!,
+                              transactionId: cubit.allTransactionModel!.data![index].tracking!,
                               paymentMethod: cubit.allTransactionModel!.data![index].payment!,
                               amount: '${cubit.allTransactionModel!.data![index].amount!}',
                               status: cubit.allTransactionModel!.data![index].status!,
