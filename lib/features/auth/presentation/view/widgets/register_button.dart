@@ -7,6 +7,7 @@ import 'package:games_app/features/bottom_navigation_bar/presentation/view/botto
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({super.key,});
@@ -28,13 +29,18 @@ class RegisterButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           onPressed: (){
             if(cubit.registerKey.currentState!.validate()){
-               cubit.createNewAccount(
-                  email: cubit.emailRegisterController.text,
-                  password: cubit.passwordRegisterController.text,
-                  name: cubit.nameRegisterController.text,
-                  phone: cubit.phoneRegisterController.text,
-                 context: context
-              );
+              if(cubit.passwordRegisterController.text != cubit.password2RegisterController.text){
+                customToast(title: 'كلمه السر غير متطابقه', color: Colors.red);
+              }else{
+                cubit.createNewAccount(
+                    email: cubit.emailRegisterController.text,
+                    password: cubit.passwordRegisterController.text,
+                    name: cubit.nameRegisterController.text,
+                    phone: cubit.phoneRegisterController.text,
+                    context: context
+                );
+              }
+
             }
           },
         );

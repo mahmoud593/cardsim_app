@@ -25,11 +25,11 @@ class RegisterViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return BlocBuilder<AuthCubit,AuthStates>(
-      builder: (context, state) {
+      builder:(context, state) {
         var cubit=AuthCubit.get(context);
         return  ModalProgressHUD(
           inAsyncCall: state is CreateAccountLoadingState,
-          progressIndicator:const CupertinoActivityIndicator(),
+          progressIndicator: CupertinoActivityIndicator(),
           child: Form(
             key: cubit.registerKey,
             child: Column(
@@ -127,7 +127,7 @@ class RegisterViewBody extends StatelessWidget {
                                 return 'كلمة المرور مطلوبه';
                               }
                             },
-                            keyboardType: TextInputType.emailAddress ,
+                            keyboardType: TextInputType.visiblePassword ,
                             fillColor: ColorManager.gray ,
                             viewPassword: true,
                             isPassword: true,
@@ -145,7 +145,7 @@ class RegisterViewBody extends StatelessWidget {
                                 return 'كلمة المرور مطلوبه';
                               }
                             },
-                            keyboardType: TextInputType.emailAddress ,
+                            keyboardType: TextInputType.visiblePassword ,
                             fillColor: ColorManager.gray ,
                             viewPassword: true,
                             isPassword: true,

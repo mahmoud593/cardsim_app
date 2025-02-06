@@ -5,8 +5,6 @@ abstract class AuthRepo{
 
   Future<AuthModel> login({required String email,required String password});
 
-  Future<AuthModel> register({required String email,required String password,required String name,required String phone});
-
   Future<UserInfoModel> getUser();
 
   Future<dynamic> loginWithGoogle();

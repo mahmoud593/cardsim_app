@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
+import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/auth/data/auth_repo_implement/auth_repo_implement.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
+import 'package:games_app/features/auth/domain/use_cases/register_use_cases.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
@@ -14,7 +16,7 @@ import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart
 
 class AuthCubit extends Cubit<AuthStates>{
 
-  AuthCubit() : super(AuthInitialState());
+  AuthCubit(this.registerUseCases) : super(AuthInitialState());
 
   static AuthCubit get(context) => BlocProvider.of(context);
 
@@ -39,32 +41,123 @@ class AuthCubit extends Cubit<AuthStates>{
   AuthModel ?registerModel;
   UserInfoModel ?userInfoModel;
 
+  RegisterUseCases registerUseCases;
+
+  // Future<void> createNewAccount({
+  //   required String email,
+  //   required String password,
+  //   required String name,
+  //   required String phone,
+  //   required BuildContext context
+  //  })async{
+  //
+  //   emit(CreateAccountLoadingState());
+  //     registerModel= await AuthRepoImplement().register(
+  //         email: email,
+  //         password: password,
+  //         name: name,
+  //         phone: phone
+  //     );
+  //     if(registerModel!.token != null){
+  //       print('Token: ${registerModel!.token}');
+  //       UserDataFromStorage.setGender(registerModel!.role!);
+  //       await getUserInfo();
+  //       emit(CreateAccountSuccessState());
+  //     }else{
+  //       print('Error in register ${registerModel}');
+  //       customToast(title: 'هذه القيمة مُستخدمة من قبل.', color: Colors.red);
+  //       emit(CreateAccountErrorState());
+  //
+  //   }
+  //
+  // }
+
+  // await httpHelper.callService(
+  // url: 'https://cardsim.net/api/register',
+  // responseType: ResponseType.post,
+  // parameter: {
+  // "name" : "oamr",//min 3 - max 30 - unique
+  // "email" : "reda@gmail.com",//unique
+  // "phone" : "123456789",//numeric
+  // "password" : "reda@gmail.com"//min 8
+  // }
+  // )
+
+  // Future <void> createAccount({
+  //   required String email,
+  //   required String password,
+  //   required String name,
+  //   required String phone,
+  //   required BuildContext context
+  // })async {
+  //   emit(CreateAccountLoadingState());
+  //   await DioHelper.postData(
+  //       url: 'https://cardsim.net/api/register',
+  //       body: {
+  //         "name" : "oamr",//min 3 - max 30 - unique
+  //         "email" : "reda@gmail.com",//unique
+  //         "phone" : "123456789",//numeric
+  //         "password" : "reda@gmail.com"//min 8
+  //       }
+  //   ).then((value) async{
+  //     print('value: ${value.toString()}');
+  //     // print('Token: ${registerModel!.token}');
+  //     // UserDataFromStorage.setGender(registerModel!.role!);
+  //     // await getUserInfo();
+  //     print('Create account success');
+  //     emit(CreateAccountSuccessState());
+  //   }).catchError((error){
+  //     print('Error in register : ${error.toString()}');
+  //     emit(CreateAccountErrorState());
+  //   });
+  // }
+
+
   Future<void> createNewAccount({
     required String email,
     required String password,
     required String name,
     required String phone,
     required BuildContext context
-   })async{
+  })async{
 
-    emit(CreateAccountLoadingState());
-      registerModel= await AuthRepoImplement().register(
-          email: email,
-          password: password,
-          name: name,
-          phone: phone
-      );
-      if(registerModel!.token != null){
-        print('Token: ${registerModel!.token}');
-        UserDataFromStorage.setGender(registerModel!.role!);
-        await getUserInfo();
-        emit(CreateAccountSuccessState());
-      }else{
-        print('Error in register ${registerModel}');
-        customToast(title: 'هذه القيمة مُستخدمة من قبل.', color: Colors.red);
-        emit(CreateAccountErrorState());
+    // emit(CreateAccountLoadingState());
+    var result = await registerUseCases.register(
+        email: email,
+        password: password,
+        name: name,
+        phone: phone
+    );
+    print('result: ${result}');
 
-    }
+
+    result.fold(
+      (l) {
+        print('Error in register : ${l.error}');
+         customToast(title: l.error, color: Colors.red);
+         emit(CreateAccountErrorState());
+      },
+      (r) async{
+            registerModel = r;
+            print('value: ${r.toString()}');
+            print('Token: ${registerModel!.token}');
+            UserDataFromStorage.setGender(registerModel!.role!);
+            await getUserInfo();
+            print('Create account success');
+      }
+    );
+
+    // if(registerModel!.token != null){
+    //   print('Token: ${registerModel!.token}');
+    //   UserDataFromStorage.setGender(registerModel!.role!);
+    //   await getUserInfo();
+    //   emit(CreateAccountSuccessState());
+    // }else{
+    //   print('Error in register ${registerModel}');
+    //   customToast(title: 'هذه القيمة مُستخدمة من قبل.', color: Colors.red);
+    //   emit(CreateAccountErrorState());
+    //
+    // }
 
   }
 
@@ -187,6 +280,7 @@ class AuthCubit extends Cubit<AuthStates>{
 
 
   }
+
 
 
 }

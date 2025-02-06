@@ -137,8 +137,6 @@ class ClientCubit extends Cubit<ClientState> {
 
       emit(AddClientSuccessState());
     }catch(e){
-
-      customToast(title: 'الاسم او الايميل مسجل بالفعل', color: ColorManager.error);
       print('Error in add clients is : ${e.toString()}');
       emit(AddClientErrorState());
     }

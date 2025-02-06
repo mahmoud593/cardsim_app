@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/clients/presentation/cubit/client_cubit.dart';
 import 'package:games_app/features/clients/presentation/cubit/client_state.dart';
 import 'package:games_app/features/coupons/presentation/cubit/coupons_cubit.dart';
@@ -10,11 +13,19 @@ import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/default_text_field.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class CreateClient extends StatelessWidget {
+import '../../../../core/network/api_handle/urls.dart';
+
+class CreateClient extends StatefulWidget {
   CreateClient({super.key});
 
+  @override
+  State<CreateClient> createState() => _CreateClientState();
+}
+
+class _CreateClientState extends State<CreateClient> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -23,6 +34,9 @@ class CreateClient extends StatelessWidget {
       listener: (context, state) {
         if(state is AddClientSuccessState){
            Navigator.pop(context);
+        }
+        if(state is AddClientErrorState){
+          customToast(title: 'الاسم او الايميل مسجل بالفعل', color: ColorManager.error);
         }
       },
       builder: (context, state) {
@@ -48,7 +62,7 @@ class CreateClient extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: SizeConfig.height * 0.05),
-              
+
                       DefaultTextField(
                         controller: cubit.nameController,
                         hintText: 'الاسم',
@@ -61,9 +75,9 @@ class CreateClient extends StatelessWidget {
                         textInputAction: TextInputAction.next,
                         fillColor: Colors.transparent,
                       ),
-              
+
                       SizedBox(height: SizeConfig.height * 0.025),
-              
+
                       DefaultTextField(
                         controller: cubit.emailController,
                         hintText: 'الايميل',
@@ -76,9 +90,9 @@ class CreateClient extends StatelessWidget {
                         textInputAction: TextInputAction.next,
                         fillColor: Colors.transparent,
                       ),
-              
+
                       SizedBox(height: SizeConfig.height * 0.025),
-              
+
                       DefaultTextField(
                         controller: cubit.phoneController,
                         hintText: 'الهاتف',
@@ -92,9 +106,9 @@ class CreateClient extends StatelessWidget {
                         textInputAction: TextInputAction.next,
                         fillColor: Colors.transparent,
                       ),
-              
+
                       SizedBox(height: SizeConfig.height * 0.025),
-              
+
                       DefaultTextField(
                         controller: cubit.passwordController,
                         hintText: 'الباسورد',
@@ -111,7 +125,7 @@ class CreateClient extends StatelessWidget {
                         withSuffix: true,
                         fillColor: Colors.transparent,
                       ),
-              
+
                       Visibility(
                           visible: UserDataFromStorage.distCustomEarning==true,
                           child: SizedBox(height: SizeConfig.height * 0.025)
@@ -133,9 +147,9 @@ class CreateClient extends StatelessWidget {
                           fillColor: Colors.transparent,
                         ),
                       ),
-              
+
                       SizedBox(height: SizeConfig.height * 0.025),
-              
+
                       DefaultTextField(
                         controller: cubit.addressController,
                         hintText: 'العنوان (إختياري)',
@@ -145,18 +159,22 @@ class CreateClient extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         fillColor: Colors.transparent,
                       ),
-              
+
                       SizedBox(height: SizeConfig.height * 0.025),
-              
+
                       DefaultButton(
                         onPressed: (){
                           if(formKey.currentState!.validate()){
-                             cubit.createNewClient(
+                             setState(() {
+
+                             });
+                             createNewClient(
                                  name: cubit.nameController.text,
                                  email: cubit.emailController.text,
                                  phone: cubit.phoneController.text,
                                  password: cubit.passwordController.text,
-                                 earningDistValue:cubit.earningController.text == '' ? 0 : num.parse(cubit.earningController.text)
+                                 earningDistValue:cubit.earningController.text == '' ? 0 : num.parse(cubit.earningController.text),
+                                 context: context
                              );
                           }
                         },
@@ -180,3 +198,82 @@ class CreateClient extends StatelessWidget {
     );
   }
 }
+
+
+Future<void> createNewClient({
+  required String name,
+  required String email,
+  required String phone,
+  required String password,
+  required num earningDistValue,
+  required BuildContext context
+
+}) async {
+
+
+  try{
+
+    Map<String, dynamic> parameter={};
+    if(earningDistValue!=0){
+      parameter =
+      {
+        "name" : name,
+        "email" : email,
+        "phone" : phone,
+        "earning_dist_value": earningDistValue,
+        "password" : password
+      };
+    }else{
+      parameter =
+      {
+        "name" : name,
+        "email" : email,
+        "phone" : phone,
+        "password" : password
+      };
+    }
+
+
+    var response = await
+    DioHelper.postData(
+      url: 'https://cardsim.net/api/dist/clients/create',
+      authorization: true,
+      body: parameter
+    );
+
+
+    customToast(title: response.data['message_ar'], color: ColorManager.primary);
+
+    ClientCubit.get(context).getAllClients();
+    Navigator.pop(context);
+
+
+  }on DioException catch(error){
+    final responseData = error.response!.data;
+
+    if (responseData is Map<String, dynamic> && responseData.containsKey('errors')) {
+      final errors = responseData['errors'];
+
+      String errorMessage = '';
+
+      if (errors.containsKey('password')) {
+        errorMessage += 'يجب أن يكون طول كلمه المرور على الأقل 8 حروفٍ/حرفًا ';
+      }
+      if (errors.containsKey('email')) {
+        errorMessage += 'البريد الإلكتروني مستخدم من قبل.';
+      }
+      if (errors.containsKey('name')) {
+        errorMessage += 'الاسم مستخدم من قبل.';
+      }
+
+      customToast(title: '${errorMessage.trim()}', color: Colors.red);
+    } else {
+      print('حدث خطأ أثناء التسجيل.');
+    }
+    print('Error in add clients is : ${error.response!.data!}');
+  }
+
+
+}
+
+

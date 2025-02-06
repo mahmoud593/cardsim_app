@@ -3,6 +3,7 @@ import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/api_handle/urls.dart';
+import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/auth/data/auth_repo/auth_repo.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
@@ -30,6 +31,8 @@ class AuthRepoImplement implements AuthRepo{
         parameter: parameter,
         authorization: false,
       );
+
+
 
       print('Login response: ${response.toString()}');
       authModel=AuthModel.fromJson(response);
@@ -69,13 +72,19 @@ class AuthRepoImplement implements AuthRepo{
         authorization: false,
       );
 
+      var result = await DioHelper.postData(
+          url: registerUrl,
+          body: parameter,
+      );
+      print('Status code: ${result.statusCode}');
+      print('result: ${result.data}');
+
       print('Register response: ${response.toString()}');
       authModel=AuthModel.fromJson(response);
       UserDataFromStorage.setUserTokenFromStorage(authModel.token!);
       print('register success');
 
     }catch(e){
-
       print('Error in Register: ${e.toString()}');
     }
 
@@ -116,7 +125,7 @@ class AuthRepoImplement implements AuthRepo{
 
         var user =await FirebaseAuth.instance.signInWithCredential(credential);
 
-        print(user.user!.email);
+        print('user: ${user.toString()}');
 
         return googleAuth?.accessToken;
       } on Exception catch (e) {

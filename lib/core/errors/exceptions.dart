@@ -1,3 +1,5 @@
+import 'package:games_app/features/auth/data/models/error_model.dart';
+
 import '../network/error_message_model.dart';
 
 class ServerExceptions implements Exception {
@@ -5,3 +7,10 @@ class ServerExceptions implements Exception {
 
   const ServerExceptions({required this.errorMessageModel});
 }
+
+class RegisterExceptions implements Exception {
+  final ErrorModel errorModel;
+
+  const RegisterExceptions({required this.errorModel});
+}
+

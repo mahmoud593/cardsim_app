@@ -47,3 +47,9 @@ class ServerFailure extends Failure {
     }
   }
 }
+
+class ResponseFailure extends Failure {
+  ResponseFailure(super.error);
+
+  
+}
