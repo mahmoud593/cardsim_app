@@ -60,18 +60,22 @@ class RegisterDataSourceImplement implements RegisterDataSource{
     }on DioException catch (error) {
       if (error.response != null) {
         final responseData = error.response!.data;
-
+         print('Error is ${error.response!.data}');
         if (responseData is Map<String, dynamic> && responseData.containsKey('errors')) {
           final errors = responseData['errors'];
 
           String errorMessage = '';
 
           if (errors.containsKey('name')) {
-            errorMessage += 'الاسم مستخدم من قبل. ';
+            errorMessage += 'الاسم مستخدم من قبل , ';
           }
           if (errors.containsKey('email')) {
-            errorMessage += 'البريد الإلكتروني مستخدم من قبل.';
+            errorMessage += 'البريد الإلكتروني مستخدم من قبل ,';
           }
+          if (errors.containsKey('password')) {
+            errorMessage += 'يجب أن يكون طول كلمة المرور على الأقل 8 حروفٍ/حرفًا ,';
+          }
+
 
           customToast(title: '${errorMessage.trim()}', color: Colors.red);
         } else {

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/balance/presentation/view/balance_details_screen.dart';
 import 'package:games_app/features/balance/presentation/view/view_transication_image.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+
+import '../../data/models/get_all_transctions_model.dart';
 
 
 class BalanceCard extends StatelessWidget {
@@ -14,6 +17,8 @@ class BalanceCard extends StatelessWidget {
   final String amount;
   final String status;
   final String transactionDate;
+  final String reason;
+  final Data data;
 
   const BalanceCard({
     super.key,
@@ -23,6 +28,8 @@ class BalanceCard extends StatelessWidget {
     required this.amount,
     required this.status,
     required this.transactionDate,
+    required this.data,
+    required this.reason,
   });
 
   @override
@@ -57,7 +64,7 @@ class BalanceCard extends StatelessWidget {
                   style: TextStyles.textStyle14Medium,
                 ),
                 Text(
-                  'المبلغ: \$${amount}',
+                  'المبلغ: \$${data.total}',
                   style: TextStyles.textStyle14Medium.copyWith(
                       color: UserDataFromStorage.themeIsDarkMode? ColorManager.success:  ColorManager.secondPrimary
                   ),
@@ -98,6 +105,33 @@ class BalanceCard extends StatelessWidget {
                 customPushNavigator(context, ViewTransicationImage(image:proofOfPayment));
               },
               child: const Text('عرض إثبات الدفع'),
+            ),
+            SizedBox(height: SizeConfig.height * 0.01),
+            status == "reject" && reason.isNotEmpty?
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'سبب الرفض: $reason',
+                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.error),
+                ),
+              ): const SizedBox(),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'تفاصيل الطلب : ',
+                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.success),
+                ),
+                IconButton(
+                    onPressed: (){
+                      customPushNavigator(context, BalanceDetailsScreen(balanceDetails:data ,));
+                    },
+                    icon: const Icon(Icons.visibility_outlined, color: ColorManager.primary,),
+                    iconSize: SizeConfig.height * 0.03
+                ),
+              ],
             ),
           ],
         ),

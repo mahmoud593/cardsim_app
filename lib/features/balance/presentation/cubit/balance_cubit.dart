@@ -32,12 +32,16 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
   String paymentMethod = '';
   String paymentId='';
+  String taxValue='';
 
   void selectPaymentMethod({required String value}) {
     paymentMethodModel!.data!.forEach((element) {
       if(element.name==value){
         paymentId=element.id.toString();
-        print('paymentId is ${paymentId}');
+        taxValue=element.tax.toString();
+        totalAmountController.text='';
+        amountController.text='';
+        print('paymentId is ${paymentId} taxValue is ${taxValue}');
       }
     });
     paymentMethod = value;
@@ -92,9 +96,11 @@ class BalanceCubit extends Cubit<BalanceStates> {
   PaymentMethodModel ?paymentMethodModel;
 
   List<DropdownMenuItem> paymentMethodList =[];
+  List<String> taxs=[];
 
   Future<void> getPaymentMethods() async {
     paymentMethodList=[];
+    taxs=[];
     emit(GetPaymentMethodsLoadingState());
 
     try {
@@ -106,12 +112,10 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
       paymentMethodModel = PaymentMethodModel.fromJson(response);
 
-
       paymentMethodModel!.data!.forEach((e) {
-
+        taxs.add(e.tax.toString());
         paymentMethodList.add(
           DropdownMenuItem(
-
             value: e.name,
             child: Row(
               children: [

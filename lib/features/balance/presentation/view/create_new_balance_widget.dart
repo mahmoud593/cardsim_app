@@ -35,6 +35,7 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
       listener: (context,state){
          if(state is CreateTransactionSuccessState){
            BalanceCubit.get(context).paymentId='';
+           BalanceCubit.get(context).taxValue='';
            BalanceCubit.get(context).currencyId='';
            BalanceCubit.get(context).image=null;
            BalanceCubit.get(context).amountController.text='';
@@ -110,8 +111,18 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                         paymentId:cubit.paymentId,
                                         currencyId:cubit.currencyId,
                                         filePath:cubit.filePath,
+                                        notes: customCodeController.text,
                                         amount:cubit.amountController.text,
                                         ).then((value){
+                                          BalanceCubit.get(context).paymentId='';
+                                          BalanceCubit.get(context).taxValue='';
+                                          BalanceCubit.get(context).currencyId='';
+                                          BalanceCubit.get(context).image=null;
+                                          BalanceCubit.get(context).amountController.text='';
+                                          BalanceCubit.get(context).currency='';
+                                          BalanceCubit.get(context).paymentMethod='';
+                                          BalanceCubit.get(context).totalAmountController.text='';
+                                          customCodeController.text='';
                                           customToast(title: 'تم ارسال الطلب', color: ColorManager.primary);
                                           Navigator.pop(context);
                                         });
@@ -179,7 +190,6 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                 )),
                                 focusColor: Colors.white,
                                 onChanged: (value){
-
                                   BalanceCubit.get(context).selectCurrency(
                                       value: value.toString(),
                                   );
@@ -206,7 +216,8 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                               cubit.totalAmountController.text = '';
                             }
                             print('total is ${cubit.chargeRate* double.parse(cubit.amountController.text)}');
-                            cubit.totalAmountController.text = '${cubit.chargeRate* double.parse(cubit.amountController.text)}';
+                            cubit.totalAmountController.text = '${((double.parse(cubit.amountController.text)/ cubit.chargeRate) - (double.parse(cubit.amountController.text) / cubit.chargeRate* (double.parse(cubit.taxValue)) /100)) }' ;
+                            cubit.totalAmountController.text = double.parse(cubit.totalAmountController.text).toStringAsFixed(2);
                           },
                       ),
 
@@ -298,6 +309,7 @@ Future<void> createTransaction({
   required String paymentId,
   required String currencyId,
   required String amount,
+  String ?notes='',
   required BuildContext context,
 }) async {
 
@@ -313,6 +325,7 @@ Future<void> createTransaction({
       'currency_id': currencyId,
       'image': file,
       'amount': amount,
+      'notes': notes,
     });
 
     Dio dio = Dio();

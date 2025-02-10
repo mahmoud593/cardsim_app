@@ -132,7 +132,7 @@ class RegisterViewBody extends StatelessWidget {
                             viewPassword: true,
                             isPassword: true,
                             withSuffix: true,
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             hintText: 'كلمة السر',
                             controller: cubit.passwordRegisterController,
                           ),

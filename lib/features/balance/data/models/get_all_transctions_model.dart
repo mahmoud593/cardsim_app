@@ -61,6 +61,7 @@ class Data {
   String? status;
   dynamic? notes;
   String? createdAt;
+  String? reason;
 
   Data(
       {this.id,
@@ -72,6 +73,7 @@ class Data {
         this.image,
         this.status,
         this.notes,
+        this.reason,
         this.createdAt});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -84,6 +86,7 @@ class Data {
     image = json['image'];
     status = json['status'];
     notes = json['notes'];
+    reason = json['reason']??'';
     createdAt = json['created_at'];
   }
 
@@ -98,6 +101,7 @@ class Data {
     data['image'] = this.image;
     data['status'] = this.status;
     data['notes'] = this.notes;
+    data['reason'] = this.reason;
     data['created_at'] = this.createdAt;
     return data;
   }

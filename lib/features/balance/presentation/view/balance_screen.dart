@@ -127,6 +127,8 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               paymentMethod: cubit.allTransactionModel!.data![index].payment!,
                               amount: '${cubit.allTransactionModel!.data![index].amount!}',
                               status: cubit.allTransactionModel!.data![index].status!,
+                              reason: cubit.allTransactionModel!.data![index].reason!,
+                              data:  cubit.allTransactionModel!.data![index],
                               transactionDate: cubit.allTransactionModel!.data![index].createdAt!,
                             ),
                             separatorBuilder: (context, index) => SizedBox(height: SizeConfig.height * 0.02,),

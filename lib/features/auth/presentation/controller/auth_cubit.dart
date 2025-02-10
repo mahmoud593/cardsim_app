@@ -9,9 +9,11 @@ import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:games_app/features/auth/domain/use_cases/register_use_cases.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 
+import '../../../../core/helper/material_navigation.dart';
 import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart';
 
 class AuthCubit extends Cubit<AuthStates>{
@@ -121,14 +123,16 @@ class AuthCubit extends Cubit<AuthStates>{
     required BuildContext context
   })async{
 
-    // emit(CreateAccountLoadingState());
+    emit(CreateAccountLoadingState());
     var result = await registerUseCases.register(
         email: email,
         password: password,
         name: name,
         phone: phone
-    );
-    print('result: ${result}');
+    ).catchError((error){
+      print('result: ${error}');
+      emit(CreateAccountErrorState());
+    });
 
 
     result.fold(
@@ -144,6 +148,7 @@ class AuthCubit extends Cubit<AuthStates>{
             UserDataFromStorage.setGender(registerModel!.role!);
             await getUserInfo();
             print('Create account success');
+            emit(CreateAccountSuccessState());
       }
     );
 
