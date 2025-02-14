@@ -1,9 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/constants.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/home/domain/entities/companies_entity.dart';
+import 'package:games_app/features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/request_order_screen.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
+
+import '../../../../auth/presentation/view/screens/login_screen.dart';
 
 class OffersGridViewItem extends StatelessWidget {
   const OffersGridViewItem({super.key, required this.companiesEntity});
@@ -18,12 +24,45 @@ class OffersGridViewItem extends StatelessWidget {
       onTap: isInactive
           ? null
           : () {
-        customPushNavigator(
-          context,
-          RequestOrderScreen(
-            companiesEntity: companiesEntity,
-          ),
-        );
+        if(UserDataFromStorage.userTokenFromStorage !=''){
+          customPushNavigator(context, RequestOrderScreen(companiesEntity: companiesEntity,),);
+        }else{
+          showDialog(
+              context: context,
+              builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                  builder: (context, state) {
+                    return AlertDialog(
+                        backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                        title: Text('تنبيه',style: TextStyle(
+                            color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                            ColorManager.white
+                        ),),
+                        content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                            color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                            ColorManager.white
+                        ),),
+                        actions: [
+                          TextButton(
+                            child:  const Text('تسجيل الدخول',style: TextStyle(
+                                color:ColorManager.primary
+                            ),),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              customPushNavigator(context, const LoginScreen());
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ]
+                    );
+                  }
+              )
+          );
+        }
       },
       child: Stack(
         clipBehavior: Clip.none,

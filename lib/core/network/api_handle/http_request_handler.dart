@@ -26,6 +26,7 @@ class HttpHelper {
     http.Response? response;
     Map<String, String> header = {
       'Accept': 'application/json',
+      'X-Client-IP': '192.168.1.5',
       "Content-type": "application/json",
       'Authorization': authorization
           ? "Bearer ${UserDataFromStorage.userTokenFromStorage}"

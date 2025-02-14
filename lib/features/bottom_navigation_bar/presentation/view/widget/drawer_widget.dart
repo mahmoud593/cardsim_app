@@ -10,6 +10,7 @@ import 'package:games_app/features/bottom_navigation_bar/presentation/view/widge
 import 'package:games_app/features/call_center/presentation/view/call_center_screen.dart';
 import 'package:games_app/features/clients/presentation/view/clients_screen.dart';
 import 'package:games_app/features/coupons/presentation/view/coupons_screen.dart';
+import 'package:games_app/features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'package:games_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:games_app/features/our_agent/presentation/view/our_agent_screen.dart';
 import 'package:games_app/features/payment_history/presentation/view/payment_history_screen.dart';
@@ -50,13 +51,90 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 title: 'الرئيسية',
                 onTap: () {
                   BottomNavCubit.get(context).changeBottomNav(0);
+
+                  // if(UserDataFromStorage.userTokenFromStorage != ''){
+                  // }else{
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                  //           builder: (context, state) {
+                  //             return AlertDialog(
+                  //                 backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                  //                 title: Text('تنبيه',style: TextStyle(
+                  //                     color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                  //                     ColorManager.white
+                  //                 ),),
+                  //                 content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                  //                     color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                  //                     ColorManager.white
+                  //                 ),),
+                  //                 actions: [
+                  //                   TextButton(
+                  //                     child:  const Text('تسجيل الدخول',style: TextStyle(
+                  //                         color:ColorManager.primary
+                  //                     ),),
+                  //                     onPressed: () {
+                  //                       Navigator.pop(context);
+                  //                       customPushNavigator(context, const LoginScreen());
+                  //                     },
+                  //                   ),
+                  //                   TextButton(
+                  //                     child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                  //                     onPressed: () {
+                  //                       Navigator.pop(context);
+                  //                     },
+                  //                   ),
+                  //                 ]
+                  //             );
+                  //           }
+                  //       )
+                  //   );
+                  // }
                 },
               ),
               DrawerItem(
                 icon: Icons.shopping_cart,
                 title: 'الطلبات',
                 onTap: () {
-                  BottomNavCubit.get(context).changeBottomNav(1);
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    BottomNavCubit.get(context).changeBottomNav(1);
+                  }else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -64,7 +142,46 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.notifications_active,
                 title: 'الاشعارات',
                 onTap: () {
-                  customPushNavigator(context, const NotificationScreen());
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    customPushNavigator(context, const NotificationScreen());
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -72,14 +189,92 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.wallet,
                 title: 'الرصيد',
                 onTap: () {
-                  BottomNavCubit.get(context).changeBottomNav(2);
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    BottomNavCubit.get(context).changeBottomNav(2);
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
               DrawerItem(
                 icon: Icons.history,
                 title: 'سجل العمليات',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentHistoryScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -88,7 +283,46 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.people_alt,
                 title: 'العملاء',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientsScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientsScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -97,7 +331,46 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.history,
                 title: 'الأرباح',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WithdrawsScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WithdrawsScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -106,7 +379,46 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.card_membership,
                 title: 'القسائم',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CouponsScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CouponsScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
 
@@ -115,29 +427,186 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icons.people,
                 title: 'وكلاؤنا',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const OurAgentScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const OurAgentScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
               DrawerItem(
                 icon: Icons.support_agent,
                 title: 'الدعم الفنى',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CallCenterScreen(),));
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CallCenterScreen(),));
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
               DrawerItem(
                 icon: Icons.settings,
                 title: 'الإعدادات',
                 onTap: () {
-                  BottomNavCubit.get(context).changeBottomNav(3);
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    BottomNavCubit.get(context).changeBottomNav(3);
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
                 },
               ),
               DrawerItem(
                 icon: Icons.logout,
                 title: 'تسجيل الخروج',
                 onTap: () async {
-                  await BottomNavCubit.get(context).logout();
-                  customPushAndRemoveUntil(context, const LoginScreen());
+                  if(UserDataFromStorage.userTokenFromStorage != ''){
+                    await BottomNavCubit.get(context).logout();
+                    customPushAndRemoveUntil(context, const LoginScreen());
+                  }
+                  else{
+                    showDialog(
+                        context: context,
+                        builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
+                            builder: (context, state) {
+                              return AlertDialog(
+                                  backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
+                                  title: Text('تنبيه',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
+                                      color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
+                                      ColorManager.white
+                                  ),),
+                                  actions: [
+                                    TextButton(
+                                      child:  const Text('تسجيل الدخول',style: TextStyle(
+                                          color:ColorManager.primary
+                                      ),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        customPushNavigator(context, const LoginScreen());
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('الغاء',style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                    );
+                  }
+
                 },
               ),
             ],

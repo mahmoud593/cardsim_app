@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_state.dart';
@@ -53,6 +54,7 @@ class RequestOrderListViewItem extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
+                    height: SizeConfig.height * 0.05,
                     color: Colors.black54,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
@@ -78,7 +80,7 @@ class RequestOrderListViewItem extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
-                    height: 45,
+                    height: 55,
                     color: Colors.black.withOpacity(0.5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +90,7 @@ class RequestOrderListViewItem extends StatelessWidget {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                         ),
-                        CashHelper.getData(key: 'currencyCharge')!='USD'?
+                        CashHelper.getData(key: 'currencyCharge')!='USD' && CashHelper.getData(key: 'currencyCharge')!=null && CashHelper.getData(key: 'numOfCharge')!=null ?
                         BlocBuilder<BalanceCubit,BalanceStates>(
                           builder: (context, state) {
                             return Text(

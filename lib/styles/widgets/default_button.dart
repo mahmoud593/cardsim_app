@@ -8,8 +8,8 @@ class DefaultButton extends StatelessWidget {
       {super.key,
       required this.onPressed,
       required this.borderRadius,
-      this.backgroundColor,
-      this.foregroundColor,
+      this.backgroundColor=ColorManager.primary,
+      this.foregroundColor=Colors.white,
       required this.text,
       this.textStyle,
       this.haveIcon=false,
@@ -32,7 +32,7 @@ class DefaultButton extends StatelessWidget {
       height: SizeConfig.height*.06,
       width: width,
       child: MaterialButton(
-          color: ColorManager.primary,
+          color: backgroundColor,
           onPressed: onPressed,
           shape: RoundedRectangleBorder(
               borderRadius: borderRadius
@@ -50,7 +50,7 @@ class DefaultButton extends StatelessWidget {
               Text(
                 text,
                 style: TextStyles.textStyle18Bold.copyWith(
-                  color: Colors.white
+                  color: foregroundColor
                 )
               ),
             ],
@@ -58,7 +58,7 @@ class DefaultButton extends StatelessWidget {
           Text(
           text,
           style: TextStyles.textStyle18Bold.copyWith(
-              color: Colors.white
+              color:foregroundColor
           )
         ),
     ));

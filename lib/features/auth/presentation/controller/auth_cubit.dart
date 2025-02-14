@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
@@ -181,6 +183,8 @@ class AuthCubit extends Cubit<AuthStates>{
     if(loginModel!.token != "" && loginModel!.token !=null){
       print('Token: ${loginModel!.token}');
       UserDataFromStorage.setGender(loginModel!.role!);
+      UserDataFromStorage.setUserTokenFromStorage(loginModel!.token!);
+      getClientIP();
       await getUserInfo();
       emit(LoginSuccessState());
     }else {
@@ -284,6 +288,17 @@ class AuthCubit extends Cubit<AuthStates>{
     }
 
 
+  }
+
+  String address = '';
+  void getClientIP() async {
+    for (var interface in await NetworkInterface.list()) {
+      for (var addr in interface.addresses) {
+        address=addr.address;
+        print('IP Address: ${addr.address}');
+      }
+    }
+    emit(GetAddressInfoState());
   }
 
 

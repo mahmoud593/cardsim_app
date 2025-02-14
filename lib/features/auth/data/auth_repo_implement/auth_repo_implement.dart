@@ -98,7 +98,7 @@ class AuthRepoImplement implements AuthRepo{
     UserInfoModel userInfoModel = UserInfoModel();
 
     var response = await httpHelper.callService(
-        url: getUserInfoUrl,
+        url:getUserInfoUrl,
         responseType: ResponseType.get,
         authorization: true
     );
