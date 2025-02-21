@@ -12,6 +12,7 @@ import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:games_app/features/auth/domain/use_cases/register_use_cases.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
+import 'package:games_app/features/home/domain/repos/home_repo.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 
@@ -20,7 +21,7 @@ import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart
 
 class AuthCubit extends Cubit<AuthStates>{
 
-  AuthCubit(this.registerUseCases) : super(AuthInitialState());
+  AuthCubit(this.registerUseCases,this.homeRepo) : super(AuthInitialState());
 
   static AuthCubit get(context) => BlocProvider.of(context);
 
@@ -122,7 +123,7 @@ class AuthCubit extends Cubit<AuthStates>{
     required String password,
     required String name,
     required String phone,
-    required BuildContext context
+    required BuildContext context,
   })async{
 
     emit(CreateAccountLoadingState());
@@ -148,7 +149,7 @@ class AuthCubit extends Cubit<AuthStates>{
             print('value: ${r.toString()}');
             print('Token: ${registerModel!.token}');
             UserDataFromStorage.setGender(registerModel!.role!);
-            await getUserInfo();
+            await getUserInfo(context: context);
             print('Create account success');
             emit(CreateAccountSuccessState());
       }
@@ -183,9 +184,9 @@ class AuthCubit extends Cubit<AuthStates>{
     if(loginModel!.token != "" && loginModel!.token !=null){
       print('Token: ${loginModel!.token}');
       UserDataFromStorage.setGender(loginModel!.role!);
-      UserDataFromStorage.setUserTokenFromStorage(loginModel!.token!);
+      // UserDataFromStorage.setUserTokenFromStorage(loginModel!.token!);
       getClientIP();
-      await getUserInfo();
+      await getUserInfo(context: context);
       emit(LoginSuccessState());
     }else {
       customToast(title: 'البريد او كلمه السر غير صحيحه', color: Colors.red);
@@ -193,10 +194,23 @@ class AuthCubit extends Cubit<AuthStates>{
     }
     }
 
-  Future<void> getUserInfo()async{
+
+  final HomeRepo homeRepo;
+  Future<void> insertCode({required String code}) async {
+    emit(InsertCodeLoadingState());
+    final result = await homeRepo.insertGoogleCode(code: code);
+    result.fold(
+          (l) => emit(InsertCodeErrorState(l.error)),
+          (r) {
+        emit(InsertCodeSuccessState());
+      },
+    );
+  }
+
+  Future<void> getUserInfo({required context})async{
 
     emit(GetUserLoadingState());
-    userInfoModel= await AuthRepoImplement().getUser();
+    userInfoModel= await AuthRepoImplement().getUser(context: context);
     if(userInfoModel != null && userInfoModel!.name != null){
       UserDataFromStorage.setFullName(userInfoModel!.name!);
       UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
@@ -210,15 +224,18 @@ class AuthCubit extends Cubit<AuthStates>{
       print('get user info');
       emit(GetUserSuccessState());
     }else {
+      print('Error in get user info');
       // customToast(title: 'حدث خطا اثناء الحصول ع البيانات', color: Colors.red);
       emit(GetUserErrorState());
     }
   }
 
-  Future<void> loginWithGoogle({required BuildContext context})async{
+  Future<void> loginWithGoogle({
+    required context
+  })async{
 
     await AuthRepoImplement().loginWithGoogle().then((value) async{
-      await loginWithAccessToken(accessToken: value, context: context);
+      await loginWithAccessToken(accessToken: value,context: context);
     });
 
    emit(GetGoogleInfoState());
@@ -229,7 +246,7 @@ class AuthCubit extends Cubit<AuthStates>{
 
   Future <void> loginWithAccessToken({
     required String accessToken,
-    required BuildContext context
+    required context
   })async{
 
     emit(LoginWithGoogleLoadingState());
@@ -241,7 +258,7 @@ class AuthCubit extends Cubit<AuthStates>{
    if(googleModel.token != "" && googleModel.token != null){
      print('Token: ${googleModel.token}');
      UserDataFromStorage.setGender(googleModel.role!);
-     await getUserInfo();
+     await getUserInfo(context: context);
      emit(LoginWithGoogleSuccessState());
    }else {
      customToast(title: 'حدث خطا حاول مره اخري', color: Colors.red);

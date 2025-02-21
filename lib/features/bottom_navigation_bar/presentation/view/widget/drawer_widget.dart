@@ -29,7 +29,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   void initState() {
     super.initState();
-    AuthCubit.get(context).getUserInfo();
+    AuthCubit.get(context).getUserInfo(context: context);
   }
 
   @override

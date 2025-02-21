@@ -38,9 +38,11 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
     emit(BottomNavChangeState());
   }
   UserInfoModel? userInfoModel;
-  Future<void> getUserInfo() async {
+  Future<void> getUserInfo({
+    required context
+  }) async {
     emit(GetUserLoadingState());
-    userInfoModel = await AuthRepoImplement().getUser();
+    userInfoModel = await AuthRepoImplement().getUser(context: context);
     if (userInfoModel != null && userInfoModel!.name != null) {
       AppSession.userInfoModel = userInfoModel;
       print('get user info');

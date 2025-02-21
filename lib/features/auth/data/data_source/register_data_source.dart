@@ -75,8 +75,6 @@ class RegisterDataSourceImplement implements RegisterDataSource{
           if (errors.containsKey('password')) {
             errorMessage += 'يجب أن يكون طول كلمة المرور على الأقل 8 حروفٍ/حرفًا ,';
           }
-
-
           customToast(title: '${errorMessage.trim()}', color: Colors.red);
         } else {
           print('حدث خطأ أثناء التسجيل.');

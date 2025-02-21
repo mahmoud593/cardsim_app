@@ -5,6 +5,7 @@ import 'package:games_app/features/home/data/models/image_slider_model.dart';
 import 'package:games_app/features/home/domain/entities/categories_entity.dart';
 import 'package:games_app/features/home/domain/entities/companies_entity.dart';
 import 'package:games_app/features/home/domain/entities/image_slider_entity.dart';
+import 'package:games_app/features/home/domain/entities/notification_entity.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
 import 'package:games_app/features/home/domain/entities/settings_entity.dart';
 import 'package:games_app/features/home/domain/entities/text_slider_entity.dart';
@@ -89,6 +90,36 @@ class HomeRepoImp implements HomeRepo {
   @override
   Future<Either<Failure, List<TextSliderEntity>>> getTextSlider() async{
    final result = await apiServices.getTextSlider();
+    try {
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications() async{
+    final result = await apiServices.getNotifications();
+    try {
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> insertGoogleCode({required String code}) async{
+    final result = await apiServices.insertGoogleCode(code: code);
+    try {
+      return Right(result);
+    } on GoogleAuthExceptions catch (failure) {
+      return Left(ServerFailure(failure.googleAuthError.message!));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateDeviceToken({required String token}) async{
+    final result = await apiServices.updateDeviceToken(token: token);
     try {
       return Right(result);
     } on ServerExceptions catch (failure) {

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:games_app/core/constants/urls.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/api_handle/urls.dart';
@@ -7,6 +9,9 @@ import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/auth/data/auth_repo/auth_repo.dart';
 import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
+import 'package:games_app/features/auth/presentation/view/screens/register_screen.dart';
+import 'package:games_app/features/auth/presentation/view/widgets/insert_code_dialog_widget.dart';
+import 'package:games_app/features/google_autherized/presentation/view/screens/insert_google_code_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
@@ -93,7 +98,7 @@ class AuthRepoImplement implements AuthRepo{
   }
 
   @override
-  Future<UserInfoModel> getUser() async{
+  Future<UserInfoModel> getUser({required context}) async{
 
     UserInfoModel userInfoModel = UserInfoModel();
 
@@ -103,11 +108,22 @@ class AuthRepoImplement implements AuthRepo{
         authorization: true
     );
 
+    print('Token ${UserDataFromStorage.userTokenFromStorage}');
     print(response);
-    if(response !=null){
-      userInfoModel=UserInfoModel.fromJson(response);
-      print('Get user info: ${userInfoModel.toString()}');
+    if(response['status'] == false){
+      print('Insert code dialog');
+      customPushAndRemoveUntil(context, InsertGoogleCodeScreen());
+      //  insertCodeDialogWidget(
+      //   context: context,
+      //   controller:  codeController
+      // );
+    }else {
+      if (response != null) {
+        userInfoModel = UserInfoModel.fromJson(response);
+        print('Get user info: ${userInfoModel.toString()}');
+      }
     }
+
     return userInfoModel??UserInfoModel();
   }
 

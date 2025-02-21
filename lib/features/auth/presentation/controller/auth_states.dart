@@ -10,6 +10,13 @@ class LoginLoadingState extends AuthStates {}
 class LoginSuccessState extends AuthStates {}
 class LoginErrorState extends AuthStates {}
 
+class InsertCodeLoadingState extends AuthStates {}
+class InsertCodeSuccessState extends AuthStates {}
+class InsertCodeErrorState extends AuthStates {
+  String error;
+  InsertCodeErrorState(this.error);
+}
+
 class LogoutLoadingState extends AuthStates {}
 class LogoutSuccessState extends AuthStates {}
 class LogoutErrorState extends AuthStates {}

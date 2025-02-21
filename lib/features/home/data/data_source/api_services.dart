@@ -1,6 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:games_app/core/network/dio_helper.dart';
+import 'package:games_app/features/auth/data/models/google_auth_error.dart';
 import 'package:games_app/features/home/data/models/companies_model.dart';
 import 'package:games_app/features/home/data/models/image_slider_model.dart';
+import 'package:games_app/features/home/data/models/notification_model.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 
 import '../../../../core/constants/urls.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -17,6 +22,66 @@ class ApiServices {
   final Dio _dio = Dio();
 
   HttpHelper httpHelper = HttpHelper();
+
+   int perPage = 10;
+   int page = 1;
+
+  Future<List<NotificationModel>> getNotifications() async {
+    try{
+      List<NotificationModel> notificationModelList = [];
+      final response =  await DioHelper.getData(
+          url: 'https://cardsim.net/api/notifications',
+          authorization: true,
+          query: {
+            'perPage':perPage,
+            'page':page,
+          }
+      );
+      response.data['data'].forEach((element) {
+        notificationModelList.add(NotificationModel.fromJson(element),);
+      });
+      return notificationModelList;
+    }on DioError catch(e){
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(e.response!.data));
+    }
+  }
+
+  Future<void> insertGoogleCode({required String code}) async {
+    try{
+
+      var res = await DioHelper.postData(
+          url: 'https://cardsim.net/api/enter-google-code',
+          authorization: true,
+        body: {
+          "insert_code":code
+        }
+      );
+
+       print('Response ${res}' );
+       print('Token ${UserDataFromStorage.userTokenFromStorage}');
+
+    }on DioError catch(e){
+      customToast(title: 'يرجى إدخال رمز صحيح', color: ColorManager.error);
+      throw GoogleAuthExceptions(googleAuthError: GoogleAuthError.fromJson(e.response!.data));
+    }
+  }
+
+  Future<void> updateDeviceToken({required String token}) async {
+    try{
+
+      await DioHelper.postData(
+          url: 'https://cardsim.net/api/update-device-token',
+          authorization: true,
+          body: {
+            "device_token":token
+          }
+      );
+
+    }on DioError catch(e){
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(e.response!.data));
+    }
+  }
+
 
   Future<List<CompaniesModel>> getCompanies() async {
     final response = await _dio.get(

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:games_app/features/home/domain/entities/check_field_entity.dart';
 import 'package:games_app/features/home/domain/entities/create_order_entity.dart';
 import 'package:games_app/features/home/domain/entities/image_slider_entity.dart';
+import 'package:games_app/features/home/domain/entities/notification_entity.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../entities/categories_entity.dart';
@@ -25,4 +26,12 @@ abstract class HomeRepo {
   Future<Either<Failure, List<ImageSliderEntity>>> getImageSlider();
 
   Future<Either<Failure, List<TextSliderEntity>>> getTextSlider();
+
+
+  Future<Either<Failure, void>> updateDeviceToken({required String token});
+
+  Future<Either<Failure, void>> insertGoogleCode({required String code});
+
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications();
+
 }

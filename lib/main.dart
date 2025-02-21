@@ -21,6 +21,7 @@ import 'package:games_app/features/settings/presentation/cubit/settings_cubit.da
 import 'package:games_app/features/splash/preentation/view/screen/splash_screen.dart';
 import 'package:games_app/firebase_options.dart';
 import 'package:games_app/styles/theme_manger/theme_manager.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/home/domain/repos/home_repo.dart';
@@ -30,12 +31,30 @@ import 'features/home/presentation/controller/image_sliders_cubit/image_sliders_
 import 'features/home/presentation/controller/text_slider_cubit/text_slider_cubit.dart';
 import 'features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'generated/l10n.dart';
-
+// dae07f47-e131-4130-a4fa-a7edb578c67b
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // ضبط مستوى السجلات (اختياري)
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+
+  // تهيئة OneSignal باستخدام App ID
+  OneSignal.initialize("bc085bc7-0536-4bdb-8609-1c634b43eb31");
+
+  // طلب إذن الإشعارات من المستخدم
+  await OneSignal.Notifications.requestPermission(true);
+
+  // ضبط الإشعارات داخل التطبيق بحيث يتم عرضها تلقائيًا
+  OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+    // يمكنك استخدام event.preventDefault() إذا أردت منع الإشعار داخل التطبيق
+    print("Received notification in foreground: ${event.notification.jsonRepresentation()}");
+  });
+
+
+
   Bloc.observer = MyBlocObserver();
   ServiceLocator().setup();
   CashHelper.init();
@@ -43,6 +62,9 @@ void main() async {
   await SharedPreferences.getInstance();
   await UserDataFromStorage.getData();
   //await HomeRepoImp(ApiServices()).createOrder(6, 1, 'test');
+
+
+
   runApp(const MyApp());
 }
 
@@ -54,10 +76,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CurrencyCubit()..getCurrency()),
-        BlocProvider(create: (context) => BottomNavCubit()..getUserInfo()),
+        BlocProvider(create: (context) => BottomNavCubit()),
         BlocProvider(create: (context) => OrdersCubit()..getOrders(search: "", status: "")),
         BlocProvider(create: (context) => BalanceCubit()),
-        BlocProvider(create: (context) => AuthCubit(getIt())..getUserInfo()),
+        BlocProvider(create: (context) => AuthCubit(getIt(),getIt())),
         BlocProvider(create: (context) => SettingsCubit()),
         BlocProvider(create: (context) => PaymentHistoryCubit()..getPaymentHistory()),
         BlocProvider(create: (context) => OurAgentCubit()..getAgent()),
@@ -98,3 +120,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

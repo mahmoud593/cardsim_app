@@ -52,7 +52,7 @@ class RequestCubit extends Cubit<RequestState> {
       (l) => emit(CreateOrderFailure(l.error)),
       (r) async{
         emit(CreateOrderSuccess(r));
-        await BottomNavCubit.get(context).getUserInfo();
+        await BottomNavCubit.get(context).getUserInfo(context: context);
         Fluttertoast.showToast(
           msg: r.messageAr,
           gravity: ToastGravity.BOTTOM,

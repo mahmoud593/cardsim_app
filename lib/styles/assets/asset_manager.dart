@@ -31,6 +31,7 @@ class AssetManager{
   static const String organicImage = "assets/images/organic.jpg";
   static const String logoLight = "assets/images/logo-light.png";
   static const String logoDark = "assets/images/logo-dark.png";
+  static const String authenticityImage  = "assets/images/authenticity.png";
 
 
 }

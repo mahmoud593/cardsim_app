@@ -41,6 +41,7 @@ class HomeScreenBody extends StatelessWidget {
             const DealingsListView(),
           if(UserDataFromStorage.userTokenFromStorage !='')
             const SizedBox(height: 16,),
+          if(UserDataFromStorage.userTokenFromStorage =='')
           Row(
             mainAxisAlignment:  MainAxisAlignment.center,
             children: [

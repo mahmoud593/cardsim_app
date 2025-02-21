@@ -10,8 +10,8 @@ class DioHelper {
       BaseOptions(
         baseUrl: '',
         receiveDataWhenStatusError: true,
-        followRedirects: true, // السماح بإعادة التوجيه
-        maxRedirects: 5, // تحديد الحد الأقصى لعدد مرات إعادة التوجيه
+        followRedirects: true,
+        maxRedirects: 5,
       ),
     );
   }
