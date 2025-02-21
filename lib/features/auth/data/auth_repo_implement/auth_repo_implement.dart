@@ -12,6 +12,8 @@ import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:games_app/features/auth/presentation/view/screens/register_screen.dart';
 import 'package:games_app/features/auth/presentation/view/widgets/insert_code_dialog_widget.dart';
 import 'package:games_app/features/google_autherized/presentation/view/screens/insert_google_code_screen.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,6 +44,7 @@ class AuthRepoImplement implements AuthRepo{
       print('Login response: ${response.toString()}');
       authModel=AuthModel.fromJson(response);
       UserDataFromStorage.setUserTokenFromStorage(authModel.token!);
+      await updateToken(token: authModel.token!);
       print('login success');
 
     }catch(e){
@@ -87,6 +90,7 @@ class AuthRepoImplement implements AuthRepo{
       print('Register response: ${response.toString()}');
       authModel=AuthModel.fromJson(response);
       UserDataFromStorage.setUserTokenFromStorage(authModel.token!);
+      await updateToken(token: authModel.token!);
       print('register success');
 
     }catch(e){
@@ -167,11 +171,31 @@ class AuthRepoImplement implements AuthRepo{
 
     authModel =AuthModel.fromJson(response);
     UserDataFromStorage.setUserTokenFromStorage(authModel.token!);
-
+    await updateToken(token: authModel.token!);
     print('login with google: ${authModel.toString()}');
 
    return authModel??AuthModel();
 
+  }
+
+  @override
+  Future<void> updateToken({required String token}) async{
+    try{
+      var response = await httpHelper.callService(
+        responseType: ResponseType.post,
+        url: updateTokenUrl,
+        parameter: {
+            "device_token":token
+        },
+        authorization: true,
+      );
+
+      print('Response: ${response.toString()}');
+      // customToast(title: response['message'], color: ColorManager.primary);
+
+    }catch(e){
+      print('Error in updateToken: ${e.toString()}');
+    }
   }
 
 

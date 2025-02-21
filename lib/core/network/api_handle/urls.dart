@@ -4,6 +4,8 @@ const String baseUrl = 'https://cardsim.net/api';
 const String registerUrl = 'register';
 
 const String loginUrl = '$baseUrl/access';
+const String deleteAccountUrl = '$baseUrl/delete-account';
+const String updateTokenUrl = '$baseUrl/update-device-token';
 const String createCouponUrl = '$baseUrl/dist/vouchers/new';
 const String getAgentUrl = '$baseUrl/distributors';
 const String getAllTransactionsUrl = '$baseUrl/user-logs';

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
+import 'package:games_app/features/google_autherized/presentation/view/screens/google_auth_screen.dart';
 import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
@@ -93,7 +95,11 @@ class SettingsBodyView extends StatelessWidget {
               Row(
                 children: [
 
-                  Switch(value: cubit.userInfoModel!.google_2fa!, onChanged: (v){}),
+                  Switch(value: cubit.userInfoModel!.google_2fa!, onChanged: (v){
+                    customPushNavigator(context, GoogleAuthScreen());
+                  }),
+
+
                   SizedBox(height: MediaQuery.of(context).size.height*.05,),
 
                   Text('Google Authenticator',style: TextStyles.textStyle18Bold,),

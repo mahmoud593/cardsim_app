@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/widget/bottom_nav_widget.dart';
@@ -46,6 +47,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     // جلب حالة الاشتراك وتحديث Firestore
     updateUserOSUserID();
     BottomNavCubit.get(context).getUserInfo(context: context);
+    AuthCubit.get(context).getUserInfo(context: context);
 
   }
 
@@ -92,7 +94,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 }
 
 Future<void> sendNotification() async {
-  const String oneSignalAppId = "dae07f47-e131-4130-a4fa-a7edb578c67b"; // ✅ استبدلها بـ App ID الخاص بك
+  const String oneSignalAppId = "bc085bc7-0536-4bdb-8609-1c634b43eb31"; // ✅ استبدلها بـ App ID الخاص بك
   const String oneSignalApiKey = "os_v2_app_3lqh6r7bgfatbjh2u7w3k6ggpnniqrdexh6egmepomv27oroet4ujl3clsp7hp4uqdmqrrqw63p72s5goa6v3ycmy3xskm7ynzjvcuy"; // ✅ استبدلها بـ API Key الخاص بك
 
   var url = Uri.parse("https://onesignal.com/api/v1/notifications");

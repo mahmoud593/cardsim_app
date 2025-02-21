@@ -16,6 +16,8 @@ class UrlConstants {
 
   static const String forgetPasswordUrl = '$baseUrl/api/forget-password';
 
+  static const String enable2faoGoogleUrl = '$baseUrl/api/enable-2fa-google';
+
   static const String checkIdFieldUrl = '$baseUrl/api/orders/check-field';
 
   static const String createOrderUrl = '$baseUrl/api/orders/create';

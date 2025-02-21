@@ -116,6 +116,7 @@ class InsertGoogleCodeBodyView extends StatelessWidget {
                         width: MediaQuery.of(context).size.width*.9 ,
                         child: DefaultButton(
                             onPressed: (){
+                              UserDataFromStorage.setUserTokenFromStorage('');
                               customPushAndRemoveUntil(context, LoginScreen());
                             },
                             backgroundColor: Colors.red,
@@ -135,7 +136,7 @@ class InsertGoogleCodeBodyView extends StatelessWidget {
       },
       listener: (context,state){
         if(state is InsertCodeSuccessState){
-          customToast(title: 'Success ', color: ColorManager.primary);
+          customToast(title: 'تم تسجيل الرمز بنجاح ', color: ColorManager.primary);
         }
         if(state is InsertCodeErrorState){
           customToast(title: state.error, color: ColorManager.error);

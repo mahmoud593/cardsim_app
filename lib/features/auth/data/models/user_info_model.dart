@@ -37,8 +37,8 @@ class UserInfoModel {
     email = json['email'];
     phone = json['phone'];
     image = json['image'];
-    email_2fa = json['email_2fa'];
-    google_2fa = json['google_2fa'];
+    email_2fa = json['email_2fa']??false;
+    google_2fa = json['google_2fa']??false;
     dist_custom_earning = json['dist_custom_earning'];
     is_active = json['is_active'];
     created_at = json['created_at'];

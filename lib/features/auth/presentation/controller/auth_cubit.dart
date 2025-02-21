@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/dio_helper.dart';
@@ -15,7 +18,8 @@ import 'package:games_app/features/bottom_navigation_bar/presentation/view/botto
 import 'package:games_app/features/home/domain/repos/home_repo.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
-
+import 'package:crypto/crypto.dart';
+import 'package:base32/base32.dart';
 import '../../../../core/helper/material_navigation.dart';
 import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart';
 
@@ -207,11 +211,24 @@ class AuthCubit extends Cubit<AuthStates>{
     );
   }
 
+  String generateSecretKey() {
+    var random = Random.secure();
+    var values = List<int>.generate(10, (i) => random.nextInt(256));
+    return base32.encode(Uint8List.fromList(values)).replaceAll('=', '');
+  }
+
   Future<void> getUserInfo({required context})async{
 
     emit(GetUserLoadingState());
     userInfoModel= await AuthRepoImplement().getUser(context: context);
     if(userInfoModel != null && userInfoModel!.name != null){
+      var secretKey = generateSecretKey();
+      if(CashHelper.getData(key: userInfoModel!.email!) != null ){
+        print('Secret key: ${CashHelper.getData(key: userInfoModel!.email!)}');
+      }else{
+        CashHelper.saveData(key: userInfoModel!.email!, value: secretKey);
+        print('New Secret key: ${CashHelper.getData(key: userInfoModel!.email!)}');
+      }
       UserDataFromStorage.setFullName(userInfoModel!.name!);
       UserDataFromStorage.setPhoneNumber(userInfoModel!.phone??'');
       UserDataFromStorage.setEmail(userInfoModel!.email!);
@@ -316,6 +333,43 @@ class AuthCubit extends Cubit<AuthStates>{
       }
     }
     emit(GetAddressInfoState());
+  }
+
+
+  Future <void> enableGoogleAuth({
+    required String code,
+    required BuildContext context
+  })async{
+
+    emit(EnableGoogleAuthLoadingState());
+
+    try{
+      var response =  await httpHelper.callService(
+          responseType: ResponseType.post,
+          url: UrlConstants.enable2faoGoogleUrl,
+          authorization: true,
+          parameter: {
+            "google2fa_secret" : CashHelper.getData(key: UserDataFromStorage.emailFromStorage),
+            "insert_code" : code,
+          }
+      );
+
+      print('Response enableGoogleAuth: ${response.toString()}');
+      if(response !=null){
+        customToast(title: 'تم تفعيل المصادقة عبر جوجل', color:ColorManager.primary);
+        customPushAndRemoveUntil(context, BottomNavigationScreen());
+      }else{
+        customToast(title: 'تحقق من الرمز و حاول مجددا', color:ColorManager.error);
+      }
+
+      emit(EnableGoogleAuthSuccessState());
+    }catch(error){
+      customToast(title: 'تحقق من الرمز و حاول مجددا', color:ColorManager.error);
+      print('error in enableGoogleAuth is $error');
+      emit(EnableGoogleAuthErrorState());
+    }
+
+
   }
 
 

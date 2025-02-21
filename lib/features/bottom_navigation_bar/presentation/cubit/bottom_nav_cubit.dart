@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
+import 'package:games_app/core/network/api_handle/urls.dart';
 import 'package:games_app/features/balance/presentation/view/balance_screen.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_cubit.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/features/orders/presentation/view/orders_screen.dart';
 import 'package:games_app/features/settings/presentation/view/screens/settings_screen.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
 
 import '../../../../core/constants/app_session.dart';
 import '../../../../styles/widgets/toast.dart';
@@ -85,6 +87,28 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
 
 
   }
+
+  Future<void> deleteAccount()async {
+
+    emit(DeleteAccountLoadingState());
+    try{
+      var response = await httpHelper.callService(
+        responseType: ResponseType.post,
+        url: deleteAccountUrl,
+        authorization: true,
+      );
+      UserDataFromStorage.setUserTokenFromStorage('');
+
+      print('Response: ${response.toString()}');
+      customToast(title: response['message'], color: ColorManager.primary);
+      emit(DeleteAccountSuccessState());
+    }catch(e){
+      print('Error in deleteAccount: ${e.toString()}');
+      emit(DeleteAccountErrorState());
+    }
+  }
+
+
 
 
 }

@@ -11,3 +11,7 @@ class GetUserErrorState extends BottomNavStates {}
 class LogoutLoadingState extends BottomNavStates {}
 class LogoutSuccessState extends BottomNavStates {}
 class LogoutErrorState extends BottomNavStates {}
+
+class DeleteAccountLoadingState extends BottomNavStates {}
+class DeleteAccountSuccessState extends BottomNavStates {}
+class DeleteAccountErrorState extends BottomNavStates {}
