@@ -5,6 +5,21 @@ import 'package:games_app/styles/colors/color_manager.dart';
 
 class TextStyles {
 
+  static TextStyle textStyle12Bold= TextStyle(
+      fontSize: SizeConfig.height * 0.012,
+      fontWeight: FontWeight.bold
+  );
+
+  static TextStyle textStyle12Medium= TextStyle(
+      fontSize: SizeConfig.height * 0.012,
+      fontWeight: FontWeight.w500
+  );
+
+  static TextStyle textStyle12Regular= TextStyle(
+      fontSize: SizeConfig.height * 0.012,
+      fontWeight: FontWeight.w400
+  );
+
   /// small text style
   static TextStyle textStyle14Bold= TextStyle(
       fontSize: SizeConfig.height * 0.016,

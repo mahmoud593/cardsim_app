@@ -15,3 +15,11 @@ class LogoutErrorState extends BottomNavStates {}
 class DeleteAccountLoadingState extends BottomNavStates {}
 class DeleteAccountSuccessState extends BottomNavStates {}
 class DeleteAccountErrorState extends BottomNavStates {}
+
+class ChangeDrawerOpenMoreState extends BottomNavStates {}
+class SelectMoreValueState extends BottomNavStates {}
+
+class GetMoreDataSuccessState extends BottomNavStates {}
+class GetMoreDataErrorState extends BottomNavStates {}
+class GetMoreDataLoadingState extends BottomNavStates {}
+

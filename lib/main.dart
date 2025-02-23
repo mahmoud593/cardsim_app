@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:games_app/bloc_observer.dart';
+import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/dio_helper.dart';
@@ -37,6 +38,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
 
   // ضبط مستوى السجلات (اختياري)
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
@@ -76,7 +78,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CurrencyCubit()..getCurrency()),
-        BlocProvider(create: (context) => BottomNavCubit()..getUserInfo(context: context)),
+        BlocProvider(create: (context) => BottomNavCubit()..getUserInfo(context: context)..getMoreData(key: 'privacy-policy')),
         BlocProvider(create: (context) => OrdersCubit()..getOrders(search: "", status: "")),
         BlocProvider(create: (context) => BalanceCubit()),
         BlocProvider(create: (context) => AuthCubit(getIt(),getIt())),

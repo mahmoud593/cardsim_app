@@ -14,6 +14,7 @@ const String getUserInfoUrl = '$baseUrl/me';
 // // order API url
 String getUserOrdersUrl(String search, String status) => '$baseUrl/orders?search=$search&status=$status';
 String getCouponsUrl(String search) => '$baseUrl/dist/vouchers?search=$search&page';
+String getMoreScreenUrl(String key) => '$baseUrl/custom-page/$key';
 
 
 

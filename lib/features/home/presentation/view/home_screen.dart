@@ -136,8 +136,9 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const Drawer(
-        child: DrawerWidget(),
+      drawer:  Drawer(
+        width: SizeConfig.width * 0.7,
+        child: const DrawerWidget(),
       ),
       body: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 12),

@@ -7,6 +7,8 @@ import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/api_handle/urls.dart';
 import 'package:games_app/features/balance/presentation/view/balance_screen.dart';
+import 'package:games_app/features/bottom_navigation_bar/data/models/more_model.dart';
+import 'package:games_app/features/bottom_navigation_bar/data/more_repo_implement/more_repo_Implement.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_cubit.dart';
 import 'package:games_app/features/home/presentation/view/home_screen.dart';
@@ -63,6 +65,14 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
   }
 
 
+  bool drawerOpenMore = false;
+
+  void changeDrawerOpenMore(bool value){
+    drawerOpenMore = value;
+    emit(ChangeDrawerOpenMoreState());
+  }
+
+
  HttpHelper httpHelper = HttpHelper();
 
   Future <void> logout()async{
@@ -108,6 +118,35 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
     }
   }
 
+  String moreScreenSelected = "سياسة الخصوصية";
+  List<String> moreScreenList = [
+    "سياسة الخصوصية",
+    "الشروط والاحكام",
+    "كيف تصبح وكيلا",
+    "اتصل بنا"
+  ];
+
+  void selectMoreValue(String value) {
+    print('Previous selected: $moreScreenSelected'); // Debug print
+    print('New selected: $value'); // Debug print
+    moreScreenSelected = value;
+    emit(SelectMoreValueState());
+  }
+
+  MoreModel moreModel = MoreModel(status: false, data: Data(title: '', slug: '', description: ''));
+
+  getMoreData({required String key}) async{
+    emit(GetMoreDataLoadingState());
+
+    try{
+      moreModel = await MoreRepoImplement().getMoreData(key: key);
+      emit(GetMoreDataSuccessState());
+    }catch(e){
+      print('Error in getMoreData =============> ${e.toString()}');
+      emit(GetMoreDataErrorState());
+    }
+
+  }
 
 
 
