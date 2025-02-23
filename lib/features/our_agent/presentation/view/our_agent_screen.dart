@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/view/widget/more_screen.dart';
 import 'package:games_app/features/our_agent/presentation/cubit/our_agent_cubit.dart';
 import 'package:games_app/features/our_agent/presentation/cubit/our_agent_state.dart';
 import 'package:games_app/features/our_agent/presentation/view/widget/our_agent_widget.dart';
@@ -36,6 +39,19 @@ class OurAgentScreen extends StatelessWidget {
                   color: isLight ? ColorManager.black : ColorManager.white,
                 ),
               ),
+              actions: [
+                InkWell(
+                  onTap: () {
+                    BottomNavCubit.get(context).selectMoreValue("كيف تصبح وكيلا");
+                    customPushNavigator(context, const MoreScreen(flag: 'order-dist',));
+                  },
+                  child: Text(
+                    'كيف تصبح وكيلا',
+                    style: TextStyles.textStyle14Bold.copyWith(color: ColorManager.primary),
+                  ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+              ],
               centerTitle: true,
             ),
             body: SizedBox(
