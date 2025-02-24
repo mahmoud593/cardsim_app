@@ -98,7 +98,7 @@ class HomeRepoImp implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<NotificationEntity>>> getNotifications() async{
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications({required bool isLoadMore}) async{
     final result = await apiServices.getNotifications();
     try {
       return Right(result);

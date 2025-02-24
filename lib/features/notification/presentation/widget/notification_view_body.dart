@@ -18,14 +18,22 @@ class NotificationViewBody extends StatelessWidget {
           BlocBuilder<NotificationCubit, NotificationStates>(
             builder:  (context, state) {
               var cubit = context.read<NotificationCubit>();
-              return ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return  NotificationItemWidget(notificationEntity: cubit.notifications[index],);
-                  },
-                  separatorBuilder: (context, index) => const SizedBox( height: 10, ),
-                  itemCount: cubit.notifications.length
+              return NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if(scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                    cubit.getNotification(isLoadMore: true);
+                  }
+                  return true;
+                },
+                child: ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return  NotificationItemWidget(notificationEntity: cubit.notifications[index],);
+                    },
+                    separatorBuilder: (context, index) => const SizedBox( height: 10, ),
+                    itemCount: cubit.notifications.length
+                ),
               );
             },
           )

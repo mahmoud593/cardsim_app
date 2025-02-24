@@ -32,6 +32,6 @@ abstract class HomeRepo {
 
   Future<Either<Failure, void>> insertGoogleCode({required String code});
 
-  Future<Either<Failure, List<NotificationEntity>>> getNotifications();
+  Future<Either<Failure, List<NotificationEntity>>> getNotifications({required bool isLoadMore});
 
 }

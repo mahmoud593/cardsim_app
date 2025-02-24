@@ -16,7 +16,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  BlocProvider(
-      create: (context) => NotificationCubit(getIt())..getNotification(),
+      create: (context) => NotificationCubit(getIt())..getNotification(isLoadMore: true),
       child: BlocConsumer<NotificationCubit,NotificationStates>(
         listener: (context,state){},
         builder: (context, state) {

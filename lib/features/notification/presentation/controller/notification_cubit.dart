@@ -10,10 +10,10 @@ class NotificationCubit extends Cubit<NotificationStates> {
   List<NotificationEntity> notifications = [];
   final HomeRepo homeRepo;
 
-  Future<void> getNotification() async {
+  Future<void> getNotification({required bool isLoadMore}) async {
     notifications=[];
     emit(GetNotificationLoadingState());
-    var result = await homeRepo.getNotifications();
+    var result = await homeRepo.getNotifications(isLoadMore: isLoadMore);
     result.fold(
             (l) => emit(GetNotificationErrorState(l.error)),
             (r) {
