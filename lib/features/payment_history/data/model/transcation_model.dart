@@ -26,9 +26,9 @@ class TranscationData {
   final int id;
   final String actionId;
   final String action;
-  final double amount;
-  final int prevBalance;
-  final double newBalance;
+  final dynamic amount;
+  final dynamic prevBalance;
+  final dynamic newBalance;
 
   TranscationData({
     required this.id,
