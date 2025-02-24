@@ -25,10 +25,20 @@ class ApiServices {
 
    int perPage = 10;
    int page = 1;
+   bool hasMore = true;
 
-  Future<List<NotificationModel>> getNotifications() async {
+  Future<List<NotificationModel>> getNotifications({bool isLoadMore = false}) async {
+    List<NotificationModel> newNotificationModelList = [];
+    List<NotificationModel> notificationModelList = [];
+    if(!hasMore && isLoadMore){
+      return notificationModelList;
+    }
+    if(!isLoadMore){
+      page=1;
+      hasMore = true;
+    }
     try{
-      List<NotificationModel> notificationModelList = [];
+
       final response =  await DioHelper.getData(
           url: 'https://cardsim.net/api/notifications',
           authorization: true,
@@ -37,9 +47,16 @@ class ApiServices {
             'page':page,
           }
       );
-      response.data['data'].forEach((element) {
-        notificationModelList.add(NotificationModel.fromJson(element),);
+       response.data['data'].forEach((element) {
+         newNotificationModelList.add(NotificationModel.fromJson(element),);
       });
+       print('notificationModelList ${notificationModelList}');
+      if(newNotificationModelList.isEmpty){
+        hasMore = false;
+      }else{
+        page++;
+        notificationModelList.addAll(newNotificationModelList);
+      }
       return notificationModelList;
     }on DioError catch(e){
       throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(e.response!.data));

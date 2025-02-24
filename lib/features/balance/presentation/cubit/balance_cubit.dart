@@ -157,8 +157,8 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
         currencyList.add(
             DropdownMenuItem(
-              value: e.code,
-              child: Text('${e.code}',style: TextStyles.textStyle18Medium,),
+              value: e.short,
+              child: Text('${e.short}',style: TextStyles.textStyle18Medium,),
         ),
         );
       });
