@@ -7,6 +7,7 @@ import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/dio_helper.dart';
+import 'package:games_app/core/services/local_notification_services.dart';
 import 'package:games_app/core/services/service_locator.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
 import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
@@ -39,6 +40,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await LocalNotificationServices.init();
 
   // ضبط مستوى السجلات (اختياري)
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
@@ -53,6 +55,10 @@ void main() async {
   OneSignal.Notifications.addForegroundWillDisplayListener((event) {
     // يمكنك استخدام event.preventDefault() إذا أردت منع الإشعار داخل التطبيق
     print("Received notification in foreground: ${event.notification.jsonRepresentation()}");
+    LocalNotificationServices.showBasicNotification(
+        title:  event.notification.title!,
+        body:  event.notification.body!,
+    );
   });
 
 
