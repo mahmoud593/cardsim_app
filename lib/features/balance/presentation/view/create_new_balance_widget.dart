@@ -30,6 +30,22 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    BalanceCubit.get(context).paymentId='';
+    BalanceCubit.get(context).taxValue='';
+    BalanceCubit.get(context).currencyId='';
+    BalanceCubit.get(context).image=null;
+    BalanceCubit.get(context).amountController.text='';
+    BalanceCubit.get(context).currency='';
+    BalanceCubit.get(context).paymentMethod='';
+    BalanceCubit.get(context).paymentMethodDetails='';
+    BalanceCubit.get(context).paymentMethodCompleteData='';
+    BalanceCubit.get(context).totalAmountController.text='';
+    customCodeController.text='';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<BalanceCubit, BalanceStates>(
       listener: (context,state){
@@ -121,6 +137,8 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                           BalanceCubit.get(context).amountController.text='';
                                           BalanceCubit.get(context).currency='';
                                           BalanceCubit.get(context).paymentMethod='';
+                                          BalanceCubit.get(context).paymentMethodDetails='';
+                                          BalanceCubit.get(context).paymentMethodCompleteData='';
                                           BalanceCubit.get(context).totalAmountController.text='';
                                           customCodeController.text='';
                                           customToast(title: 'تم ارسال الطلب', color: ColorManager.primary);
@@ -150,23 +168,44 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
 
                       BlocBuilder<BalanceCubit, BalanceStates>(
                           builder: (context, state) {
-                            return DropdownButton(
-                                dropdownColor:  ColorManager.white,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                    color: ColorManager.darkThemeBackground
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DropdownButton(
+                                    dropdownColor:  ColorManager.white,
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                        color: ColorManager.darkThemeBackground
+                                    ),
+                                    items: BalanceCubit.get(context).paymentMethodList,
+                                    hint: BalanceCubit.get(context).paymentMethod=='' ?
+                                    Text('اختر طريقة الدفع', style: TextStyles.textStyle18Medium.copyWith(
+                                        color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black
+                                    )):Text(BalanceCubit.get(context).paymentMethod, style: TextStyles.textStyle18Medium.copyWith(
+                                        color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black
+                                    )),
+                                    focusColor: Colors.white,
+                                    onChanged: (value){
+                                      BalanceCubit.get(context).selectPaymentMethod(value: value.toString());
+                                    }
                                 ),
-                                items: BalanceCubit.get(context).paymentMethodList,
-                                hint: BalanceCubit.get(context).paymentMethod==''?
-                                Text('اختر طريقة الدفع', style: TextStyles.textStyle18Medium.copyWith(
-                                    color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black
-                                )):Text(BalanceCubit.get(context).paymentMethod, style: TextStyles.textStyle18Medium.copyWith(
-                                    color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black
-                                )),
-                                focusColor: Colors.white,
-                                onChanged: (value){
-                                  BalanceCubit.get(context).selectPaymentMethod(value: value.toString());
-                                }
+
+                                BalanceCubit.get(context).paymentMethodDetails==''?Container():
+                                SizedBox( height: MediaQuery.of(context).size.height*.02, ),
+
+                                BalanceCubit.get(context).paymentMethodDetails==''?Container():
+                                Text( BalanceCubit.get(context).paymentMethodDetails,style:  TextStyles.textStyle18Medium.copyWith(
+                                  color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
+                                ),),
+
+                                BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
+                                SizedBox( height: MediaQuery.of(context).size.height*.02, ),
+
+                                BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
+                                Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Medium.copyWith(
+                                  color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
+                                ),),
+                              ],
                             );
                           }
                       ),

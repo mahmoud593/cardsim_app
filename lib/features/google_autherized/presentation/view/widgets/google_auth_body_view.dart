@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
@@ -42,7 +43,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
+  TextEditingController randomCodeController = TextEditingController();
 
   String generateGoogleAuthUrl(String secretKey, String accountName, String issuer) {
     return "otpauth://totp/$issuer:$accountName?secret=$secretKey&issuer=$issuer&algorithm=SHA1&digits=6&period=30";
@@ -53,6 +54,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
   void initState() {
     super.initState();
      otpAuthUrl = generateGoogleAuthUrl(secretKey, accountName, issuer);
+    randomCodeController.text=otpAuthUrl;
   }
 
 
@@ -110,7 +112,44 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
                           ),
                         ),
 
-                        SizedBox(height: MediaQuery.of(context).size.height*.08,),
+                        SizedBox(height: MediaQuery.of(context).size.height*.02,),
+
+                        Text('او', style: TextStyles.textStyle24Bold),
+
+                        SizedBox(height: MediaQuery.of(context).size.height*.02,),
+
+                        Row(
+                          children: [
+
+                            Expanded(
+                              child: DefaultTextField(
+                                  enable:false,
+                                  controller: randomCodeController,
+                                  hintText: '',
+                                  validator: (value){
+                              
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.done,
+                                  fillColor: ColorManager.gray
+                              ),
+                            ),
+
+                            SizedBox(width: MediaQuery.of(context).size.width*.02,),
+
+                            DefaultButton(
+                                onPressed: (){
+                                  Clipboard.setData(ClipboardData(text: otpAuthUrl));
+                                  customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
+                                },
+                                borderRadius: BorderRadius.circular(12),
+                                text: 'نسخ'
+                            )
+                            
+                          ],
+                        ),
+
+                        SizedBox(height: MediaQuery.of(context).size.height*.05,),
 
                         Align(
                             alignment: Alignment.topRight,

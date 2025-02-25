@@ -37,6 +37,8 @@ class BalanceCubit extends Cubit<BalanceStates> {
   void selectPaymentMethod({required String value}) {
     paymentMethodModel!.data!.forEach((element) {
       if(element.name==value){
+        paymentMethodDetails=element.notes!.replaceAll(RegExp(r'</?(p|br)>'), '');
+        paymentMethodCompleteData=element.details!.replaceAll(RegExp(r'</?p>'), '');
         paymentId=element.id.toString();
         taxValue=element.tax.toString();
         totalAmountController.text='';
@@ -94,6 +96,9 @@ class BalanceCubit extends Cubit<BalanceStates> {
   }
 
   PaymentMethodModel ?paymentMethodModel;
+
+  String paymentMethodDetails ='';
+  String paymentMethodCompleteData ='';
 
   List<DropdownMenuItem> paymentMethodList =[];
   List<String> taxs=[];
