@@ -23,3 +23,6 @@ class GetMoreDataSuccessState extends BottomNavStates {}
 class GetMoreDataErrorState extends BottomNavStates {}
 class GetMoreDataLoadingState extends BottomNavStates {}
 
+class GetDrawerDataSuccessState extends BottomNavStates {}
+class GetDrawerDataErrorState extends BottomNavStates {}
+class GetDrawerDataLoadingState extends BottomNavStates {}

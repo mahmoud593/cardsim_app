@@ -20,6 +20,8 @@ import 'package:games_app/features/withdraws/presentation/views/withdraws_screen
 import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:games_app/styles/widgets/loading_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
@@ -34,6 +36,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   void initState() {
     super.initState();
     AuthCubit.get(context).getUserInfo(context: context);
+    BottomNavCubit.get(context).getDrawerData();
   }
 
   @override
@@ -709,41 +712,39 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Visibility(
                 visible: BottomNavCubit.get(context).drawerOpenMore == true? true : false,
                   child: Column(
-                children: [
-                  DrawerItem(
-                    icon: Icons.info,
-                    title: 'سياسة الخصوصية',
-                    onTap: () async {
-                      BottomNavCubit.get(context).selectMoreValue("سياسة الخصوصية");
-                      customPushNavigator(context, const MoreScreen(flag: 'privacy-policy',));
-                    },
+                                  children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: ModalProgressHUD(
+                      inAsyncCall: state is GetDrawerDataLoadingState? true : false,
+                      progressIndicator: const LoadingAnimationWidget(),
+                      child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: (){
+                                BottomNavCubit.get(context).selectMoreValue(BottomNavCubit.get(context).drawerItems[index].title);
+                                customPushNavigator(context, MoreScreen(flag: BottomNavCubit.get(context).drawerItems[index].slug,));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01, horizontal: MediaQuery.of(context).size.height * 0.02),
+                                child: Text(
+                                  BottomNavCubit.get(context).drawerItems[index].title,
+                                  style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.white),
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
+                            );
+                          },
+                          itemCount: BottomNavCubit.get(context).drawerItems.length,
+                      ),
+                    ),
                   ),
-                  DrawerItem(
-                    icon: Icons.description,
-                    title: 'الشروط والاحكام',
-                    onTap: () async {
-                      BottomNavCubit.get(context).selectMoreValue("الشروط والاحكام");
-                      customPushNavigator(context, const MoreScreen(flag: 'terms-conditions',));
-                    },
-                  ),
-                  DrawerItem(
-                    icon: Icons.help,
-                    title: 'كيف تصبح وكيلا؟',
-                    onTap: () async {
-                      BottomNavCubit.get(context).selectMoreValue("كيف تصبح وكيلا");
-                      customPushNavigator(context, const MoreScreen(flag: 'order-dist',));
-                    },
-                  ),
-                  DrawerItem(
-                    icon: Icons.phone,
-                    title: 'اتصل بنا',
-                    onTap: () async {
-                      BottomNavCubit.get(context).selectMoreValue("اتصل بنا");
-                      customPushNavigator(context, const MoreScreen(flag: 'call-us',));
-                    },
-                  ),
-                ],
-              )),
+                                  ],
+                                )),
 
               const Spacer(),
 
@@ -758,7 +759,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         children: [
                           InkWell(
                             onTap: () {
-                              BottomNavCubit.get(context).selectMoreValue('سياسة الخصوصية');
+                              BottomNavCubit.get(context).selectMoreValue("سياسة الخصوصية");
                               customPushNavigator(context, const MoreScreen(flag: 'privacy-policy',));
                             },
                             child: Text(
@@ -772,7 +773,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ),
                           InkWell(
                             onTap: () {
-                              BottomNavCubit.get(context).selectMoreValue('الشروط والاحكام');
+                              BottomNavCubit.get(context).selectMoreValue("الشروط والأحكام");
                               customPushNavigator(context, const MoreScreen(flag: 'terms-conditions',));
                             },
                             child: Text(

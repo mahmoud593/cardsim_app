@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CurrencyCubit()..getCurrency()),
-        BlocProvider(create: (context) => BottomNavCubit()..getUserInfo(context: context)..getMoreData(key: 'privacy-policy')),
+        BlocProvider(create: (context) => BottomNavCubit()..getUserInfo(context: context)..getDrawerData()..getMoreData(key: 'privacy-policy')),
         BlocProvider(create: (context) => OrdersCubit()..getOrders(search: "", status: "")),
         BlocProvider(create: (context) => BalanceCubit()),
         BlocProvider(create: (context) => AuthCubit(getIt(),getIt())),

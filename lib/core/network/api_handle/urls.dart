@@ -9,6 +9,7 @@ const String updateTokenUrl = '$baseUrl/update-device-token';
 const String createCouponUrl = '$baseUrl/dist/vouchers/new';
 const String getAgentUrl = '$baseUrl/distributors';
 const String getAllTransactionsUrl = '$baseUrl/user-logs';
+const String getDrawerDataUrl = '$baseUrl/settings';
 
 const String getUserInfoUrl = '$baseUrl/me';
 // // order API url

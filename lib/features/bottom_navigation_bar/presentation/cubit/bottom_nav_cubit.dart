@@ -7,6 +7,7 @@ import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
 import 'package:games_app/core/network/api_handle/urls.dart';
 import 'package:games_app/features/balance/presentation/view/balance_screen.dart';
+import 'package:games_app/features/bottom_navigation_bar/data/models/drawer_model.dart';
 import 'package:games_app/features/bottom_navigation_bar/data/models/more_model.dart';
 import 'package:games_app/features/bottom_navigation_bar/data/more_repo_implement/more_repo_Implement.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_state.dart';
@@ -119,12 +120,7 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
   }
 
   String moreScreenSelected = "سياسة الخصوصية";
-  List<String> moreScreenList = [
-    "سياسة الخصوصية",
-    "الشروط والاحكام",
-    "كيف تصبح وكيلا",
-    "اتصل بنا"
-  ];
+  List<String> moreScreenList = [];
 
   void selectMoreValue(String value) {
     print('Previous selected: $moreScreenSelected'); // Debug print
@@ -146,6 +142,25 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
       emit(GetMoreDataErrorState());
     }
 
+  }
+
+  List<DrawerModel> drawerItems= [];
+
+  getDrawerData () async {
+    emit(GetDrawerDataLoadingState());
+
+    try{
+      drawerItems = await MoreRepoImplement().getDrawerData();
+      moreScreenSelected = drawerItems[0].title;
+      for(var item in drawerItems){
+        moreScreenList.add(item.title);
+      }
+      emit(GetDrawerDataSuccessState());
+    }catch(e){
+      debugPrint("Error when get drawer data ========> ${e.toString()}");
+      emit(GetDrawerDataErrorState());
+    }
+    
   }
 
 

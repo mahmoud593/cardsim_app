@@ -67,11 +67,11 @@ class _MoreScreenState extends State<MoreScreen> {
                             final cubit = BottomNavCubit.get(context);
                             return ChoiceChip(
                               padding: EdgeInsets.zero,
-                              label: Text(cubit.moreScreenList[index]),
+                              label: Text(cubit.drawerItems[index].title),
                               labelStyle: TextStyle(
                                 fontSize: SizeConfig.height * 0.012,
                                 color: cubit.moreScreenSelected ==
-                                        cubit.moreScreenList[index]
+                                    cubit.drawerItems[index].title
                                     ? Colors.white
                                     : isLight
                                         ? ColorManager.black
@@ -79,39 +79,20 @@ class _MoreScreenState extends State<MoreScreen> {
                               ),
                               showCheckmark: false,
                               selected: cubit.moreScreenSelected ==
-                                  cubit.moreScreenList[index],
+                                  cubit.drawerItems[index].title,
                               selectedColor: ColorManager.primary,
                               checkmarkColor: ColorManager.white,
                               backgroundColor: isLight
                                   ? ColorManager.white
                                   : ColorManager.darkThemeBackgroundLight,
                               onSelected: (bool selected) {
-                                cubit.selectMoreValue(cubit.moreScreenList[index]);
-                                switch (cubit.moreScreenSelected) {
-                                  case "سياسة الخصوصية" :{
-                                    BottomNavCubit.get(context).getMoreData(key: 'privacy-policy');
-                                    break;
-                                  }
-                                  case "الشروط والاحكام" :{
-                                    BottomNavCubit.get(context).getMoreData(key: 'terms-conditions');
-                                    break;
-                                  }
-                                  case "اتصل بنا" :{
-                                    BottomNavCubit.get(context).getMoreData(key: 'call-us');
-                                    break;
-                                  }
-                                  case "كيف تصبح وكيلا" :{
-                                    BottomNavCubit.get(context).getMoreData(key: 'order-dist');
-                                    break;
-                                  }
-                                }
+                                cubit.selectMoreValue(cubit.drawerItems[index].title);
+                                BottomNavCubit.get(context).getMoreData(key: cubit.drawerItems[index].slug);
                               },
                             );
                           },
-                          separatorBuilder: (context, index) => SizedBox(
-                            width: SizeConfig.height * 0.005,
-                          ),
-                          itemCount: BottomNavCubit.get(context).moreScreenList.length,
+                          separatorBuilder: (context, index) => SizedBox(width: SizeConfig.height * 0.005,),
+                          itemCount: BottomNavCubit.get(context).drawerItems.length,
                         ),
                       ),
                     ),
