@@ -4,20 +4,16 @@ class LocalNotificationServices {
 
   // initialization Notification
   static Future init() async {
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings(
-        '@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
+
     const InitializationSettings initializationSettings =
     InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-
-    await FlutterLocalNotificationsPlugin().initialize(initializationSettings,
-        onDidReceiveNotificationResponse: onTapNotification,
-        onDidReceiveBackgroundNotificationResponse: onTapNotification);
-
 
     FlutterLocalNotificationsPlugin()
         .resolvePlatformSpecificImplementation<
@@ -27,11 +23,21 @@ class LocalNotificationServices {
       badge: true,
       sound: true,
     );
+
+    // click on notification
+    await FlutterLocalNotificationsPlugin().initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onTapNotification,
+        onDidReceiveBackgroundNotificationResponse: onTapNotification
+    );
+
   }
 
 
-// basic Notification
-  static Future<void> showBasicNotification({required String title,required String body}) async {
+  // basic Notification
+  static Future<void> showBasicNotification({
+    required String title,
+    required String body
+  }) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'your channel id',
       'your channel name',
@@ -42,7 +48,10 @@ class LocalNotificationServices {
     );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics
+    );
+
+    /// details of notification
     await FlutterLocalNotificationsPlugin().show(
       0,
       title,
@@ -54,4 +63,7 @@ class LocalNotificationServices {
 
 }
 
-void onTapNotification(NotificationResponse notificationResponse) {}
+/// click on notification
+void onTapNotification(NotificationResponse notificationResponse) {
+
+}

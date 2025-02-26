@@ -19,6 +19,8 @@ import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/services/on_signal_notification.dart';
+
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({super.key});
 
@@ -36,54 +38,97 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   void initState() {
     super.initState();
 
-    // جلب حالة الاشتراك وتحديث Firestore
+
+    OnSignalNotificationServices.init();
+    handleNotificationWhenAppOpened();
+
     updateUserOSUserID();
     BottomNavCubit.get(context).getUserInfo(context: context);
     AuthCubit.get(context).getUserInfo(context: context);
-    notificationSetup();
+    onClickNotificationSetup();
   }
 
-  void notificationSetup() async {
-    // استقبال الإشعارات داخل التطبيق
-    OneSignal.Notifications.addForegroundWillDisplayListener((event) {
-      setState(() {
-        subtitle = event.notification.body!;
-        content = event.notification.body!;
-        data = event.notification.additionalData?['data'];
-      });
-    });
+  void onClickNotificationSetup() async {
 
     bool _notificationHandled = false;
-    bool _notificationForeHandled = false;
 
-
-    // التعامل مع فتح الإشعار
     OneSignal.Notifications.addClickListener((event) {
       print('Notification Opened: ${event.notification.jsonRepresentation()}');
-      if(!_notificationHandled){
-        _notificationHandled=true;
-        showDialog(context: context, builder: (context){
-          return AlertDialog(
-            backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.gray,
-            title: Constants.titleNotification==''?
-            Text('${event.notification.title}'): Text('${Constants.titleNotification}'),
-            content:  Constants.bodyNotification==''? Text('${event.notification.body}'): Text('${Constants.bodyNotification}'),
-            actions: [
-              Align(
-                alignment: Alignment.center,
-                child: DefaultButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    borderRadius: BorderRadius.circular(12),
-                    text: 'مقروءة'
+
+        if(!_notificationHandled){
+          _notificationHandled = true;
+          showDialog(context: context, builder: (context){
+            return AlertDialog(
+              backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.gray,
+              title: Text('${event.notification.title}'),
+              content:Text('${event.notification.body}'),
+              actions: [
+                Align(
+                  alignment: Alignment.center,
+                  child: DefaultButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      borderRadius: BorderRadius.circular(12),
+                      text: 'مقروءة'
+                  ),
                 ),
-              ),
-            ],
-          );
-        });
-      }
+              ],
+            );
+          });
+        }
     });
+  }
+
+  void handleNotificationWhenAppOpened() async {
+
+    String? lastNotificationId;
+    OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+
+      final String currentMessageId = event.notification.jsonRepresentation();
+
+      if (lastNotificationId == currentMessageId) {
+        return;
+      }
+      lastNotificationId = currentMessageId;
+
+      print("Received notification in foreground: ${event.notification.jsonRepresentation()}");
+
+      LocalNotificationServices.showBasicNotification(
+        title:  event.notification.title!,
+        body:  event.notification.body!,
+      );
+
+      showDialog(context: context, builder: (context){
+        return AlertDialog(
+          backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.gray,
+          title: Text('${event.notification.title}'),
+          content:  Text('${event.notification.body}'),
+          actions: [
+            Align(
+              alignment: Alignment.center,
+              child: DefaultButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  text: 'مقروءة'
+              ),
+            ),
+          ],
+        );
+      });
+
+      OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+        setState(() {
+          subtitle = event.notification.body!;
+          content = event.notification.body!;
+          data = event.notification.additionalData?['data'];
+        });
+      });
+
+    });
+
 
   }
 
@@ -106,39 +151,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<BottomNavCubit, BottomNavStates>(
       listener: (context, state) {},
       builder: (context, state) {
-
-        OneSignal.Notifications.addForegroundWillDisplayListener((event) {
-          // يمكنك استخدام event.preventDefault() إذا أردت منع الإشعار داخل التطبيق
-          print("Received notification in foreground: ${event.notification.jsonRepresentation()}");
-          LocalNotificationServices.showBasicNotification(
-            title:  event.notification.title!,
-            body:  event.notification.body!,
-          );
-
-
-            showDialog(context: context, builder: (context){
-              return AlertDialog(
-                backgroundColor: UserDataFromStorage.themeIsDarkMode ? ColorManager.darkThemeBackground : ColorManager.gray,
-                title: Text('${event.notification.title!}'),
-                content:  Text('${event.notification.body!}'),
-                actions: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: DefaultButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        borderRadius: BorderRadius.circular(12),
-                        text: 'مقروءة'
-                    ),
-                  ),
-                ],
-              );
-            });
-        });
         print('current index is ${BottomNavCubit.get(context).currentIndex}');
         return Scaffold(
           key: BottomNavCubit.get(context).scaffoldKey,
@@ -163,8 +179,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 }
 
 Future<void> sendNotification() async {
+
   const String oneSignalAppId = "bc085bc7-0536-4bdb-8609-1c634b43eb31"; // ✅ استبدلها بـ App ID الخاص بك
-  const String oneSignalApiKey = "os_v2_app_3lqh6r7bgfatbjh2u7w3k6ggpnniqrdexh6egmepomv27oroet4ujl3clsp7hp4uqdmqrrqw63p72s5goa6v3ycmy3xskm7ynzjvcuy"; // ✅ استبدلها بـ API Key الخاص بك
+  const String oneSignalApiKey = "os_v2_app_3lqh6r7bgfatbjh2u7w3k6ggppvs4bru4hhuv3fmzkudrzadfsuemctbutpmm66tcocidxl5xkfzf564uyctzqlicdba7mrk7be3m6i"; // ✅ استبدلها بـ API Key الخاص بك
 
   var url = Uri.parse("https://onesignal.com/api/v1/notifications");
 
@@ -175,7 +192,7 @@ Future<void> sendNotification() async {
 
   var body = jsonEncode({
     "app_id": oneSignalAppId,
-    "include_player_ids": ["eaf2dcd7-a1e2-4cb6-ae5c-c39a3bc3a752a"], // ✅ استبدلها بـ playerId للمستخدم
+    "include_player_ids": ["f32164e3-01cc-405c-bcd4-1e5d354d872a"], // ✅ استبدلها بـ playerId للمستخدم
     "headings": {"en": "Flutter in Depth"},
     "contents": {"en": "New series lessons from Code With Ammar"},
     "data": {"custom_key": "this is our data"},
