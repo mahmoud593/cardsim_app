@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:games_app/bloc_observer.dart';
+import 'package:games_app/core/constants/constants.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
@@ -34,6 +35,9 @@ import 'features/home/presentation/controller/text_slider_cubit/text_slider_cubi
 import 'features/home/presentation/controller/theme_cubit/theme_cubit.dart';
 import 'generated/l10n.dart';
 // dae07f47-e131-4130-a4fa-a7edb578c67b
+
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -61,8 +65,6 @@ void main() async {
     );
   });
 
-
-
   Bloc.observer = MyBlocObserver();
   ServiceLocator().setup();
   CashHelper.init();
@@ -70,8 +72,6 @@ void main() async {
   await SharedPreferences.getInstance();
   await UserDataFromStorage.getData();
   //await HomeRepoImp(ApiServices()).createOrder(6, 1, 'test');
-
-
 
   runApp(const MyApp());
 }

@@ -8,4 +8,7 @@ class Constants {
     'يمكنك الحفاظ على مستوى تقدمك في حال وصلت إلى نقطة الامان'
   ];
 
+  static String titleNotification = '';
+  static String bodyNotification = '';
+
 }
