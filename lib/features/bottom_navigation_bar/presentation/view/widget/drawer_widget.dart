@@ -654,54 +654,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
                         },
                       ),
-                      DrawerItem(
-                        icon: Icons.delete_outline,
-                        title: 'حذف الحساب',
-                        onTap: () async {
-                          if(UserDataFromStorage.userTokenFromStorage != ''){
-                            await BottomNavCubit.get(context).deleteAccount();
-                            customPushAndRemoveUntil(context, const LoginScreen());
-                          }
-                          else{
-                            showDialog(
-                                context: context,
-                                builder: (context) => BlocBuilder<ThemeCubit,ThemeState>(
-                                    builder: (context, state) {
-                                      return AlertDialog(
-                                          backgroundColor: UserDataFromStorage.themeIsDarkMode==false? ColorManager.white: ColorManager.darkThemeBackgroundLight,
-                                          title: Text('تنبيه',style: TextStyle(
-                                              color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
-                                              ColorManager.white
-                                          ),),
-                                          content: Text('تحتاج الي تسجيل الدخول لاستخدام التطبيق',style: TextStyle(
-                                              color: UserDataFromStorage.themeIsDarkMode==false? ColorManager.textColor :
-                                              ColorManager.white
-                                          ),),
-                                          actions: [
-                                            TextButton(
-                                              child:  const Text('تسجيل الدخول',style: TextStyle(
-                                                  color:ColorManager.primary
-                                              ),),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                customPushNavigator(context, const LoginScreen());
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text('الغاء',style: TextStyle(color: Colors.red),),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ]
-                                      );
-                                    }
-                                )
-                            );
-                          }
-
-                        },
-                      ),
                     ],
                   ),
               ),
