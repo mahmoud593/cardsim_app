@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/material_navigation.dart';
+import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:games_app/features/google_autherized/presentation/view/screens/google_auth_screen.dart';
 import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
@@ -114,6 +117,57 @@ class SettingsBodyView extends StatelessWidget {
                   onPressed: (){},
                   borderRadius: BorderRadius.circular(12),
                   text: 'حفظ البيانات '
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height*.03,),
+
+              DefaultButton(
+                  width: double.infinity,
+                  onPressed: ()async{
+
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: UserDataFromStorage.themeIsDarkMode ?
+                            ColorManager.darkThemeBackground :
+                            ColorManager.gray,
+                            title: const Text('حذف الحساب'),
+                            content: const Text('هل تريد حذف الحساب؟'),
+                            actions: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: DefaultButton(
+                                        backgroundColor: Colors.red,
+                                        onPressed: () async {
+                                          await BottomNavCubit.get(context).deleteAccount();
+                                          customPushAndRemoveUntil(context, const LoginScreen());
+                                        },
+                                        borderRadius: BorderRadius.circular(12),
+                                        text: 'نعم'
+                                    ),
+                                  ),
+                                  SizedBox(width: MediaQuery.of(context).size.width*.05,),
+                                  Expanded(
+                                    child: DefaultButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        borderRadius: BorderRadius.circular(12),
+                                        text: 'لا'
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ]);
+                        }
+                    );
+                  },
+                  backgroundColor: Colors.red,
+                  borderRadius: BorderRadius.circular(12),
+                  text: 'حذف الحساب '
               ),
 
             ],

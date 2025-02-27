@@ -4,6 +4,7 @@ import 'package:games_app/core/helper/material_navigation.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/auth/presentation/view/screens/register_screen.dart';
+import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
 import 'package:games_app/features/home/presentation/controller/companies_cubit/companies_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view.dart';
 import 'package:games_app/features/home/presentation/view/widgets/image_carousal_widget.dart';
@@ -74,7 +75,12 @@ class HomeScreenBody extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          const TextSliderWidget(),
+          GestureDetector(
+              onTap: (){
+                sendNotification();
+              },
+              child: const TextSliderWidget()
+          ),
 
           // Center(
           //   child: Text(

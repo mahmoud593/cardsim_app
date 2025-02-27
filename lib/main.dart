@@ -46,25 +46,6 @@ void main() async {
 
   await LocalNotificationServices.init();
 
-  // ضبط مستوى السجلات (اختياري)
-  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-
-  // تهيئة OneSignal باستخدام App ID
-  OneSignal.initialize("bc085bc7-0536-4bdb-8609-1c634b43eb31");
-
-  // طلب إذن الإشعارات من المستخدم
-  await OneSignal.Notifications.requestPermission(true);
-
-  // ضبط الإشعارات داخل التطبيق بحيث يتم عرضها تلقائيًا
-  OneSignal.Notifications.addForegroundWillDisplayListener((event) {
-    // يمكنك استخدام event.preventDefault() إذا أردت منع الإشعار داخل التطبيق
-    print("Received notification in foreground: ${event.notification.jsonRepresentation()}");
-    LocalNotificationServices.showBasicNotification(
-        title:  event.notification.title!,
-        body:  event.notification.body!,
-    );
-  });
-
   Bloc.observer = MyBlocObserver();
   ServiceLocator().setup();
   CashHelper.init();
