@@ -59,7 +59,27 @@ class BalanceCubit extends Cubit<BalanceStates> {
 
   void selectCurrency({required String value,}) {
     currencyModel!.data!.forEach((element) {
-      if(element.code==value){
+      print('Value is ${value}');
+      print('element ${element.code}');
+      if(element.code=='SYP' && value=='SYP'){
+        currencyId=element.id.toString();
+        chargeRate=element.exchangeRate!;
+        totalAmountController.text='';
+        amountController.text='';
+      }
+      if(element.code=='LE' && value=='EGP'){
+        currencyId=element.id.toString();
+        chargeRate=element.exchangeRate!;
+        totalAmountController.text='';
+        amountController.text='';
+      }
+      if(element.code=='₺' && value=='TRY'){
+        currencyId=element.id.toString();
+        chargeRate=element.exchangeRate!;
+        totalAmountController.text='';
+        amountController.text='';
+      }
+      if(element.code=='\$' && value=='USD'){
         currencyId=element.id.toString();
         chargeRate=element.exchangeRate!;
         totalAmountController.text='';
@@ -67,6 +87,7 @@ class BalanceCubit extends Cubit<BalanceStates> {
       }
     });
     currency = value;
+    print('Currency is ${currency}');
     emit(SelectCurrencyState());
   }
 

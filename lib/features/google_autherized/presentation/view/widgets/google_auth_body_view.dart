@@ -54,7 +54,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
   void initState() {
     super.initState();
      otpAuthUrl = generateGoogleAuthUrl(secretKey, accountName, issuer);
-    randomCodeController.text=otpAuthUrl;
+    randomCodeController.text=secretKey;
   }
 
 
@@ -139,7 +139,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
 
                             DefaultButton(
                                 onPressed: (){
-                                  Clipboard.setData(ClipboardData(text: otpAuthUrl));
+                                  Clipboard.setData(ClipboardData(text: secretKey));
                                   customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
                                 },
                                 borderRadius: BorderRadius.circular(12),

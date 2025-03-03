@@ -47,9 +47,14 @@ class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
                     selectedProductIndex: selectedProductIndex,
                     onProductSelected: (index) {
                       setState(() {
+                        print('state.products[index] is ${state.products[index].status}');
                         selectedProductIndex = index;
-                        amountController.text =
-                            (state.products[index].quantity!.min ?? 1).toString();
+                        if(state.products[index].quantity != null){
+                          amountController.text = state.products[index].quantity!.min.toString();
+                        }else{
+                          amountController.text = (1).toString();
+                        }
+
                       });
                     },
                   ),

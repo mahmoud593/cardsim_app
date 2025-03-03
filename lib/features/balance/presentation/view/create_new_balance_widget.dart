@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
@@ -10,6 +11,7 @@ import 'package:games_app/features/balance/presentation/cubit/balance_state.dart
 import 'package:games_app/styles/assets/asset_manager.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/default_text_field.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -187,11 +189,13 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                     focusColor: Colors.white,
                                     onChanged: (value){
                                       BalanceCubit.get(context).selectPaymentMethod(value: value.toString());
+                                      print('paymentMethodDetails is ${BalanceCubit.get(context).paymentMethod}');
                                     }
                                 ),
 
                                 BalanceCubit.get(context).paymentMethodDetails==''?Container():
                                 SizedBox( height: MediaQuery.of(context).size.height*.02, ),
+
 
                                 BalanceCubit.get(context).paymentMethodDetails==''?Container():
                                 Text( BalanceCubit.get(context).paymentMethodDetails,style:  TextStyles.textStyle18Medium.copyWith(
@@ -201,10 +205,38 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                 BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
                                 SizedBox( height: MediaQuery.of(context).size.height*.02, ),
 
-                                BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
+
+                                BalanceCubit.get(context).paymentMethodCompleteData==''?
                                 Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Medium.copyWith(
                                   color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
-                                ),),
+                                ),):BalanceCubit.get(context).paymentMethod=='شام كاش' || BalanceCubit.get(context).paymentMethod=='SyriaPhone' || BalanceCubit.get(context).paymentMethod=='Payeer'?
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(
+                                          12
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: UserDataFromStorage.themeIsDarkMode ? ColorManager.gray : ColorManager.gray,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Regular.copyWith(
+                                          color: UserDataFromStorage.themeIsDarkMode ? ColorManager.primary : ColorManager.primary,
+                                          fontSize: 14
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width:  MediaQuery.of(context).size.width*.02,),
+                                    DefaultButton(
+                                        onPressed: (){
+                                      Clipboard.setData(ClipboardData(text: BalanceCubit.get(context).paymentMethodCompleteData));
+                                      customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
+                                    }, borderRadius: BorderRadius.circular(12), text: 'نسخ')
+                                  ],
+                                ):Container()
                               ],
                             );
                           }

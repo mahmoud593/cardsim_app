@@ -35,11 +35,15 @@ class RequestOrderGridView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Center(
                   child: RequestOrderListViewItem(
+                    status: state.products[index].status,
                     productsEntity: state.products[index],
                     isSelected: selectedProductIndex == index,
                     onTap: state.products[index].status == 'unavailable'
                         ? null
+                        : state.products[index].status=='inactive'
+                        ? null
                         : () {
+                      print(state.products[index].status);
                             onProductSelected(index);
                           },
                   ),

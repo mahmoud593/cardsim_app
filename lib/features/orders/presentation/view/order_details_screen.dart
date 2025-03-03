@@ -4,10 +4,12 @@ import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/features/orders/data/models/orders_model.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final Order orderDetails;
-  const OrderDetailsScreen({super.key, required this.orderDetails});
+  final List<String> codes;
+  const OrderDetailsScreen({super.key, required this.orderDetails,required this.codes});
 
   @override
   Widget build(BuildContext context) {
@@ -131,37 +133,36 @@ class OrderDetailsScreen extends StatelessWidget {
             SizedBox(
               height: SizeConfig.height * 0.01,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  orderDetails.field.name,
-                  style: TextStyles.textStyle18Medium,
-                ),
-                Text(
-                  " : ",
-                  style: TextStyles.textStyle18Medium,
-                ),
-                Text(
-                  orderDetails.field.value,
-                  style: TextStyles.textStyle18Medium,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Clipboard.setData(
-                        ClipboardData(text: orderDetails.field.value));
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('تم نسخ البيانات'),
-                    ));
-                  },
-                  icon: Icon(
-                    size: SizeConfig.height * 0.03,
-                    Icons.copy,
-                    color: ColorManager.white,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                'بيانات اضافيه',
+                style: TextStyles.textStyle18Medium,
+              ),
+            ),
+
+            Container(
+              height: SizeConfig.height * 0.1,
+              child: ListView.separated(
+                  itemBuilder: (context, index) => Row(
+                    children: [
+                      Text(codes[index]),
+                      SizedBox(
+                        width: SizeConfig.height * 0.01,
+                      ),
+                      Text(' : ',style:  TextStyles.textStyle24Medium,),
+                      IconButton(
+                          onPressed: (){
+                            Clipboard.setData(ClipboardData(text: codes[index]));
+                            customToast(title: 'تم نسخ الكود', color: ColorManager.primary);
+                          },
+                          icon: const Icon(Icons.copy)
+                      )
+                    ],
                   ),
-                ),
-              ],
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: codes.length
+              ),
             ),
           ],
         ),

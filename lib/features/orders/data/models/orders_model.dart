@@ -50,7 +50,7 @@ class Order {
   final double walletBalanceBefore;
   final double walletBalanceAfter;
   final Field field;
-  final dynamic orderDetails;
+  final List<OrderDetails> orderDetails;
   final String status;
   final String rejectReason;
   final String addedDetails;
@@ -83,7 +83,7 @@ class Order {
     walletBalanceBefore: json["wallet_balance_before"] != null ? json["wallet_balance_before"].toDouble() : 0.0,
     walletBalanceAfter: json["wallet_balance_after"] != null ? json["wallet_balance_after"].toDouble() : 0.0,
     field: json["field"] != null ? Field.fromMap(json["field"]) : Field(name: '', value: '', valueCheckedName: null),
-    orderDetails: json["order_details"],
+    orderDetails: List<OrderDetails>.from(json["order_details"].map((x) => OrderDetails.fromMap(x))).toList()??[],
     status: json["status"] ?? '',
     rejectReason: json["reject_reason"] ?? '',
     addedDetails: json["added_details"] ?? '',
@@ -153,5 +153,25 @@ class OrderDetailsClass {
     "additional_data": additionalData,
     "number": number,
     "sms_code": smsCode,
+  };
+}
+
+class OrderDetails {
+  final String key;
+  final String value;
+
+  OrderDetails({
+    required this.key,
+    required this.value,
+  });
+
+  factory OrderDetails.fromMap(Map<String, dynamic> json) => OrderDetails(
+    key: json["key"] ?? '',
+    value: json["value"] ?? '',
+  );
+
+  Map<String, dynamic> toMap() => {
+    "key": key,
+    "value": value,
   };
 }

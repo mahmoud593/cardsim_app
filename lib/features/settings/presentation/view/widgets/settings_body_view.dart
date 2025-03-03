@@ -80,18 +80,19 @@ class SettingsBodyView extends StatelessWidget {
                 controller: cubit.phoneProfileController,
               ),
 
-              SizedBox(height: MediaQuery.of(context).size.height*.03,),
-
-              Row(
-                children: [
-
-                  Switch(value: cubit.userInfoModel!.email_2fa!, onChanged: (v){}),
-                  SizedBox(height: MediaQuery.of(context).size.height*.05,),
-
-                  Text('المصادقه الثنائيه',style: TextStyles.textStyle18Bold,),
-
-                ],
-              ),
+              /// المصداقه الثنائيه
+              // SizedBox(height: MediaQuery.of(context).size.height*.03,),
+              //
+              // Row(
+              //   children: [
+              //
+              //     Switch(value: cubit.userInfoModel!.email_2fa!, onChanged: (v){}),
+              //     SizedBox(height: MediaQuery.of(context).size.height*.05,),
+              //
+              //     Text('المصادقه الثنائيه',style: TextStyles.textStyle18Bold,),
+              //
+              //   ],
+              // ),
 
               SizedBox(height: MediaQuery.of(context).size.height*.03,),
 

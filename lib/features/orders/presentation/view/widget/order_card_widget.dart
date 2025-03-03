@@ -18,6 +18,7 @@ class GameOrderCard extends StatelessWidget {
   final String status;
   final DateTime purchaseDate;
   final String? rejectReason;
+  final List<String>? code;
   final Order data;
 
   const GameOrderCard({
@@ -30,6 +31,7 @@ class GameOrderCard extends StatelessWidget {
     required this.quantity,
     required this.status,
     required this.purchaseDate,
+    required this.code,
     this.rejectReason,
     required this.data,
   });
@@ -91,6 +93,7 @@ class GameOrderCard extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: SizeConfig.height * 0.01,),
 
             Text(
               'اللاعب/المشترك: $playerName',
@@ -98,6 +101,8 @@ class GameOrderCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
+            SizedBox(height: SizeConfig.height * 0.01,),
+
             // Price and purchase date
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,6 +121,8 @@ class GameOrderCard extends StatelessWidget {
                 ),
               ],
             ),
+
+            SizedBox(height: SizeConfig.height * 0.01,),
 
             if (status == "reject" && rejectReason != null && rejectReason!.isNotEmpty)
               Padding(
@@ -136,7 +143,7 @@ class GameOrderCard extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: (){
-                      customPushNavigator(context, OrderDetailsScreen(orderDetails: data));
+                      customPushNavigator(context, OrderDetailsScreen(orderDetails: data,codes: code!,));
                     },
                     icon: const Icon(Icons.visibility_outlined, color: ColorManager.primary,),
                     iconSize: SizeConfig.height * 0.03

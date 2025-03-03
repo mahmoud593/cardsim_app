@@ -24,22 +24,52 @@ class NotificationItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         color: UserDataFromStorage.themeIsDarkMode?  ColorManager.darkThemeBackgroundLight:ColorManager.gray,
       ),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(notificationEntity.data.title,
-              style: TextStyles.textStyle24Bold.copyWith(
-                  color: UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.primary,
-                  fontSize: MediaQuery.sizeOf(context).height*.02
-              ),),
-            const SizedBox( height: 10, ),
-            Text(notificationEntity.data.data,
-              style: TextStyles.textStyle24Bold.copyWith(
-                  color: UserDataFromStorage.themeIsDarkMode? ColorManager.lightGrey : ColorManager.black,
-                  fontSize: MediaQuery.sizeOf(context).height*.014
-              ),),
+      child: Row(
+        children: [
 
-          ]
+          Stack(
+            children: [
+              CircleAvatar(
+                radius:  MediaQuery.sizeOf(context).height*.03,
+                backgroundImage: NetworkImage(notificationEntity.data.image),
+              ),
+              notificationEntity.data.status=='rejected'?
+              const Positioned(
+                bottom: 0,
+                child: Image(
+                  height: 20,
+                  color: Colors.red,
+                  image: AssetImage('assets/images/dislike.png'),
+                ),
+              ): const Positioned(
+                bottom: 0,
+                child: Image(
+                  height: 20,
+                  color: Colors.green,
+                  image: AssetImage('assets/images/like.png'),
+                ),
+              )
+            ],
+          ),
+          SizedBox(width: MediaQuery.sizeOf(context).height*.02,),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(notificationEntity.data.title,
+                  style: TextStyles.textStyle24Bold.copyWith(
+                      color: UserDataFromStorage.themeIsDarkMode? ColorManager.white : ColorManager.primary,
+                      fontSize: MediaQuery.sizeOf(context).height*.02
+                  ),),
+                const SizedBox( height: 10, ),
+                Text(notificationEntity.data.data,
+                  style: TextStyles.textStyle24Bold.copyWith(
+                      color: UserDataFromStorage.themeIsDarkMode? ColorManager.lightGrey : ColorManager.black,
+                      fontSize: MediaQuery.sizeOf(context).height*.014
+                  ),),
+                const SizedBox( height: 10, ),
+              ]
+          ),
+        ],
       ),
     );
   }

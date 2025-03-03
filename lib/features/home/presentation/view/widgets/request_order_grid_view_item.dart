@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
@@ -7,16 +6,19 @@ import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_cubit.dart';
 import 'package:games_app/features/balance/presentation/cubit/balance_state.dart';
 import 'package:games_app/features/home/domain/entities/products_entity.dart';
+import 'package:games_app/styles/colors/color_manager.dart';
 
 class RequestOrderListViewItem extends StatelessWidget {
   const RequestOrderListViewItem({
     super.key,
     required this.productsEntity,
     required this.isSelected,
+    required this.status,
     this.onTap,
   });
 
   final ProductsEntity productsEntity;
+  final String status;
   final bool isSelected;
   final VoidCallback? onTap;
 
@@ -36,8 +38,13 @@ class RequestOrderListViewItem extends StatelessWidget {
                           Colors.black,
                           BlendMode.saturation,
                         )
-                      : const ColorFilter.mode(
-                          Colors.transparent, BlendMode.multiply),
+                      :  status == 'inactive'?
+                  const ColorFilter.mode(
+                          Colors.grey, BlendMode.hue
+                  ):
+                  const ColorFilter.mode(
+                      Colors.transparent, BlendMode.multiply
+                  ),
                   child: Image.network(
                     productsEntity.image,
                     fit: BoxFit.cover,
@@ -49,6 +56,7 @@ class RequestOrderListViewItem extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                     ),
                   ),
+
                 Positioned(
                   top: 0,
                   left: 0,
@@ -75,6 +83,41 @@ class RequestOrderListViewItem extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                status=='inactive'?
+                Positioned(
+                  top: SizeConfig.height * 0.062,
+                  left: SizeConfig.height*.07,
+                  right: 0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: ColorManager.primary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12),
+                      ),
+                    ),
+                    height: SizeConfig.height * 0.03,
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'غير متوفر',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ):Container(),
+
                 Positioned(
                   bottom: 0,
                   left: 0,
