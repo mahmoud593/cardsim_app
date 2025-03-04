@@ -357,6 +357,7 @@ class AuthCubit extends Cubit<AuthStates>{
       print('Response enableGoogleAuth: ${response.toString()}');
       if(response !=null){
         customToast(title: 'تم تفعيل المصادقة عبر جوجل', color:ColorManager.primary);
+        getUserInfo(context: context);
         customPushAndRemoveUntil(context, BottomNavigationScreen());
       }else{
         customToast(title: 'تحقق من الرمز و حاول مجددا', color:ColorManager.error);
@@ -367,6 +368,41 @@ class AuthCubit extends Cubit<AuthStates>{
       customToast(title: 'تحقق من الرمز و حاول مجددا', color:ColorManager.error);
       print('error in enableGoogleAuth is $error');
       emit(EnableGoogleAuthErrorState());
+    }
+
+
+  }
+
+  Future <void> updateUserInfo({
+    required String phone,
+    required bool google_2fa,
+  })async{
+
+    emit(UpdateUserLoadingState());
+
+    try{
+      var response =  await httpHelper.callService(
+          responseType: ResponseType.post,
+          url: UrlConstants.updateUser,
+          authorization: true,
+          parameter: {
+            "phone" : phone,
+            "google_2fa" : google_2fa,
+          }
+      );
+
+      print('Update User: ${response.toString()}');
+
+      if(response !=null){
+        customToast(title: 'تم تحديث البيانات', color:ColorManager.primary);
+      }else{
+
+      }
+
+      emit(UpdateUserSuccessState());
+    }catch(error){
+      print('error in update user is $error');
+      emit(UpdateUserErrorState());
     }
 
 

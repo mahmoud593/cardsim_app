@@ -102,7 +102,7 @@ class InsertGoogleCodeBodyView extends StatelessWidget {
                         child: DefaultButton(
                             onPressed: () async {
                               await cubit.insertCode(code: codeController.text);
-                              // await cubit.getUserInfo(context: context );
+                              await cubit.getUserInfo(context: context );
                               customPushAndRemoveUntil(context, BottomNavigationScreen());
                             },
                             borderRadius: BorderRadius.circular(12),

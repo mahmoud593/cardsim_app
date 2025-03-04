@@ -39,3 +39,7 @@ class GetAddressInfoState extends AuthStates {}
 class EnableGoogleAuthLoadingState extends AuthStates {}
 class EnableGoogleAuthSuccessState extends AuthStates {}
 class EnableGoogleAuthErrorState extends AuthStates {}
+
+class UpdateUserLoadingState extends AuthStates {}
+class UpdateUserSuccessState extends AuthStates {}
+class UpdateUserErrorState extends AuthStates {}

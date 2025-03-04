@@ -13,9 +13,23 @@ import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
 import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/default_text_field.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class SettingsBodyView extends StatelessWidget {
+class SettingsBodyView extends StatefulWidget {
   const SettingsBodyView({super.key});
+
+  @override
+  State<SettingsBodyView> createState() => _SettingsBodyViewState();
+}
+
+class _SettingsBodyViewState extends State<SettingsBodyView> {
+  bool isSwitched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isSwitched=AuthCubit.get(context).userInfoModel!.google_2fa!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +113,17 @@ class SettingsBodyView extends StatelessWidget {
               Row(
                 children: [
 
-                  Switch(value: cubit.userInfoModel!.google_2fa!, onChanged: (v){
-                    customPushNavigator(context, GoogleAuthScreen());
+                  Switch(
+                      value: isSwitched,
+                      onChanged: (v){
+                        print('google 2fa: ${isSwitched}');
+                        if(isSwitched==false){
+                          customPushNavigator(context, GoogleAuthScreen());
+                        }else{
+                          setState(() {
+                            isSwitched=false;
+                          });
+                        }
                   }),
 
 
@@ -113,9 +136,19 @@ class SettingsBodyView extends StatelessWidget {
 
               SizedBox(height: MediaQuery.of(context).size.height*.05,),
 
+
+              state is UpdateUserLoadingState?
+              const Center(
+                child: CircularProgressIndicator(),
+              ):
               DefaultButton(
                   width: double.infinity,
-                  onPressed: (){},
+                  onPressed: (){
+                    cubit.updateUserInfo(
+                        phone: cubit.phoneProfileController.text,
+                        google_2fa: isSwitched,
+                    );
+                  },
                   borderRadius: BorderRadius.circular(12),
                   text: 'حفظ البيانات '
               ),

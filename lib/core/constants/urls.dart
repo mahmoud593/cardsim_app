@@ -10,6 +10,8 @@ class UrlConstants {
 
   static const String searchUrl = '$baseUrl/api/companies?search=';
 
+  static const String updateUser = '$baseUrl/api/update-user-info';
+
   static const String loginWithGoogleUrl = '$baseUrl/api/login/google';
 
   static const String logoutUrl = '$baseUrl/api/logout';
