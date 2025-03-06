@@ -35,12 +35,12 @@ class Data {
   Data({this.id, this.name, this.details, this.notes, this.tax, this.image});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    details = json['details'];
-    notes = json['notes'];
-    tax = json['tax'];
-    image = json['image'];
+    id = json['id']??'';
+    name = json['name']??'';
+    details = json['details']??'';
+    notes = json['notes']??'';
+    tax = json['tax']??'';
+    image = json['image']??'';
   }
 
   Map<String, dynamic> toJson() {

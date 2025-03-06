@@ -5,10 +5,11 @@ import 'package:games_app/styles/colors/color_manager.dart';
 import '../../../../../styles/text_styles/text_styles.dart';
 
 class DealingsListViewItem extends StatelessWidget {
-  const DealingsListViewItem({super.key, required this.value, required this.title});
+  const DealingsListViewItem({super.key, required this.value, required this.title, this.isBalance = false});
 
   final String value ;
   final String title ;
+  final bool isBalance;
   @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
@@ -26,7 +27,7 @@ class DealingsListViewItem extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 12),
         title:  Text(
-          value,
+          isBalance==false? '${double.parse(value).toInt()}' :value,
           style: const TextStyle(
             fontSize: 25,
             height: 1,

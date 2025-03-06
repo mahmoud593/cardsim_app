@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/auth/data/models/google_auth_error.dart';
 import 'package:games_app/features/home/data/models/companies_model.dart';
@@ -206,6 +207,13 @@ class ApiServices {
         },
       ),
     );
+    if(response.data['msg'] =='warning'){
+      customToast(title: response.data['message_ar'], color: Colors.red);
+    }else{
+      customToast(title: response.data['message_ar'], color: ColorManager.primary);
+    }
+    print('message: ${response.data['message_ar']}');
+    print('response: ${response.data}');
     if (response.statusCode == 200) {
       return CreateOrderModel.fromJson(response.data);
     } else {

@@ -49,18 +49,21 @@ class RequestCubit extends Cubit<RequestState> {
     );
 
     result.fold(
-      (l) => emit(CreateOrderFailure(l.error)),
+      (l) {
+        isOrderCreated = false;
+        emit(CreateOrderFailure(l.error));
+      },
       (r) async{
         emit(CreateOrderSuccess(r));
         await BottomNavCubit.get(context).getUserInfo(context: context);
-        Fluttertoast.showToast(
-          msg: r.messageAr,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor:r.message == 'Order Created Successfully' ? ColorManager.primary : Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: r.messageAr,
+        //   gravity: ToastGravity.BOTTOM,
+        //   timeInSecForIosWeb: 1,
+        //   backgroundColor:r.message == 'Order Created Successfully' ? ColorManager.primary : Colors.red,
+        //   textColor: Colors.white,
+        //   fontSize: 16.0,
+        // );
         isOrderCreated = false;
         emit(CreateOrderSuccess(r));
         customPushAndRemoveUntil(context, BottomNavigationScreen());

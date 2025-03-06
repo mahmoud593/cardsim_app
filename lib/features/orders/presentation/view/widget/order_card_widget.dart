@@ -176,9 +176,9 @@ class GameOrderCard extends StatelessWidget {
     switch (status) {
       case 'completed':
         return 'مكتمل';
-      case 'processing':
-        return 'قيد التنفيذ';
       case 'pending':
+        return 'قيد التنفيذ';
+      case 'processing':
         return 'قيد الإنتظار';
       case 'reject':
         return 'مرفوض';

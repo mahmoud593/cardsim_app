@@ -205,11 +205,16 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                 BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
                                 SizedBox( height: MediaQuery.of(context).size.height*.02, ),
 
+                                BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
+                                Text('يرجي تحويل المبلغ المراد شحنه علي المحفظه التاليه :',style:  TextStyles.textStyle18Medium.copyWith(
+                                  color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
+                                ),),
+
+                                BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
+                                SizedBox( height: MediaQuery.of(context).size.height*.01, ),
 
                                 BalanceCubit.get(context).paymentMethodCompleteData==''?
-                                Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Medium.copyWith(
-                                  color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
-                                ),):BalanceCubit.get(context).paymentMethod=='شام كاش' || BalanceCubit.get(context).paymentMethod=='SyriaPhone' || BalanceCubit.get(context).paymentMethod=='Payeer'?
+                                Container():
                                 Row(
                                   children: [
                                     Expanded(
@@ -222,21 +227,23 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Regular.copyWith(
-                                          color: UserDataFromStorage.themeIsDarkMode ? ColorManager.primary : ColorManager.primary,
+                                          color: UserDataFromStorage.themeIsDarkMode ? ColorManager.black : ColorManager.black,
                                           fontSize: 14
                                         ),
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.start,
                                         ),
                                       ),
                                     ),
                                     SizedBox(width:  MediaQuery.of(context).size.width*.02,),
+                                    BalanceCubit.get(context).paymentMethod=='شام كاش' ||
+                                    BalanceCubit.get(context).paymentMethod=='SyriaPhone' || BalanceCubit.get(context).paymentMethod=='Payeer' ?
                                     DefaultButton(
                                         onPressed: (){
                                       Clipboard.setData(ClipboardData(text: BalanceCubit.get(context).paymentMethodCompleteData));
                                       customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
-                                    }, borderRadius: BorderRadius.circular(12), text: 'نسخ')
+                                    }, borderRadius: BorderRadius.circular(12), text: 'نسخ'):Container()
                                   ],
-                                ):Container()
+                                )
                               ],
                             );
                           }

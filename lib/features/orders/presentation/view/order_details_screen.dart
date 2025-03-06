@@ -141,8 +141,7 @@ class OrderDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            Container(
-              height: SizeConfig.height * 0.1,
+            Expanded(
               child: ListView.separated(
                   itemBuilder: (context, index) => Row(
                     children: [
@@ -160,7 +159,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  separatorBuilder: (context, index) => const Divider(),
+                  separatorBuilder: (context, index) =>  Container(),
                   itemCount: codes.length
               ),
             ),
@@ -174,9 +173,9 @@ class OrderDetailsScreen extends StatelessWidget {
     switch (status) {
       case 'completed':
         return 'مكتمل';
-      case 'processing':
-        return 'قيد التنفيذ';
       case 'pending':
+        return 'قيد التنفيذ';
+      case 'processing':
         return 'قيد الإنتظار';
       case 'reject':
         return 'مرفوض';

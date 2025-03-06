@@ -33,87 +33,65 @@ class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsState>(
       builder: (context, state) {
-          return ModalProgressHUD(
-            inAsyncCall: context.read<RequestCubit>().isOrderCreated,
-            progressIndicator: const CupertinoActivityIndicator(
-              color: ColorManager.primary,
-            ),
-            child: state is ProductsSuccess?
-            SingleChildScrollView(
-              child:Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RequestOrderGridView(
-                    selectedProductIndex: selectedProductIndex,
-                    onProductSelected: (index) {
-                      setState(() {
-                        print('state.products[index] is ${state.products[index].status}');
-                        selectedProductIndex = index;
-                        if(state.products[index].quantity != null){
-                          amountController.text = state.products[index].quantity!.min.toString();
-                        }else{
-                          amountController.text = (1).toString();
-                        }
+          return state is ProductsSuccess?
+          SingleChildScrollView(
+            child:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RequestOrderGridView(
+                  selectedProductIndex: selectedProductIndex,
+                  onProductSelected: (index) {
+                    setState(() {
+                      print('state.products[index] is ${state.products[index].status}');
+                      selectedProductIndex = index;
+                      if(state.products[index].quantity != null){
+                        amountController.text = state.products[index].quantity!.min.toString();
+                      }else{
+                        amountController.text = (1).toString();
+                      }
 
-                      });
-                    },
+                    });
+                  },
+                ),
+                const SizedBox(height: 30),
+                if (widget.companiesEntity.notes!.isNotEmpty) ...[
+                  NotesListView(widget: widget),
+                ],
+                const SizedBox(height: 12),
+                if (selectedProductIndex != null &&
+                    state.products[selectedProductIndex!].quantity != null) ...[
+                  AmountSection(
+                    productsEntity: state.products[selectedProductIndex!],
+                    controller: amountController,
                   ),
-                  const SizedBox(height: 30),
-                  if (widget.companiesEntity.notes!.isNotEmpty) ...[
-                    NotesListView(widget: widget),
-                  ],
-                  const SizedBox(height: 12),
-                  if (selectedProductIndex != null &&
-                      state.products[selectedProductIndex!].quantity != null) ...[
-                    AmountSection(
+                  const SizedBox(height: 24),
+                  if (state.products[selectedProductIndex!].field != null)
+                    PlayerIdSearchSection(
+                      idController: idController,
                       productsEntity: state.products[selectedProductIndex!],
-                      controller: amountController,
+                      formKey: _formKey,
                     ),
-                    const SizedBox(height: 24),
-                    if (state.products[selectedProductIndex!].field != null)
-                      PlayerIdSearchSection(
-                        idController: idController,
-                        productsEntity: state.products[selectedProductIndex!],
-                        formKey: _formKey,
-                      ),
-                  ],
-                  const SizedBox(height: 32),
-                  RequestOrderButton(
-                    formKey: _formKey,
-                    onPressed: () async {
-                      var text = amountController.text;
-                      var parsedQuantity = int.tryParse(text);
-                      if (_formKey.currentState != null) {
-                        if (_formKey.currentState!.validate()) {
-                          if (state.products[selectedProductIndex!].field!
-                                  .fieldCheck ==
-                              true) {
-                            await context.read<RequestCubit>().checkIdField(
-                                idController.text,
-                                state.products[selectedProductIndex!].field!
-                                    .fieldCheckType!);
-                            if (context
-                                    .read<RequestCubit>()
-                                    .checkFieldEntity!
-                                    .result ==
-                                'success') {
-                              context.read<RequestCubit>().createOrder(
-                                    context: context,
-                                    productId:
-                                        state.products[selectedProductIndex!].id,
-                                    quantity: parsedQuantity!,
-                                    field: idController.text,
-                                  );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('من فضلك تحقق من البيانات'),
-                                ),
-                              );
-                            }
-                          } else if (state.products[selectedProductIndex!].field!
-                                  .fieldCheck ==
-                              false) {
+                ],
+                const SizedBox(height: 32),
+                RequestOrderButton(
+                  formKey: _formKey,
+                  onPressed: () async {
+                    var text = amountController.text;
+                    var parsedQuantity = int.tryParse(text);
+                    if (_formKey.currentState != null) {
+                      if (_formKey.currentState!.validate()) {
+                        if (state.products[selectedProductIndex!].field!
+                                .fieldCheck ==
+                            true) {
+                          await context.read<RequestCubit>().checkIdField(
+                              idController.text,
+                              state.products[selectedProductIndex!].field!
+                                  .fieldCheckType!);
+                          if (context
+                              .read<RequestCubit>()
+                                  .checkFieldEntity!
+                                  .result ==
+                              'success') {
                             context.read<RequestCubit>().createOrder(
                                   context: context,
                                   productId:
@@ -121,30 +99,45 @@ class _RequestOrderScreenBodyState extends State<RequestOrderScreenBody> {
                                   quantity: parsedQuantity!,
                                   field: idController.text,
                                 );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('من فضلك تحقق من البيانات'),
+                              ),
+                            );
                           }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('من فضلك تحقق من البيانات'),
-                            ),
-                          );
+                        } else if (state.products[selectedProductIndex!].field!
+                                .fieldCheck ==
+                            false) {
+                          context.read<RequestCubit>().createOrder(
+                                context: context,
+                                productId:
+                                    state.products[selectedProductIndex!].id,
+                                quantity: parsedQuantity!,
+                                field: idController.text,
+                              );
                         }
                       } else {
-                        context.read<RequestCubit>().createOrder(
-                              context: context,
-                              productId: state.products[selectedProductIndex!].id,
-                              quantity: parsedQuantity!,
-                              field: idController.text,
-                            );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('من فضلك تحقق من البيانات'),
+                          ),
+                        );
                       }
-                    },
-                  ),
-                ],
-              ),
-            ):
-           const Center(child: CircularProgressIndicator()),
-
-          );
+                    } else {
+                      context.read<RequestCubit>().createOrder(
+                            context: context,
+                            productId: state.products[selectedProductIndex!].id,
+                            quantity: parsedQuantity!,
+                            field: idController.text,
+                          );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ):
+                     const Center(child: CircularProgressIndicator());
       },
       listener: (context, state) {
       },
