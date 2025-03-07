@@ -21,16 +21,16 @@ class DealingsListView extends StatelessWidget {
               title: 'الرصيد');
         },
       ),
-      DealingsListViewItem(
-          value: '${UserDataFromStorage.orderWaiting}',
-          title: 'الطلبات قيد الانتظار'),
-      DealingsListViewItem(
-          value: '${UserDataFromStorage.progressWaiting} ',
-          title: 'عمليات مكتمله'),
-      DealingsListViewItem(
-          value: '${UserDataFromStorage.orderRefuse}', title: 'طلبات مرفوضه'),
-      DealingsListViewItem(
-          value: '${UserDataFromStorage.allOrders}', title: 'جميع الطلبات'),
+      // DealingsListViewItem(
+      //     value: '${UserDataFromStorage.orderWaiting}',
+      //     title: 'الطلبات قيد الانتظار'),
+      // DealingsListViewItem(
+      //     value: '${UserDataFromStorage.progressWaiting} ',
+      //     title: 'عمليات مكتمله'),
+      // DealingsListViewItem(
+      //     value: '${UserDataFromStorage.orderRefuse}', title: 'طلبات مرفوضه'),
+      // DealingsListViewItem(
+      //     value: '${UserDataFromStorage.allOrders}', title: 'جميع الطلبات'),
     ];
 
     return SizedBox(

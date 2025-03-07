@@ -226,22 +226,21 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                           color: UserDataFromStorage.themeIsDarkMode ? ColorManager.gray : ColorManager.gray,
                                           borderRadius: BorderRadius.circular(10),
                                         ),
-                                        child: Text( BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Regular.copyWith(
+                                        child: Text(BalanceCubit.get(context).paymentMethodCompleteData,style:  TextStyles.textStyle18Regular.copyWith(
                                           color: UserDataFromStorage.themeIsDarkMode ? ColorManager.black : ColorManager.black,
-                                          fontSize: 14
+                                          fontSize: 13
                                         ),
                                         textAlign: TextAlign.start,
                                         ),
                                       ),
                                     ),
                                     SizedBox(width:  MediaQuery.of(context).size.width*.02,),
-                                    BalanceCubit.get(context).paymentMethod=='شام كاش' ||
-                                    BalanceCubit.get(context).paymentMethod=='SyriaPhone' || BalanceCubit.get(context).paymentMethod=='Payeer' ?
+
                                     DefaultButton(
                                         onPressed: (){
                                       Clipboard.setData(ClipboardData(text: BalanceCubit.get(context).paymentMethodCompleteData));
                                       customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
-                                    }, borderRadius: BorderRadius.circular(12), text: 'نسخ'):Container()
+                                    }, borderRadius: BorderRadius.circular(12), text: 'نسخ')
                                   ],
                                 )
                               ],
