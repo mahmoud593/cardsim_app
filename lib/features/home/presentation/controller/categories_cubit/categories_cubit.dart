@@ -15,7 +15,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     final result = await homeRepo.getCategories();
     result.fold(
           (l) => emit(CategoriesFailure(l.error)),
-          (r) => emit(CategoriesSuccess(r)),
+          (r) {
+            print('Call Categories');
+            emit(CategoriesSuccess(r));
+          }
     );
   }
 

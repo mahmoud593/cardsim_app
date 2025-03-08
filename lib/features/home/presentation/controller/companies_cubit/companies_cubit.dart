@@ -9,6 +9,8 @@ part 'companies_state.dart';
 class CompaniesCubit extends Cubit<CompaniesState> {
   CompaniesCubit(this.homeRepo) : super(CompaniesInitial());
 
+
+
   final HomeRepo homeRepo;
 
   Future<void> getCompanies({String? category, String? query}) async {
@@ -31,6 +33,7 @@ class CompaniesCubit extends Cubit<CompaniesState> {
                   company.name.toLowerCase().contains(query.toLowerCase()))
               .toList();
         }
+        print('Call getCompanies');
         emit(CompaniesSuccess(filteredCompanies));
       },
     );

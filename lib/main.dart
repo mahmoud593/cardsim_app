@@ -76,13 +76,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ClientCubit()),
         BlocProvider(create: (context) => TextSliderCubit(getIt.get<HomeRepo>())..getTextSlider()),
         BlocProvider(create: (context) => ImageSlidersCubit(getIt.get<HomeRepo>())..getImageSlider()),
-        BlocProvider(
-          create: (context) =>
-              CompaniesCubit(getIt.get<HomeRepo>())..getCompanies(),
+        BlocProvider(create: (context) => CompaniesCubit(getIt.get<HomeRepo>())..getCompanies(),
         ),
-        BlocProvider(
-            create: (context) =>
-                CategoriesCubit(getIt.get<HomeRepo>())..getCategories()),
+        BlocProvider(create: (context) => CategoriesCubit(getIt.get<HomeRepo>())..getCategories()),
         BlocProvider(create: (context) => ThemeCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

@@ -206,7 +206,7 @@ class _CreateNewBalanceWidgetState extends State<CreateNewBalanceWidget> {
                                 SizedBox( height: MediaQuery.of(context).size.height*.02, ),
 
                                 BalanceCubit.get(context).paymentMethodCompleteData==''?Container():
-                                Text('يرجي تحويل المبلغ المراد شحنه علي المحفظه التاليه :',style:  TextStyles.textStyle18Medium.copyWith(
+                                Text('يرجي تحويل المبلغ المراد شحنه الى المحفظه التاليه :',style:  TextStyles.textStyle18Medium.copyWith(
                                   color: UserDataFromStorage.themeIsDarkMode ? ColorManager.white : ColorManager.black,
                                 ),),
 

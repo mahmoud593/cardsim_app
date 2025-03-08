@@ -11,8 +11,21 @@ import 'package:games_app/styles/widgets/custom_search_field.dart';
 import 'package:games_app/styles/widgets/loading_widget.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class OrdersScreen extends StatelessWidget {
+class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
+
+  @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    OrdersCubit.get(context).getOrders(search: "", status: '');
+  }
 
   @override
   Widget build(BuildContext context) {

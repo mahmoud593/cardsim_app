@@ -6,6 +6,7 @@ import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart'
 import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/auth/presentation/view/screens/register_screen.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
+import 'package:games_app/features/home/presentation/controller/categories_cubit/categories_cubit.dart';
 import 'package:games_app/features/home/presentation/controller/companies_cubit/companies_cubit.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view.dart';
 import 'package:games_app/features/home/presentation/view/widgets/image_carousal_widget.dart';
@@ -29,6 +30,8 @@ class HomeScreenBody extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: ()async{
           AuthCubit.get(context).getUserInfo(context: context);
+          context.read<CompaniesCubit>().getCompanies();
+          context.read<CategoriesCubit>().getCategories();
       },
       child: SingleChildScrollView(
         child: Column(
