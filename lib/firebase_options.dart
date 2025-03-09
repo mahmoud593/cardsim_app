@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '132088450182',
     projectId: 'news-app-3f5f8',
     storageBucket: 'news-app-3f5f8.appspot.com',
-    iosBundleId: 'com.game.gamesApp',
+    iosBundleId: 'app.cardsim.net',
   );
 }

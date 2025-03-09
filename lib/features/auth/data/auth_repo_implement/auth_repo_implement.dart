@@ -134,13 +134,19 @@ class AuthRepoImplement implements AuthRepo{
   @override
   Future<dynamic> loginWithGoogle() async{
       try {
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+        GoogleSignIn googleSignIn = GoogleSignIn(
+          forceCodeForRefreshToken: true,
+        );
+
+        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
         final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken,
           idToken: googleAuth?.idToken,
+
         );
 
         var user =await FirebaseAuth.instance.signInWithCredential(credential);

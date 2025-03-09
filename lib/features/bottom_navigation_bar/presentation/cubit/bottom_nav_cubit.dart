@@ -1,4 +1,5 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:games_app/features/home/presentation/view/home_screen.dart';
 import 'package:games_app/features/orders/presentation/view/orders_screen.dart';
 import 'package:games_app/features/settings/presentation/view/screens/settings_screen.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../core/constants/app_session.dart';
 import '../../../../styles/widgets/toast.dart';
@@ -88,7 +90,9 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
       );
       UserDataFromStorage.setUserTokenFromStorage('');
       print(UserDataFromStorage.userTokenFromStorage);
-
+      await GoogleSignIn().signOut();
+      await GoogleSignIn().disconnect(); // يمسح الجلسة القديمة تمامًا
+      await FirebaseAuth.instance.signOut();
       print('Logout Successfully');
       emit(LogoutSuccessState());
     }catch(error){
