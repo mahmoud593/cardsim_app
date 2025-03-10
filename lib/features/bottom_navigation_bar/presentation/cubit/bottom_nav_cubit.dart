@@ -91,7 +91,7 @@ class BottomNavCubit extends Cubit<BottomNavStates> {
       UserDataFromStorage.setUserTokenFromStorage('');
       print(UserDataFromStorage.userTokenFromStorage);
       await GoogleSignIn().signOut();
-      await GoogleSignIn().disconnect(); // يمسح الجلسة القديمة تمامًا
+      await GoogleSignIn().disconnect();
       await FirebaseAuth.instance.signOut();
       print('Logout Successfully');
       emit(LogoutSuccessState());
