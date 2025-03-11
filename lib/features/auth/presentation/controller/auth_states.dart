@@ -43,3 +43,7 @@ class EnableGoogleAuthErrorState extends AuthStates {}
 class UpdateUserLoadingState extends AuthStates {}
 class UpdateUserSuccessState extends AuthStates {}
 class UpdateUserErrorState extends AuthStates {}
+
+class UpdatePasswordLoadingState extends AuthStates {}
+class UpdatePasswordSuccessState extends AuthStates {}
+class UpdatePasswordErrorState extends AuthStates {}

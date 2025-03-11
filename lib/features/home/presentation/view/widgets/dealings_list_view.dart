@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
+import 'package:games_app/features/auth/presentation/controller/auth_cubit.dart';
+import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_cubit.dart';
 import 'package:games_app/features/home/presentation/controller/currency_cubit/currency_states.dart';
 import 'package:games_app/features/home/presentation/view/widgets/dealings_list_view_item.dart';
@@ -12,12 +14,11 @@ class DealingsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of items
     final items = [
-      BlocBuilder<CurrencyCubit, CurrencyStates>(
+      BlocBuilder<AuthCubit, AuthStates>(
         builder: (context, state) {
           return DealingsListViewItem(
               isBalance: true,
-              value: '\$ ${UserDataFromStorage
-                  .balanceFromStorage.toStringAsFixed(2)}',
+              value: '\$ ${UserDataFromStorage.balanceFromStorage.toStringAsFixed(2)}',
               title: 'الرصيد');
         },
       ),

@@ -25,6 +25,8 @@ class SettingsBodyView extends StatefulWidget {
 class _SettingsBodyViewState extends State<SettingsBodyView> {
   bool isSwitched = false;
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -134,7 +136,7 @@ class _SettingsBodyViewState extends State<SettingsBodyView> {
                 ],
               ),
 
-              SizedBox(height: MediaQuery.of(context).size.height*.05,),
+              SizedBox(height: MediaQuery.of(context).size.height*.025,),
 
 
               state is UpdateUserLoadingState?
@@ -154,6 +156,98 @@ class _SettingsBodyViewState extends State<SettingsBodyView> {
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height*.03,),
+
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Text('تغير كلمة السر',style: TextStyles.textStyle18Bold,)
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height*.02,),
+
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    DefaultTextField(
+                      isPassword: true,
+                      withSuffix: true,
+                      viewPassword: true,
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return 'كلمة السر القديمة مطلوبة';
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress ,
+                      fillColor: ColorManager.gray ,
+                      textInputAction: TextInputAction.done,
+                      hintText: 'كلمة السر القديمة',
+                      controller: cubit.oldPasswordProfileController,
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height*.025,),
+
+                    DefaultTextField(
+                      isPassword: true,
+                      withSuffix: true,
+                      viewPassword: true,
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return 'كلمة السر الجديدة مطلوبة';
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress ,
+                      fillColor: ColorManager.gray ,
+                      textInputAction: TextInputAction.done,
+                      hintText: 'كلمة السر الجديدة',
+                      controller: cubit.newPasswordController,
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height*.025,),
+
+                    DefaultTextField(
+                      isPassword: true,
+                      withSuffix: true,
+                      viewPassword: true,
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return 'تأكيد كلمة السر مطلوبة';
+                        }else if(value!=cubit.newPasswordController.text){
+                          return 'كلمة السر غير متطابقة';
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress ,
+                      fillColor: ColorManager.gray ,
+                      textInputAction: TextInputAction.done,
+                      hintText: 'تأكيد كلمة السر',
+                      controller: cubit.confirmPasswordController,
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height*.025,),
+
+                    state is UpdatePasswordLoadingState?
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ):
+                    DefaultButton(
+                        width: double.infinity,
+                        onPressed: (){
+                          if(formKey.currentState!.validate()){
+                             cubit.updateUserPassword(
+                                 context: context,
+                                 oldPassword: cubit.oldPasswordProfileController.text,
+                                 newPassword: cubit.newPasswordController.text,
+                                 confirmPassword: cubit.confirmPasswordController.text
+                             );
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        text: 'تغير كلمه السر'
+                    ),
+
+                    SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                  ],
+                ),
+              ),
 
               DefaultButton(
                   width: double.infinity,

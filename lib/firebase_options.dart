@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -50,19 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC_WyY2fH7ZWFG1NgExlUHh85Ap-ms-oNU',
-    appId: '1:132088450182:android:5182986dacbaf4dc835507',
-    messagingSenderId: '132088450182',
-    projectId: 'news-app-3f5f8',
-    storageBucket: 'news-app-3f5f8.appspot.com',
+    apiKey: 'AIzaSyDhQ8sqtWWM0mGi4IHjg8hLjp_8So7jf50',
+    appId: '1:1838996923:android:a9abed6e4b1afcdb87b89e',
+    messagingSenderId: '1838996923',
+    projectId: 'cardsim-ce7ae',
+    storageBucket: 'cardsim-ce7ae.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDJpGMwEPNZx0AHIQjuql7O_2ITAyKIoZE',
-    appId: '1:132088450182:ios:d8768c85f2e1747f835507',
-    messagingSenderId: '132088450182',
-    projectId: 'news-app-3f5f8',
-    storageBucket: 'news-app-3f5f8.appspot.com',
-    iosBundleId: 'app.cardsim.net',
+    apiKey: 'AIzaSyBa-EpXDmCSUQ5IO4-1ipoTf7Viiu4p2po',
+    appId: '1:1838996923:ios:9a0d776ec665d17287b89e',
+    messagingSenderId: '1838996923',
+    projectId: 'cardsim-ce7ae',
+    storageBucket: 'cardsim-ce7ae.firebasestorage.app',
+    iosBundleId: 'com.cardsim.net',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDx1hixAvR7Zryl3ERD9aUbYd8ZBG0bas4',
+    appId: '1:1838996923:web:df5a0658738c57a187b89e',
+    messagingSenderId: '1838996923',
+    projectId: 'cardsim-ce7ae',
+    authDomain: 'cardsim-ce7ae.firebaseapp.com',
+    storageBucket: 'cardsim-ce7ae.firebasestorage.app',
+    measurementId: 'G-ERNJ7W22TK',
+  );
+
 }

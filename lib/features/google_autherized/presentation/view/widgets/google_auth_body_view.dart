@@ -54,7 +54,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
   void initState() {
     super.initState();
      otpAuthUrl = generateGoogleAuthUrl(secretKey, accountName, issuer);
-    randomCodeController.text=secretKey;
+     randomCodeController.text=secretKey;
   }
 
 
@@ -101,7 +101,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
                           height: SizeConfig.height*.2 ,
                           child: Center(
                             child: Container(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: QrImageView(
                                 data: otpAuthUrl,
                                 version: QrVersions.auto,
@@ -127,7 +127,7 @@ class _GoogleAuthBodyViewState extends State<GoogleAuthBodyView> {
                                   controller: randomCodeController,
                                   hintText: '',
                                   validator: (value){
-                              
+                                    return null;
                                   },
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.done,

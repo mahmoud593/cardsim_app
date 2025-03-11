@@ -5,6 +5,8 @@ import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 class DioHelper {
   static Dio? dio;
 
+  static var dioHelper;
+
   static dioInit() {
     dio = Dio(
       BaseOptions(

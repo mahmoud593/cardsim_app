@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/features/notification/presentation/controller/notification_cubit.dart';
 import 'package:games_app/features/notification/presentation/controller/notification_states.dart';
 import 'package:games_app/features/notification/presentation/widget/notification_item_widget.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class NotificationViewBody extends StatelessWidget {
   const NotificationViewBody({super.key});

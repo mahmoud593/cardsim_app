@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/text_styles/text_styles.dart';
+import 'package:games_app/styles/widgets/default_button.dart';
+import 'package:games_app/styles/widgets/toast.dart';
 
 
 class CouponsCard extends StatelessWidget {
@@ -41,14 +44,23 @@ class CouponsCard extends StatelessWidget {
                   'القسيمة: $coupon',
                   style: TextStyles.textStyle14Medium,
                 ),
+                IconButton(
+                    onPressed: (){
+                      Clipboard.setData(ClipboardData(text: coupon));
+                      customToast(title: 'تم نسخ الرمز', color: ColorManager.primary);
+                    },
+                    icon: const Icon(
+                      Icons.copy
+                    ),
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   decoration: BoxDecoration(
-                    color: ColorManager.success,
+                    color:  status == 'new' ? ColorManager.success : ColorManager.primary,
                     borderRadius: BorderRadius.circular(SizeConfig.height * 0.01),
                   ),
                   child: Text(
-                    status == 'new' ? 'جديده' : status,
+                    status == 'new' ? 'غير مستخدمة' : 'مستخدمه',
                     style: TextStyles.textStyle14Medium.copyWith(color: ColorManager.white),
                   ),
                 ),

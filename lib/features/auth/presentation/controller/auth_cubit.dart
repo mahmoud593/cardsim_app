@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/constants/urls.dart';
@@ -14,12 +15,14 @@ import 'package:games_app/features/auth/data/models/auth_model.dart';
 import 'package:games_app/features/auth/data/models/user_info_model.dart';
 import 'package:games_app/features/auth/domain/use_cases/register_use_cases.dart';
 import 'package:games_app/features/auth/presentation/controller/auth_states.dart';
+import 'package:games_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:games_app/features/bottom_navigation_bar/presentation/view/bottom_navigation_bar.dart';
 import 'package:games_app/features/home/domain/repos/home_repo.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
 import 'package:games_app/styles/widgets/toast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:base32/base32.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../core/helper/material_navigation.dart';
 import '../../../home/presentation/controller/currency_cubit/currency_cubit.dart';
 
@@ -42,6 +45,9 @@ class AuthCubit extends Cubit<AuthStates>{
   TextEditingController emailProfileController = TextEditingController();
   TextEditingController phoneProfileController = TextEditingController();
   TextEditingController nameProfileController = TextEditingController();
+  TextEditingController oldPasswordProfileController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   GlobalKey<FormState> registerKey = GlobalKey<FormState>();
@@ -376,34 +382,76 @@ class AuthCubit extends Cubit<AuthStates>{
   Future <void> updateUserInfo({
     required String phone,
     required bool google_2fa,
-  })async{
-
+  })async {
     emit(UpdateUserLoadingState());
 
-    try{
-      var response =  await httpHelper.callService(
+    try {
+      var response = await httpHelper.callService(
           responseType: ResponseType.post,
           url: UrlConstants.updateUser,
           authorization: true,
           parameter: {
-            "phone" : phone,
-            "google_2fa" : google_2fa,
+            "phone": phone,
+            "google_2fa": google_2fa,
           }
       );
 
       print('Update User: ${response.toString()}');
 
-      if(response !=null){
-        customToast(title: 'تم تحديث البيانات', color:ColorManager.primary);
-      }else{
+      if (response != null) {
+        customToast(title: 'تم تحديث البيانات', color: ColorManager.primary);
+      } else {
 
       }
 
       emit(UpdateUserSuccessState());
-    }catch(error){
+    } catch (error) {
       print('error in update user is $error');
       emit(UpdateUserErrorState());
     }
+  }
+
+    Future <void> updateUserPassword({
+      required String oldPassword,
+      required String newPassword,
+      required String confirmPassword,
+      required BuildContext context
+    })async{
+
+      emit(UpdatePasswordLoadingState());
+
+      try{
+        var response =  await httpHelper.callService(
+            responseType: ResponseType.post,
+            url: UrlConstants.updatePassword,
+            authorization: true,
+            parameter: {
+              "old_password" : oldPassword,
+              "new_password" : newPassword,
+              "new_password_confirmation" : confirmPassword,
+            }
+        );
+
+        print('Update password: ${response.toString()}');
+
+        if(response !=null){
+          if(response['success'] == false){
+            customToast(title: response['message_ar'], color:ColorManager.error);
+          }else{
+            customToast(title: response['message_ar'], color:ColorManager.primary);
+
+            UserDataFromStorage.setUserTokenFromStorage('');
+            print(UserDataFromStorage.userTokenFromStorage);
+            print('Logout Successfully');
+
+            customPushAndRemoveUntil(context, const LoginScreen());
+          }
+        }
+        emit(UpdatePasswordSuccessState());
+      }catch(error){
+        print('error in update password is $error');
+        emit(UpdatePasswordErrorState());
+      }
 
 
   }

@@ -100,44 +100,46 @@ class _CouponsScreenState extends State<CouponsScreen> {
                       inAsyncCall: state is GetCouponsLoadingState,
                       progressIndicator: const LoadingAnimationWidget(),
                       color: Colors.transparent,
-                      child: CouponsCubit.get(context)
-                              .couponDataModel
-                              .data
-                              .isNotEmpty
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: CouponsCubit.get(context)
-                                  .couponDataModel
-                                  .data
-                                  .length,
-                              itemBuilder: (context, index) => CouponsCard(
-                                username: CouponsCubit.get(context)
+                      child: CouponsCubit.get(context).couponDataModel.data.isNotEmpty ?
+                      RefreshIndicator(
+                        onRefresh: ()async {
+                          await CouponsCubit.get(context).getCoupons(search: "");
+                        },
+                        child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: CouponsCubit.get(context)
                                     .couponDataModel
-                                    .data[index]
-                                    .usedIn,
-                                amount: CouponsCubit.get(context)
-                                    .couponDataModel
-                                    .data[index]
-                                    .amount
-                                    .toString(),
-                                status: CouponsCubit.get(context)
-                                    .couponDataModel
-                                    .data[index]
-                                    .status,
-                                coupon: CouponsCubit.get(context)
-                                    .couponDataModel
-                                    .data[index]
-                                    .code,
-                                createdAt: CouponsCubit.get(context)
-                                    .couponDataModel
-                                    .data[index]
-                                    .createdAt,
-                                buyedAtDate: CouponsCubit.get(context)
-                                    .couponDataModel
-                                    .data[index]
-                                    .createdAt,
+                                    .data
+                                    .length,
+                                itemBuilder: (context, index) => CouponsCard(
+                                  username: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .usedIn,
+                                  amount: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .amount
+                                      .toString(),
+                                  status: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .status,
+                                  coupon: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .code,
+                                  createdAt: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .createdAt,
+                                  buyedAtDate: CouponsCubit.get(context)
+                                      .couponDataModel
+                                      .data[index]
+                                      .createdAt,
+                                ),
                               ),
-                            )
+                      )
                           : Center(
                               child: Text(
                                 'لا يوجد بيانات لعرضها',

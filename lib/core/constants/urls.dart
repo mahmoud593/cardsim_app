@@ -12,6 +12,8 @@ class UrlConstants {
 
   static const String updateUser = '$baseUrl/api/update-user-info';
 
+  static const String updatePassword = '$baseUrl/api/update-user-password';
+
   static const String loginWithGoogleUrl = '$baseUrl/api/login/google';
 
   static const String logoutUrl = '$baseUrl/api/logout';

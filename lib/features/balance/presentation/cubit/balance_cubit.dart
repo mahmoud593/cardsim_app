@@ -7,6 +7,7 @@ import 'package:games_app/core/constants/urls.dart';
 import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/local/shared_preference/shared_preference.dart';
 import 'package:games_app/core/network/api_handle/http_request_handler.dart';
+import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/balance/data/models/create_custom_code_model.dart';
 import 'package:games_app/features/balance/data/models/create_transaction_model.dart';
 import 'package:games_app/features/balance/data/models/get_all_transctions_model.dart';
@@ -261,7 +262,7 @@ class BalanceCubit extends Cubit<BalanceStates> {
     emit(CreateCustomCodeLoadingState());
 
     var parameter={
-      'code':code
+      "code":code
     };
 
     try{
@@ -272,9 +273,17 @@ class BalanceCubit extends Cubit<BalanceStates> {
           parameter: parameter
       );
 
+      // var response=await DioHelper.postData(url: 'https://cardsim.net/api/voucher-charge', body: parameter,authorization: true);
+
       customCodeModel = CustomCodeModel.fromJson(response);
 
-      customToast(title:  '${customCodeModel!.messageAr!}', color: Colors.red);
+      print('Response ${response}');
+
+      if(customCodeModel!.messageAr == 'تم تعبئة الرصيد'){
+        customToast(title:  '${customCodeModel!.messageAr!}', color: ColorManager.primary);
+      }else{
+        customToast(title:  '${customCodeModel!.messageAr!}', color: Colors.red);
+      }
 
       print('customCodeModel  is ${customCodeModel!.message!}');
 
@@ -346,7 +355,7 @@ class BalanceCubit extends Cubit<BalanceStates> {
                   validator: (value){
                     return '';
                   },
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.done,
                   fillColor: ColorManager.gray
               ),

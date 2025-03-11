@@ -47,7 +47,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
-        maxLength: widget.isCode == true ? 16 : null,
+        maxLength: widget.isCode == true ? null : null,
         textDirection: TextDirection.ltr,
         enabled: widget.enable,
         style: TextStyle(
