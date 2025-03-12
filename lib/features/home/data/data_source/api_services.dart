@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/core/network/dio_helper.dart';
 import 'package:games_app/features/auth/data/models/google_auth_error.dart';
 import 'package:games_app/features/home/data/models/companies_model.dart';
@@ -253,6 +254,8 @@ class ApiServices {
       ),
     );
     if (response.statusCode == 200) {
+      print('min_value_purchase_voucher ${response.data['min_value_purchase_voucher']}');
+      CashHelper.saveData(key: 'couponValue', value: response.data['min_value_purchase_voucher']);
       return List<TextSliderModel>.from(
         (response.data['texts_slider'] as List).map(
               (e) => TextSliderModel.fromJson(e),

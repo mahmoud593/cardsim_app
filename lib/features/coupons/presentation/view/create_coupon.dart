@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_app/core/helper/app_size_config.dart';
+import 'package:games_app/core/local/cashe_helper/cashe_helper.dart';
 import 'package:games_app/features/coupons/presentation/cubit/coupons_cubit.dart';
 import 'package:games_app/features/coupons/presentation/cubit/coupons_state.dart';
 import 'package:games_app/styles/colors/color_manager.dart';
@@ -9,8 +10,22 @@ import 'package:games_app/styles/widgets/default_button.dart';
 import 'package:games_app/styles/widgets/default_text_field.dart';
 import 'package:games_app/styles/widgets/loading_widget.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-class CreateCoupon extends StatelessWidget {
+class CreateCoupon extends StatefulWidget {
   const CreateCoupon({super.key});
+
+  @override
+  State<CreateCoupon> createState() => _CreateCouponState();
+}
+
+class _CreateCouponState extends State<CreateCoupon> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    CouponsCubit.get(context).couponCount.text = '1';
+    CouponsCubit.get(context).couponAmount.text= CashHelper.getData(key: 'couponValue')??'5';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +60,13 @@ class CreateCoupon extends StatelessWidget {
 
                       DefaultTextField(
                         controller: CouponsCubit.get(context).couponAmount,
-                        hintText: 'القيمة (أقل قيمة 5)',
+                        hintText: 'القيمة أقل قيمة ${CashHelper.getData(key: 'couponValue')}',
                         validator: (value) {
                           if(value == null || value.isEmpty){
                             return "القيمة يجب ان تكون عدد واحد على الاقل";
                           }
-                          else if(int.parse(value!) < 5){
-                            return "القيمة يجب ان تكون القيمة 5 او اكبر من 5";
+                          else if(int.parse(value!) < int.parse(CashHelper.getData(key: 'couponValue')!)){
+                            return "القيمة يجب ان تكون القيمة ${CashHelper.getData(key: 'couponValue')}  او اكبر من ${CashHelper.getData(key: 'couponValue')}";
                           }else{
                             return null;
                           }

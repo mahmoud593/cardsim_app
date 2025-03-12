@@ -40,9 +40,11 @@ class CouponsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'القسيمة: $coupon',
-                  style: TextStyles.textStyle14Medium,
+                Expanded(
+                  child: Text(
+                    'القسيمة: $coupon',
+                    style: TextStyles.textStyle14Medium,
+                  ),
                 ),
                 IconButton(
                     onPressed: (){
