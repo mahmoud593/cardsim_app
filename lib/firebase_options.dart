@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDhQ8sqtWWM0mGi4IHjg8hLjp_8So7jf50',
-    appId: '1:1838996923:android:a9abed6e4b1afcdb87b89e',
+    appId: '1:1838996923:android:292b4f230a6de1ac87b89e',
     messagingSenderId: '1838996923',
     projectId: 'cardsim-ce7ae',
     storageBucket: 'cardsim-ce7ae.firebasestorage.app',
@@ -56,21 +56,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBa-EpXDmCSUQ5IO4-1ipoTf7Viiu4p2po',
-    appId: '1:1838996923:ios:9a0d776ec665d17287b89e',
+    appId: '1:1838996923:ios:708c88272c03ef3b87b89e',
     messagingSenderId: '1838996923',
     projectId: 'cardsim-ce7ae',
     storageBucket: 'cardsim-ce7ae.firebasestorage.app',
-    iosBundleId: 'com.cardsim.net',
+    androidClientId: '1838996923-n6rpgik1ou542518e00vh6bur6153dkg.apps.googleusercontent.com',
+    iosClientId: '1838996923-30hq4bjg34ojd9jbopheoljg94o86pbl.apps.googleusercontent.com',
+    iosBundleId: 'games.cardsim.net',
   );
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDx1hixAvR7Zryl3ERD9aUbYd8ZBG0bas4',
-    appId: '1:1838996923:web:df5a0658738c57a187b89e',
+    appId: '1:1838996923:web:4a06cdf3d62994ca87b89e',
     messagingSenderId: '1838996923',
     projectId: 'cardsim-ce7ae',
     authDomain: 'cardsim-ce7ae.firebaseapp.com',
     storageBucket: 'cardsim-ce7ae.firebasestorage.app',
-    measurementId: 'G-ERNJ7W22TK',
+    measurementId: 'G-9NC6KKTZNR',
   );
 
 }
