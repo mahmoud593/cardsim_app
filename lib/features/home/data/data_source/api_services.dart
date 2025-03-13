@@ -246,7 +246,6 @@ class ApiServices {
 
   Future<List<TextSliderModel>> getTextSlider() async {
     final response = await _dio.get(
-
       UrlConstants.settingsUrl,
       options: Options(
         headers: {
