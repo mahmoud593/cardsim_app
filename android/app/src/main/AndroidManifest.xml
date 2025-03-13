@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.game.games_app">
+    package="games.cardsim.net">
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />

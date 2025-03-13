@@ -1,4 +1,4 @@
-package com.game.games_app
+package games.cardsim.net
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,45 +1,43 @@
 {
   "project_info": {
-    "project_number": "132088450182",
-    "project_id": "news-app-3f5f8",
-    "storage_bucket": "news-app-3f5f8.appspot.com"
+    "project_number": "1838996923",
+    "project_id": "cardsim-ce7ae",
+    "storage_bucket": "cardsim-ce7ae.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132088450182:android:5182986dacbaf4dc835507",
+        "mobilesdk_app_id": "1:1838996923:android:292b4f230a6de1ac87b89e",
         "android_client_info": {
-          "package_name": "com.game.games_app"
+          "package_name": "games.cardsim.net"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1838996923-v4kbcc6bfontva4adb30tocsm2mnm0dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_WyY2fH7ZWFG1NgExlUHh85Ap-ms-oNU"
+          "current_key": "AIzaSyDhQ8sqtWWM0mGi4IHjg8hLjp_8So7jf50"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:132088450182:android:b3a9609dc3bad051835507",
-        "android_client_info": {
-          "package_name": "com.news_last_app.news_last_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC_WyY2fH7ZWFG1NgExlUHh85Ap-ms-oNU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1838996923-v4kbcc6bfontva4adb30tocsm2mnm0dn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1838996923-h2glp3spi9u2ftkvjub6nqpu2vf9bgkt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cardsim.net"
+              }
+            }
+          ]
         }
       }
     }
