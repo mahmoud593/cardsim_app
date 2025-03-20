@@ -103,6 +103,7 @@ class OffersGridViewItem extends StatelessWidget {
               ),
             ),
           ),
+
           Positioned(
             bottom: 25,
             left: 8.5,
@@ -125,7 +126,29 @@ class OffersGridViewItem extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          if(isInactive)
+          Positioned(
+            bottom: 40,
+            left: 8.5,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: ColorManager.gray,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(Constants.defaultRadius),
+                  bottomRight: Radius.circular(Constants.defaultRadius),
+                ),
+              ),
+              child: const Text(
+                'غير متوفره',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: ColorManager.primary
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
